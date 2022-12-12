@@ -1,0 +1,9 @@
+{
+	"include": [
+		"*.js",
+		"libraries/*.js",
+		"./index.d.ts",
+		"./d.ts files/global.d.ts",
+		"./d.ts files/Ball.d.ts"
+	]
+}
