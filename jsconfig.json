@@ -1,9 +1,3 @@
 {
-	"include": [
-		"*.js",
-		"libraries/*.js",
-		"./index.d.ts",
-		"d.ts_files/global.d.ts",
-		"d.ts_files/Ball.d.ts"
-	]
+	"include": ["*.js", "libraries/*.js", "d.ts_files/*.d.ts"]
 }
