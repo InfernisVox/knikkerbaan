@@ -1,3 +1,0 @@
-{
-	"include": ["*.js", "libraries/*.js", "d.ts_files/*.d.ts"]
-}
