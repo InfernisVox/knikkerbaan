@@ -1,14 +1,8 @@
 import P5 from "./core/P5.js";
 import Boundary from "./Boundary.js";
-import Marble from "./lib/Marble.js";
+import Marble from "./Marble.js";
 
 console.clear();
-
-/**
- * ##################################################
- * ##################  SETUP DEMO  ##################
- * ##################################################
- */
 
 let engine, world, runner;
 let marbles = [],
