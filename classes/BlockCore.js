@@ -16,7 +16,7 @@ XX - Benno Step 7
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/xx-benno-step7/sketch.js">open code</a>
 */
 
-class BlockCore {
+export default class BlockCore {
   constructor(world, attributes, options) {
     this.world = world;
     this.attributes = attributes;
@@ -33,7 +33,13 @@ class BlockCore {
   }
 
   addBody() {
-    this.body = Matter.Bodies.rectangle(this.attributes.x, this.attributes.y, this.attributes.w, this.attributes.h, this.options);
+    this.body = Matter.Bodies.rectangle(
+      this.attributes.x,
+      this.attributes.y,
+      this.attributes.w,
+      this.attributes.h,
+      this.options
+    );
   }
 
   /**
@@ -83,5 +89,4 @@ class BlockCore {
     }
     endShape(CLOSE);
   }
-
 }

@@ -35,13 +35,16 @@ XX - Benno Step 7
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/xx-benno-step7/sketch.js">open code</a>
 */
 
-class PolygonFromPoints extends Block {
+export default class PolygonFromPoints extends Block {
   constructor(world, attributes, options) {
     super(world, attributes, options);
   }
 
   addBody() {
-    let shape = Matter.Vertices.create(this.attributes.points, Matter.Body.create({}));
+    let shape = Matter.Vertices.create(
+      this.attributes.points,
+      Matter.Body.create({})
+    );
     this.body = Matter.Bodies.fromVertices(0, 0, shape, this.options);
     Matter.Body.setPosition(this.body, this.attributes);
   }

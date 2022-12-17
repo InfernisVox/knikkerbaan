@@ -27,7 +27,7 @@ const options = {
 let blockFromParts = new Parts(world, attributes, options)
 */
 
-class Parts extends Block {
+export default class Parts extends Block {
   constructor(world, attributes, options) {
     super(world, attributes, options);
   }

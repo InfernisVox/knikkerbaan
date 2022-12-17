@@ -35,7 +35,7 @@ let box = new Block(world, attributes, options)
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/1-mouse/sketch.js">open code</a>
 */
 
-class Block extends BlockCore {
+export default class Block extends BlockCore {
   constructor(world, attributes, options) {
     super(world, attributes, options);
     this.collisions = [];
@@ -47,7 +47,7 @@ class Block extends BlockCore {
   draw() {
     if (this.body) {
       this.update();
-      if (this.attributes.color || this.attributes.stroke) {
+      if (this.attributes.color || this.attributes.stroke) {
         super.draw();
       }
       if (this.attributes.image) {
@@ -84,7 +84,7 @@ class Block extends BlockCore {
     const offsetA = constraint.pointA;
     let posA = {
       x: 0,
-      y: 0
+      y: 0,
     };
     if (constraint.bodyA) {
       posA = constraint.bodyA.position;
@@ -92,7 +92,7 @@ class Block extends BlockCore {
     const offsetB = constraint.pointB;
     let posB = {
       x: 0,
-      y: 0
+      y: 0,
     };
     if (constraint.bodyB) {
       posB = constraint.bodyB.position;
@@ -106,9 +106,13 @@ class Block extends BlockCore {
   }
 
   update() {
-    this.collisions.forEach(block => {
+    this.collisions.forEach((block) => {
       if (block.attributes.force) {
-        Matter.Body.applyForce(this.body, this.body.position, block.attributes.force);
+        Matter.Body.applyForce(
+          this.body,
+          this.body.position,
+          block.attributes.force
+        );
       }
       if (block.attributes.trigger) {
         block.attributes.trigger(this, block);
@@ -138,7 +142,7 @@ class Block extends BlockCore {
       if (!options.pointB) {
         options.pointB = {
           x: this.body.position.x,
-          y: this.body.position.y
+          y: this.body.position.y,
         };
       }
     }
@@ -171,8 +175,13 @@ class Block extends BlockCore {
     translate(pos.x, pos.y);
     rotate(angle);
     imageMode(CENTER);
-    image(this.attributes.image, this.offset.x, this.offset.y, this.attributes.image.width * this.attributes.scale, this.attributes.image.height * this.attributes.scale);
+    image(
+      this.attributes.image,
+      this.offset.x,
+      this.offset.y,
+      this.attributes.image.width * this.attributes.scale,
+      this.attributes.image.height * this.attributes.scale
+    );
     pop();
   }
-
 }
