@@ -7,7 +7,8 @@ Create a magnet. A magnet is a ball that attracts or repels other bodies.
 @extends Ball
 */
 
-export default class Magnet extends Ball {
+class Magnet extends Ball {
+
   constructor(world, attributes, options) {
     super(world, attributes, options);
     this.attracted = [];
@@ -33,21 +34,17 @@ export default class Magnet extends Ball {
    */
   attract() {
     if (this.isActive) {
-      this.attracted.forEach((obj) => {
+      this.attracted.forEach(obj => {
         if (obj.body) {
           obj = obj.body;
         }
         let force = {
-          x: this.body.position.x - obj.position.x,
-          y: this.body.position.y - obj.position.y,
-        };
+          x: (this.body.position.x - obj.position.x),
+          y: (this.body.position.y - obj.position.y)
+        }
         //Matter.Body.applyForce(ball, ball.position, Matter.Vector.neg(force));
-        Matter.Body.applyForce(
-          obj,
-          obj.position,
-          Matter.Vector.mult(force, this.attributes.attraction)
-        );
-      });
+        Matter.Body.applyForce(obj, obj.position, Matter.Vector.mult(force, this.attributes.attraction));
+      })
     }
   }
 
@@ -57,7 +54,7 @@ export default class Magnet extends Ball {
    */
   gravity() {
     if (this.isActive) {
-      this.attracted.forEach((obj) => {
+      this.attracted.forEach(obj => {
         if (obj.body) {
           obj = obj.body;
         }
@@ -65,13 +62,11 @@ export default class Magnet extends Ball {
         let bToA = Matter.Vector.sub(obj.position, this.body.position);
         let distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001;
         let normal = Matter.Vector.normalise(bToA);
-        let magnitude =
-          -this.attributes.attraction *
-          ((this.body.mass * obj.mass) / distanceSq);
+        let magnitude = -this.attributes.attraction * (this.body.mass * obj.mass / distanceSq);
         let force = Matter.Vector.mult(normal, magnitude);
         // Matter.Body.applyForce(this.body, this.body.position, Matter.Vector.neg(force));
         Matter.Body.applyForce(obj, obj.position, force);
-      });
+      })
     }
   }
 }

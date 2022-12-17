@@ -16,7 +16,7 @@ XX - Benno Step 7
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/xx-benno-step7/sketch.js">open code</a>
 */
 
-export default class BlockCore {
+class BlockCore {
   constructor(world, attributes, options) {
     this.world = world;
     this.attributes = attributes;
@@ -33,60 +33,55 @@ export default class BlockCore {
   }
 
   addBody() {
-    this.body = Matter.Bodies.rectangle(
-      this.attributes.x,
-      this.attributes.y,
-      this.attributes.w,
-      this.attributes.h,
-      this.options
-    );
+    this.body = Matter.Bodies.rectangle(this.attributes.x, this.attributes.y, this.attributes.w, this.attributes.h, this.options);
   }
 
   /**
    * Draws the matter body to the p5 canvas
    * @memberof BlockCore
    */
-  draw(p5) {
+  draw() {
     if (this.body) {
       if (this.attributes.color) {
-        p5.fill(this.attributes.color);
+        fill(this.attributes.color);
       } else {
-        p5.noFill();
+        noFill();
       }
       if (this.attributes.stroke) {
         stroke(this.attributes.stroke);
         if (this.attributes.weight) {
-          p5.strokeWeight(this.attributes.weight);
+          strokeWeight(this.attributes.weight);
         }
       } else {
-        p5.noStroke();
+        noStroke();
       }
-      this.drawBody(p5);
+      this.drawBody();
     }
   }
 
-  drawBody(p5) {
+  drawBody() {
     if (this.body.parts && this.body.parts.length > 1) {
       // skip index 0
       for (let p = 1; p < this.body.parts.length; p++) {
-        this.drawVertices(p5, this.body.parts[p].vertices);
+        this.drawVertices(this.body.parts[p].vertices);
       }
     } else {
       if (this.body.type == "composite") {
         for (let body of this.body.bodies) {
-          this.drawVertices(p5, body.vertices);
+          this.drawVertices(body.vertices);
         }
       } else {
-        this.drawVertices(p5, this.body.vertices);
+        this.drawVertices(this.body.vertices);
       }
     }
   }
 
-  drawVertices(p5, vertices) {
-    p5.beginShape();
+  drawVertices(vertices) {
+    beginShape();
     for (const vertice of vertices) {
-      p5.vertex(vertice.x, vertice.y);
+      vertex(vertice.x, vertice.y);
     }
-    p5.endShape(p5.CLOSE);
+    endShape(CLOSE);
   }
+
 }

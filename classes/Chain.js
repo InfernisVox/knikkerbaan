@@ -7,7 +7,7 @@ Creates a chain of blocks, as defined in the attributes.
 @extends Block
 */
 
-export default class Chain extends Block {
+class Chain extends Block {
   constructor(world, attributes, options) {
     super(world, attributes, options);
     this.constraints = Matter.Composite.allConstraints(this.composite);
@@ -20,10 +20,7 @@ export default class Chain extends Block {
     }
     this.body = Matter.Composites.chain(
       this.composite,
-      this.attributes.xOffsetA,
-      this.attributes.yOffsetA,
-      this.attributes.xOffsetB,
-      this.attributes.yOffsetB,
+      this.attributes.xOffsetA, this.attributes.yOffsetA, this.attributes.xOffsetB, this.attributes.yOffsetB,
       this.options
     );
   }

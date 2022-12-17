@@ -28,21 +28,13 @@ let block = new CompositeBlock(world, attributes)
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/1-stacks/sketch.js">open code</a>
 */
 
-export default class Stack extends Block {
+class Stack extends Block {
   constructor(world, attributes, options) {
     super(world, attributes, options);
   }
 
   addBody() {
-    this.body = Matter.Composites.stack(
-      this.attributes.x,
-      this.attributes.y,
-      this.attributes.cols,
-      this.attributes.rows,
-      this.attributes.colGap,
-      this.attributes.rowGap,
-      this.attributes.create
-    );
+    this.body = Matter.Composites.stack(this.attributes.x, this.attributes.y, this.attributes.cols, this.attributes.rows, this.attributes.colGap, this.attributes.rowGap, this.attributes.create);
     for (let body of this.body.bodies) {
       body.plugin = this.options.plugin;
     }

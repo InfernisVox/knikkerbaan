@@ -15,17 +15,17 @@ let mouse = new Mouse(engine, canvas, { stroke: 'blue', strokeWeight: 3 })
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/1-mouse/sketch.js">open code</a>
 */
 
-export default class Mouse {
+class Mouse {
   constructor(engine, canvas, attributes) {
-    this.attributes = attributes || { stroke: "magenta", strokeWeight: 2 };
+    this.attributes = attributes || {stroke: "magenta", strokeWeight: 2};
     this.mouse = Matter.Mouse.create(canvas.elt);
     const mouseOptions = {
       mouse: this.mouse,
       constraint: {
         stiffness: 0.05,
-        angularStiffness: 0,
-      },
-    };
+        angularStiffness: 0
+      }
+    }
     this.mouseConstraint = Matter.MouseConstraint.create(engine, mouseOptions);
     this.mouseConstraint.mouse.pixelRatio = window.devicePixelRatio;
 
@@ -48,7 +48,7 @@ export default class Mouse {
    * @memberof Mouse
    */
   setOffset(offset) {
-    Matter.Mouse.setOffset(this.mouse, offset);
+    Matter.Mouse.setOffset(this.mouse, offset)
   }
 
   /**

@@ -1,4 +1,3 @@
-import Block from "./Block.js";
 /**
 Creates a new rigid body model with a circle hull.
 
@@ -34,17 +33,12 @@ let magentaColoredBall = new Ball(world, attributes, options)
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/4-jumping-ball/sketch.js">open code</a>
 */
 
-export default class Ball extends Block {
+class Ball extends Block {
   constructor(world, attributes, options) {
     super(world, attributes, options);
   }
 
   addBody() {
-    this.body = Matter.Bodies.circle(
-      this.attributes.x,
-      this.attributes.y,
-      this.attributes.r,
-      this.options
-    );
+    this.body = Matter.Bodies.circle(this.attributes.x, this.attributes.y, this.attributes.r, this.options);
   }
 }

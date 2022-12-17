@@ -1,4 +1,3 @@
-import BlockCore from "./BlockCore.js";
 /**
 Creates a new rigid body model with a rectangular hull.  <br/>
 <br/>
@@ -36,7 +35,7 @@ let box = new Block(world, attributes, options)
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/1-mouse/sketch.js">open code</a>
 */
 
-export default class Block extends BlockCore {
+class Block extends BlockCore {
   constructor(world, attributes, options) {
     super(world, attributes, options);
     this.collisions = [];
@@ -45,18 +44,18 @@ export default class Block extends BlockCore {
     this.attributes.scale = this.attributes.scale || 1.0;
   }
 
-  draw(p5) {
+  draw() {
     if (this.body) {
       this.update();
-      if (this.attributes.color || this.attributes.stroke) {
-        super.draw(p5);
+      if (this.attributes.color || this.attributes.stroke) {
+        super.draw();
       }
       if (this.attributes.image) {
-        this.drawSprite(p5);
+        this.drawSprite();
       }
       if (this.constraints.length > 0) {
         for (let c of this.constraints) {
-          if (c.draw === true) this.drawConstraint(p5, c);
+          if (c.draw === true) this.drawConstraint(c);
         }
       }
     }
@@ -67,25 +66,25 @@ export default class Block extends BlockCore {
    * @method drawConstraints
    * @memberof Block
    */
-  drawConstraints(p5) {
+  drawConstraints() {
     if (this.constraints.length > 0) {
       for (let c of this.constraints) {
-        this.drawConstraint(p5, c);
+        this.drawConstraint(c);
       }
     }
   }
 
-  drawConstraint(p5, constraint) {
+  drawConstraint(constraint) {
     if (constraint.color) {
-      p5.stroke(constraint.color);
+      stroke(constraint.color);
     } else {
-      p5.stroke("magenta");
+      stroke("magenta");
     }
-    p5.strokeWeight(2);
+    strokeWeight(2);
     const offsetA = constraint.pointA;
     let posA = {
       x: 0,
-      y: 0,
+      y: 0
     };
     if (constraint.bodyA) {
       posA = constraint.bodyA.position;
@@ -93,12 +92,12 @@ export default class Block extends BlockCore {
     const offsetB = constraint.pointB;
     let posB = {
       x: 0,
-      y: 0,
+      y: 0
     };
     if (constraint.bodyB) {
       posB = constraint.bodyB.position;
     }
-    p5.line(
+    line(
       posA.x + offsetA.x,
       posA.y + offsetA.y,
       posB.x + offsetB.x,
@@ -107,13 +106,9 @@ export default class Block extends BlockCore {
   }
 
   update() {
-    this.collisions.forEach((block) => {
+    this.collisions.forEach(block => {
       if (block.attributes.force) {
-        Matter.Body.applyForce(
-          this.body,
-          this.body.position,
-          block.attributes.force
-        );
+        Matter.Body.applyForce(this.body, this.body.position, block.attributes.force);
       }
       if (block.attributes.trigger) {
         block.attributes.trigger(this, block);
@@ -143,7 +138,7 @@ export default class Block extends BlockCore {
       if (!options.pointB) {
         options.pointB = {
           x: this.body.position.x,
-          y: this.body.position.y,
+          y: this.body.position.y
         };
       }
     }
@@ -169,20 +164,15 @@ export default class Block extends BlockCore {
    * Make sure to set attributes.image so that there is an image to draw.
    * @memberof Block
    */
-  drawSprite(p5) {
+  drawSprite() {
     const pos = this.body.position;
     const angle = this.body.angle;
-    p5.push();
-    p5.translate(pos.x, pos.y);
-    p5.rotate(angle);
-    p5.imageMode(p5.CENTER);
-    p5.image(
-      this.attributes.image,
-      this.offset.x,
-      this.offset.y,
-      this.attributes.image.width * this.attributes.scale,
-      this.attributes.image.height * this.attributes.scale
-    );
-    p5.pop();
+    push();
+    translate(pos.x, pos.y);
+    rotate(angle);
+    imageMode(CENTER);
+    image(this.attributes.image, this.offset.x, this.offset.y, this.attributes.image.width * this.attributes.scale, this.attributes.image.height * this.attributes.scale);
+    pop();
   }
+
 }

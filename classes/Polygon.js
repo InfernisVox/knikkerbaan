@@ -16,18 +16,12 @@ let polygon = new Polygon(world, {x: 300, y: 200, s: 5, r: 100, color: 'white'})
 <a target="_blank" href="https://github.com/b-g/p5-matter-examples/blob/master/3-constraints/sketch.js">open code</a>
 */
 
-export default class Polygon extends Block {
+class Polygon extends Block {
   constructor(world, attributes, options) {
     super(world, attributes, options);
   }
 
   addBody() {
-    this.body = Matter.Bodies.polygon(
-      this.attributes.x,
-      this.attributes.y,
-      this.attributes.s,
-      this.attributes.r,
-      this.options
-    );
+    this.body = Matter.Bodies.polygon(this.attributes.x, this.attributes.y, this.attributes.s, this.attributes.r, this.options);
   }
 }
