@@ -46,47 +46,47 @@ export default class BlockCore {
    * Draws the matter body to the p5 canvas
    * @memberof BlockCore
    */
-  draw() {
+  draw(p5) {
     if (this.body) {
       if (this.attributes.color) {
-        fill(this.attributes.color);
+        p5.fill(this.attributes.color);
       } else {
-        noFill();
+        p5.noFill();
       }
       if (this.attributes.stroke) {
         stroke(this.attributes.stroke);
         if (this.attributes.weight) {
-          strokeWeight(this.attributes.weight);
+          p5.strokeWeight(this.attributes.weight);
         }
       } else {
-        noStroke();
+        p5.noStroke();
       }
-      this.drawBody();
+      this.drawBody(p5);
     }
   }
 
-  drawBody() {
+  drawBody(p5) {
     if (this.body.parts && this.body.parts.length > 1) {
       // skip index 0
       for (let p = 1; p < this.body.parts.length; p++) {
-        this.drawVertices(this.body.parts[p].vertices);
+        this.drawVertices(p5, this.body.parts[p].vertices);
       }
     } else {
       if (this.body.type == "composite") {
         for (let body of this.body.bodies) {
-          this.drawVertices(body.vertices);
+          this.drawVertices(p5, body.vertices);
         }
       } else {
-        this.drawVertices(this.body.vertices);
+        this.drawVertices(p5, this.body.vertices);
       }
     }
   }
 
-  drawVertices(vertices) {
-    beginShape();
+  drawVertices(p5, vertices) {
+    p5.beginShape();
     for (const vertice of vertices) {
-      vertex(vertice.x, vertice.y);
+      p5.vertex(vertice.x, vertice.y);
     }
-    endShape(CLOSE);
+    p5.endShape(p5.CLOSE);
   }
 }

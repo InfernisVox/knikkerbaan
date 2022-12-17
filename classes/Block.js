@@ -1,3 +1,4 @@
+import BlockCore from "./BlockCore.js";
 /**
 Creates a new rigid body model with a rectangular hull.  <br/>
 <br/>
@@ -44,18 +45,18 @@ export default class Block extends BlockCore {
     this.attributes.scale = this.attributes.scale || 1.0;
   }
 
-  draw() {
+  draw(p5) {
     if (this.body) {
       this.update();
       if (this.attributes.color || this.attributes.stroke) {
-        super.draw();
+        super.draw(p5);
       }
       if (this.attributes.image) {
-        this.drawSprite();
+        this.drawSprite(p5);
       }
       if (this.constraints.length > 0) {
         for (let c of this.constraints) {
-          if (c.draw === true) this.drawConstraint(c);
+          if (c.draw === true) this.drawConstraint(p5, c);
         }
       }
     }
@@ -66,21 +67,21 @@ export default class Block extends BlockCore {
    * @method drawConstraints
    * @memberof Block
    */
-  drawConstraints() {
+  drawConstraints(p5) {
     if (this.constraints.length > 0) {
       for (let c of this.constraints) {
-        this.drawConstraint(c);
+        this.drawConstraint(p5, c);
       }
     }
   }
 
-  drawConstraint(constraint) {
+  drawConstraint(p5, constraint) {
     if (constraint.color) {
-      stroke(constraint.color);
+      p5.stroke(constraint.color);
     } else {
-      stroke("magenta");
+      p5.stroke("magenta");
     }
-    strokeWeight(2);
+    p5.strokeWeight(2);
     const offsetA = constraint.pointA;
     let posA = {
       x: 0,
@@ -97,7 +98,7 @@ export default class Block extends BlockCore {
     if (constraint.bodyB) {
       posB = constraint.bodyB.position;
     }
-    line(
+    p5.line(
       posA.x + offsetA.x,
       posA.y + offsetA.y,
       posB.x + offsetB.x,
@@ -168,20 +169,20 @@ export default class Block extends BlockCore {
    * Make sure to set attributes.image so that there is an image to draw.
    * @memberof Block
    */
-  drawSprite() {
+  drawSprite(p5) {
     const pos = this.body.position;
     const angle = this.body.angle;
-    push();
-    translate(pos.x, pos.y);
-    rotate(angle);
-    imageMode(CENTER);
-    image(
+    p5.push();
+    p5.translate(pos.x, pos.y);
+    p5.rotate(angle);
+    p5.imageMode(p5.CENTER);
+    p5.image(
       this.attributes.image,
       this.offset.x,
       this.offset.y,
       this.attributes.image.width * this.attributes.scale,
       this.attributes.image.height * this.attributes.scale
     );
-    pop();
+    p5.pop();
   }
 }

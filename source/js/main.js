@@ -1,4 +1,5 @@
 import P5 from "./core/P5.js";
+import Block from "../../classes/Block.js";
 import Boundary from "./Boundary.js";
 import Marble from "./Marble.js";
 
@@ -6,6 +7,7 @@ console.clear();
 
 // Rewind conceptsketch
 
+let ground;
 let engine, world, runner;
 let marbles = [],
   boundaries = [];
@@ -38,6 +40,12 @@ function setup() {
     )
   );
 
+  ground = ground = new Block(
+    world,
+    { x: 400, y: 500, w: 810, h: 15, color: "grey" },
+    { isStatic: true, angle: p5.PI / 36 }
+  );
+
   marbles.push(new Marble(world, { x: 225, y: 100, r: 15 }));
 
   runner = Runner.create();
@@ -61,6 +69,8 @@ function draw() {
       i--;
     }
   }
+
+  ground.draw(p5);
 
   // console.log(marbles.length, world.bodies.length);
 }
