@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&display=swap");
 
+@font-face {
+  font-family: "customfont";
+  src: url("./assets/fonts/GLOBUS.TTF") format("truetype");
+}
+
 *,
 *::before,
 *::after {
@@ -37,6 +42,6 @@ canvas {
   top: 0;
   left: 0;
   margin: -2.15rem 0 0 -0.25rem;
-  font-family: "Rubik 80s Fade", cursive;
+  font-family: "customfont";
   font-size: 5rem;
 }
