@@ -1,3 +1,7 @@
+//Clears the console
+console.clear();
+
+//Setup the
 const Engine = Matter.Engine;
 const Runner = Matter.Runner;
 const Bodies = Matter.Bodies;
@@ -30,8 +34,9 @@ function setup() {
 }
 
 function draw() {
+  background(200);
   ellipse(100, 100, 100, 100);
-  background(50);
+
   Engine.update(engine);
   blocks.forEach((block) => block.draw());
 }
@@ -51,10 +56,24 @@ function setupcanvas() {
 }
 
 function setupgamefunctions() {
+  blocks.push(
+    new Ball(
+      world,
+      {
+        x: 100,
+        y: 100,
+        r: 15,
+        color: "yellow",
+      },
+      { isStatic: false, restitution: 1, label: "Murmel" }
+    )
+  );
+
   mouse = new Mouse(engine, canvas, { stroke: "blue", strokeWeight: 3 });
   mouse.on("startdrag", (evt) => {
     isDrag = true;
   });
+
   mouse.on("mouseup", (evt) => {
     if (!isDrag) {
       let ball = new Ball(
@@ -71,10 +90,34 @@ function setupgamefunctions() {
         x: 0,
         y: 2,
       });
+      ball.constrainTo(null, {
+        pointA: { x: 0, y: 0 },
+        pointB: { x: evt.mouse.position.x, y: evt.mouse.position.y },
+        length: 30,
+        stiffness: 0.001,
+        draw: true,
+        color: "red",
+        width: 10,
+      });
+
       blocks.push(ball);
     }
     isDrag = false;
   });
 }
 
-function drawworld() {}
+function drawworld() {
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 100,
+        y: 100,
+        w: 100,
+        h: 10,
+        color: "red",
+      },
+      { isStatic: true, label: "Block", angle: 0.1 }
+    )
+  );
+}
