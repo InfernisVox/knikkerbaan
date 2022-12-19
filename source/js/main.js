@@ -165,6 +165,8 @@ function setupgamefunctions() {
     }
     isDrag = false;
   });
+
+  mouse.draw();
 }
 
 function drawworld() {
