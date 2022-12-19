@@ -19,15 +19,70 @@ let poly;
 let blocks = [];
 
 let canvaswidth;
+let imgBall;
 
-function preload() {}
+function preload() {
+  imgBall = loadImage("./assets/images/Wollball.png");
+}
 
 function setup() {
   setupcanvas();
   setupgamefunctions();
   drawworld();
 
+  blocks.push(
+    new Ball(
+      world,
+      {
+        x: 300,
+        y: 80,
+        r: 30,
+        color: "blue",
+        image: imgBall,
+        scale: 0.4,
+      },
+      {
+        label: "Murmel",
+        isStatic: false,
+        density: 0.001,
+        restitution: 0.75,
+        friction: 0.0,
+        frictionAir: 0.0,
+      }
+    )
+  );
+
+  blocks.push(
+    new BlockCore(
+      world,
+      {
+        x: windowWidth / 2,
+        y: 650,
+        w: windowWidth,
+        h: 40,
+        color: "gray",
+        //force: { x: 0.0001, y: -0.0001 },
+      },
+      { isStatic: true }
+    )
+  );
+
   Composite.add(world, blocks);
+
+  /*blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 400,
+        y: 400,
+        fromFile: "./assets/img/Wollball.svg",
+        scale: 0.6,
+        color: "white",
+        image: imgBall,
+      },
+      { isStatic: false, friction: 0.0 }
+    )
+  );*/
 
   runner = Runner.create();
   Runner.run(engine);
@@ -35,7 +90,6 @@ function setup() {
 
 function draw() {
   background(200);
-  ellipse(100, 100, 100, 100);
 
   Engine.update(engine);
   blocks.forEach((block) => block.draw());
@@ -120,4 +174,5 @@ function drawworld() {
       { isStatic: true, label: "Block", angle: 0.1 }
     )
   );
+  mouse.draw();
 }
