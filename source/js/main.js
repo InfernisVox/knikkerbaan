@@ -19,6 +19,7 @@ let poly;
 let blocks = [];
 
 let canvaswidth;
+let lengthvalue = 10;
 let imgBall;
 
 function preload() {
@@ -90,6 +91,7 @@ function setup() {
 
 function draw() {
   background(200);
+  ellipse(100, 100, 100, 100);
 
   Engine.update(engine);
   blocks.forEach((block) => block.draw());
@@ -147,8 +149,8 @@ function setupgamefunctions() {
       ball.constrainTo(null, {
         pointA: { x: 0, y: 0 },
         pointB: { x: evt.mouse.position.x, y: evt.mouse.position.y },
-        length: 30,
-        stiffness: 0.001,
+        length: lengthvalue,
+        stiffness: 1,
         draw: true,
         color: "red",
         width: 10,
@@ -166,8 +168,8 @@ function drawworld() {
       world,
       {
         x: 100,
-        y: 100,
-        w: 100,
+        y: 400,
+        w: 500,
         h: 10,
         color: "red",
       },
