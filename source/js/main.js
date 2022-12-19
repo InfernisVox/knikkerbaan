@@ -22,6 +22,8 @@ let canvaswidth;
 let lengthvalue = 10;
 let imgBall;
 
+let canvas;
+
 function preload() {
   imgBall = loadImage("./assets/images/Wollball.png");
 }
@@ -47,8 +49,8 @@ function setup() {
         isStatic: false,
         density: 0.001,
         restitution: 0.75,
-        friction: 0.0,
-        frictionAir: 0.0,
+        friction: 0.001,
+        frictionAir: 0.005,
       }
     )
   );
@@ -62,7 +64,6 @@ function setup() {
         w: windowWidth,
         h: 40,
         color: "gray",
-        //force: { x: 0.0001, y: -0.0001 },
       },
       { isStatic: true }
     )
@@ -95,19 +96,22 @@ function draw() {
 
   Engine.update(engine);
   blocks.forEach((block) => block.draw());
+
+  mouse.draw();
 }
 
 function setupcanvas() {
-  if (windowWidth < 1280) {
+  /* if (windowWidth < 1280) {
     canvaswidth = windowWidth - 20;
   } else {
     canvaswidth = 1280;
-  }
+  } */
 
-  const canvas = createCanvas(canvaswidth, 720);
+  canvas = createCanvas(1280, 720);
   canvas.parent("canvas");
 
   engine = Engine.create();
+  engine.pixelDensity = pixelDensity();
   world = engine.world;
 }
 
@@ -132,6 +136,7 @@ function setupgamefunctions() {
 
   mouse.on("mouseup", (evt) => {
     if (!isDrag) {
+      console.log(evt.mouse.position.x, evt.mouse.position.y);
       let ball = new Ball(
         world,
         {
@@ -176,5 +181,4 @@ function drawworld() {
       { isStatic: true, label: "Block", angle: 0.1 }
     )
   );
-  mouse.draw();
 }
