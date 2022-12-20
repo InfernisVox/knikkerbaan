@@ -20,6 +20,8 @@ let poly;
 let blocks = [];
 let ballposition = [{ x: 0, y: 0 }];
 let newballposition;
+let ballrotation = [0];
+let newballrotation;
 let reversing = false;
 
 let lengthvalue = 10;
@@ -50,15 +52,24 @@ function draw() {
       newballposition = block.body.position;
       const { x: ballX, y: ballY } = newballposition;
 
+      newballrotation = block.body.angle;
+
       if (
-        (ballX >= ballposition[ballposition.length - 1].x + 1 ||
-          ballY >= ballposition[ballposition.length - 1].y + 1 ||
-          ballX <= ballposition[ballposition.length - 1].x - 1 ||
-          ballY <= ballposition[ballposition.length - 1].y - 1) &&
+        (ballX >= ballposition[ballposition.length - 1].x + 0.25 ||
+          ballY >= ballposition[ballposition.length - 1].y + 0.25 ||
+          ballX <= ballposition[ballposition.length - 1].x - 0.25 ||
+          ballY <= ballposition[ballposition.length - 1].y - 0.25) &&
         reversing === false
       ) {
         ballposition.push({ x: ballX, y: ballY });
-        console.log(ballposition);
+      }
+
+      if (
+        (newballrotation <= ballrotation[ballrotation.length - 1] - 0.1 ||
+          newballrotation >= ballrotation[ballrotation.length - 1] + 0.1) &&
+        reversing === false
+      ) {
+        ballrotation.push(newballrotation);
       }
     }
   });
@@ -127,16 +138,22 @@ function setupgamefunctions() {
         if (block.body.label === "Wollknäuel") {
           if (ballposition.length != 1) {
             block.body.isStatic = true;
+
             Matter.Body.setPosition(
               block.body,
               ballposition[ballposition.length - 1]
             );
+
+            Matter.Body.setAngle(
+              block.body,
+              ballrotation[ballrotation.length - 1]
+            );
+
+            ballrotation.pop();
             ballposition.pop();
           }
         }
       });
-    } else {
-      reversing = false;
     }
   };
 }
@@ -174,6 +191,7 @@ function drawworld() {
         restitution: 0.75,
         friction: 0.001,
         frictionAir: 0.005,
+        angle: 0,
       }
     )
   );
