@@ -1,5 +1,6 @@
 //Clears the console
 console.clear();
+console.log("Starting game...");
 
 //Setup the
 const Engine = Matter.Engine;
@@ -17,8 +18,10 @@ let isDrag = false;
 let poly;
 
 let blocks = [];
+let ballposition = [{ x: 0, y: 0 }];
+let newballposition;
+let reversing = false;
 
-let canvaswidth;
 let lengthvalue = 10;
 let imgBall;
 
@@ -40,7 +43,25 @@ function setup() {
 }
 
 function draw() {
-  background(200);
+  background(200, 150, 100);
+
+  blocks.forEach((block) => {
+    if (block.body.label === "Wollknäuel") {
+      newballposition = block.body.position;
+      const { x: ballX, y: ballY } = newballposition;
+
+      if (
+        (ballX >= ballposition[ballposition.length - 1].x + 1 ||
+          ballY >= ballposition[ballposition.length - 1].y + 1 ||
+          ballX <= ballposition[ballposition.length - 1].x - 1 ||
+          ballY <= ballposition[ballposition.length - 1].y - 1) &&
+        reversing === false
+      ) {
+        ballposition.push({ x: ballX, y: ballY });
+        console.log(ballposition);
+      }
+    }
+  });
 
   Engine.update(engine);
   blocks.forEach((block) => block.draw());
@@ -58,19 +79,6 @@ function setupcanvas() {
 }
 
 function setupgamefunctions() {
-  blocks.push(
-    new Ball(
-      world,
-      {
-        x: 100,
-        y: 100,
-        r: 15,
-        color: "yellow",
-      },
-      { isStatic: false, restitution: 1, label: "Murmel" }
-    )
-  );
-
   mouse = new Mouse(engine, canvas, { stroke: "blue", strokeWeight: 3 });
   mouse.on("startdrag", (evt) => {
     isDrag = true;
@@ -109,6 +117,28 @@ function setupgamefunctions() {
   });
 
   mouse.draw();
+
+  document.body.onkeydown = function (e) {
+    if (e.code == "Space") {
+      // CLEAN UP LATER !!!!
+      //loop the code while space is pressed
+      reversing = true;
+      blocks.forEach((block) => {
+        if (block.body.label === "Wollknäuel") {
+          if (ballposition.length != 1) {
+            block.body.isStatic = true;
+            Matter.Body.setPosition(
+              block.body,
+              ballposition[ballposition.length - 1]
+            );
+            ballposition.pop();
+          }
+        }
+      });
+    } else {
+      reversing = false;
+    }
+  };
 }
 
 function drawworld() {
@@ -138,7 +168,7 @@ function drawworld() {
         scale: 0.4,
       },
       {
-        label: "Murmel",
+        label: "Wollknäuel",
         isStatic: false,
         density: 0.001,
         restitution: 0.75,
@@ -154,7 +184,7 @@ function drawworld() {
       {
         x: windowWidth / 2,
         y: 650,
-        w: windowWidth,
+        w: windowWidth * 4,
         h: 40,
         color: "gray",
       },
