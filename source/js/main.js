@@ -112,15 +112,6 @@ function setupgamefunctions() {
         x: 0,
         y: 2,
       });
-      ball.constrainTo(null, {
-        pointA: { x: 0, y: 0 },
-        pointB: { x: evt.mouse.position.x, y: evt.mouse.position.y },
-        length: lengthvalue,
-        stiffness: 1,
-        draw: true,
-        color: "red",
-        width: 10,
-      });
 
       blocks.push(ball);
     }
