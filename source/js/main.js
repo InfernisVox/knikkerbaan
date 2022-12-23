@@ -18,25 +18,29 @@ let isDrag = false;
 let poly;
 
 let blocks = [];
-let ballposition = [{ x: 0, y: 0 }];
-let newballposition;
-let ballrotation = [0];
-let newballrotation;
+
+let screencounter = 1;
+let player;
+let playerposition = [{ x: 0, y: 0 }];
+let newplayerposition;
+let playerrotation = [0];
+let newplayerrotation;
 let reversing = false;
 
 let lengthvalue = 10;
-let imgBall;
+let imgPlayer;
 
 let canvas;
 
 function preload() {
-  imgBall = loadImage("./assets/images/Wollball.png");
+  imgPlayer = loadImage("./assets/images/Wollball.png");
 }
 
 function setup() {
   setupcanvas();
   setupgamefunctions();
-  drawworld();
+  drawplayer();
+  drawscreen1();
 
   Composite.add(world, blocks);
 
@@ -46,36 +50,12 @@ function setup() {
 
 function draw() {
   background(200, 150, 100);
-
-  blocks.forEach((block) => {
-    if (block.body.label === "Wollknäuel") {
-      newballposition = block.body.position;
-      const { x: ballX, y: ballY } = newballposition;
-
-      newballrotation = block.body.angle;
-
-      if (
-        (ballX >= ballposition[ballposition.length - 1].x + 0.25 ||
-          ballY >= ballposition[ballposition.length - 1].y + 0.25 ||
-          ballX <= ballposition[ballposition.length - 1].x - 0.25 ||
-          ballY <= ballposition[ballposition.length - 1].y - 0.25) &&
-        reversing === false
-      ) {
-        ballposition.push({ x: ballX, y: ballY });
-      }
-
-      if (
-        (newballrotation <= ballrotation[ballrotation.length - 1] - 0.1 ||
-          newballrotation >= ballrotation[ballrotation.length - 1] + 0.1) &&
-        reversing === false
-      ) {
-        ballrotation.push(newballrotation);
-      }
-    }
-  });
+  boundaries();
+  getplayerposition();
 
   Engine.update(engine);
   blocks.forEach((block) => block.draw());
+  player.draw();
 
   mouse.draw();
 }
@@ -125,31 +105,27 @@ function setupgamefunctions() {
       // CLEAN UP LATER !!!!
       //loop the code while space is pressed
       reversing = true;
-      blocks.forEach((block) => {
-        if (block.body.label === "Wollknäuel") {
-          if (ballposition.length != 1) {
-            block.body.isStatic = true;
+      if (playerposition.length != 1) {
+        player.body.isStatic = true;
 
-            Matter.Body.setPosition(
-              block.body,
-              ballposition[ballposition.length - 1]
-            );
+        Matter.Body.setPosition(
+          player.body,
+          playerposition[playerposition.length - 1]
+        );
 
-            Matter.Body.setAngle(
-              block.body,
-              ballrotation[ballrotation.length - 1]
-            );
+        Matter.Body.setAngle(
+          player.body,
+          playerrotation[playerrotation.length - 1]
+        );
 
-            ballrotation.pop();
-            ballposition.pop();
-          }
-        }
-      });
+        playerrotation.pop();
+        playerposition.pop();
+      }
     }
   };
 }
 
-function drawworld() {
+function drawscreen1() {
   blocks.push(
     new Block(
       world,
@@ -161,29 +137,6 @@ function drawworld() {
         color: "red",
       },
       { isStatic: true, label: "Block", angle: 0.1 }
-    )
-  );
-
-  blocks.push(
-    new Ball(
-      world,
-      {
-        x: 300,
-        y: 80,
-        r: 30,
-        color: "blue",
-        image: imgBall,
-        scale: 0.4,
-      },
-      {
-        label: "Wollknäuel",
-        isStatic: false,
-        density: 0.001,
-        restitution: 0.75,
-        friction: 0.001,
-        frictionAir: 0.005,
-        angle: 0,
-      }
     )
   );
 
@@ -200,4 +153,111 @@ function drawworld() {
       { isStatic: true }
     )
   );
+}
+
+function drawscreen2() {
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 100,
+        y: 400,
+        w: 500,
+        h: 10,
+        color: "blue",
+      },
+      { isStatic: true, label: "Block", angle: 0.1 }
+    )
+  );
+
+  blocks.push(
+    new BlockCore(
+      world,
+      {
+        x: windowWidth / 2,
+        y: 650,
+        w: windowWidth * 4,
+        h: 40,
+        color: "gray",
+      },
+      { isStatic: true }
+    )
+  );
+}
+
+function boundaries() {
+  if (player.body.position.x > 1280) {
+    Matter.Body.setPosition(player.body, { x: 300, y: 80 });
+    blocks.forEach((block) => {
+      block.body.position = { x: -1000, y: -1000 };
+    });
+    World.remove(world, blocks);
+    screencounter++;
+    switch (screencounter) {
+      case 2:
+        drawscreen2();
+        break;
+      case 3:
+        screencounter = 1;
+        break;
+    }
+  }
+
+  if (
+    player.body.position.y < 0 ||
+    player.body.position.y > 750 ||
+    player.body.position.x < 0
+  ) {
+    playerposition = [{ x: 0, y: 0 }];
+    playerrotation = [0];
+    Matter.Body.setPosition(player.body, { x: 300, y: 80 });
+  }
+}
+
+function drawplayer() {
+  player = new Ball(
+    world,
+    {
+      x: 300,
+      y: 80,
+      r: 30,
+      color: "blue",
+      image: imgPlayer,
+      scale: 0.4,
+    },
+    {
+      label: "Wollknäuel",
+      isStatic: false,
+      density: 0.001,
+      restitution: 0.75,
+      friction: 0.001,
+      frictionAir: 0.005,
+      angle: 0,
+    }
+  );
+}
+
+function getplayerposition() {
+  newplayerposition = player.body.position;
+  const { x: ballX, y: ballY } = newplayerposition;
+
+  newplayerrotation = player.body.angle;
+
+  if (
+    (ballX >= playerposition[playerposition.length - 1].x + 0.25 ||
+      ballY >= playerposition[playerposition.length - 1].y + 0.25 ||
+      ballX <= playerposition[playerposition.length - 1].x - 0.25 ||
+      ballY <= playerposition[playerposition.length - 1].y - 0.25) &&
+    reversing === false
+  ) {
+    playerposition.push({ x: ballX, y: ballY });
+  }
+
+  if (
+    (newplayerrotation <= playerrotation[playerrotation.length - 1] - 0.1 ||
+      newplayerrotation >= playerrotation[playerrotation.length - 1] + 0.1) &&
+    reversing === false
+  ) {
+    playerrotation.push(newplayerrotation);
+  }
 }
