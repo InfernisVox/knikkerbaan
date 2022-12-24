@@ -1,6 +1,11 @@
+/*TODO LIST:
+- Add chain to character
+- Add screen change 
+- VERTICAL SCROLL @RON please first thing even before the chain i dont know naymore tried for an hour
+*/
+
 //Clears the console
 console.clear();
-console.log("Starting game...");
 
 //Setup the
 const Engine = Matter.Engine;
@@ -9,6 +14,7 @@ const Bodies = Matter.Bodies;
 const Events = Matter.Events;
 const World = Matter.World;
 const Composite = Matter.Composite;
+const Body = Matter.Body;
 
 let engine;
 let runner;
@@ -32,8 +38,15 @@ let imgPlayer;
 
 let canvas;
 
+function loadingmessage(currentasset) {
+  console.clear();
+  console.log("Loading assets ... " + currentasset + " / 1");
+}
+
 function preload() {
+  loadingmessage(0);
   imgPlayer = loadImage("./assets/images/Wollball.png");
+  loadingmessage(1);
 }
 
 function setup() {
@@ -102,24 +115,25 @@ function setupgamefunctions() {
 
   document.body.onkeydown = function (e) {
     if (e.code == "Space") {
-      // CLEAN UP LATER !!!!
-      //loop the code while space is pressed
-      reversing = true;
-      if (playerposition.length != 1) {
-        player.body.isStatic = true;
+      if (e.repeat) {
+        reversing = true;
+        if (playerposition.length != 2) {
+          Body.setStatic(player.body, true);
 
-        Matter.Body.setPosition(
-          player.body,
-          playerposition[playerposition.length - 1]
-        );
+          Body.setPosition(
+            player.body,
+            playerposition[playerposition.length - 1]
+          );
 
-        Matter.Body.setAngle(
-          player.body,
-          playerrotation[playerrotation.length - 1]
-        );
+          Body.setAngle(player.body, playerrotation[playerrotation.length - 1]);
 
-        playerrotation.pop();
-        playerposition.pop();
+          playerrotation.pop();
+          playerposition.pop();
+        } else {
+          reversing = false;
+        }
+      } else {
+        Body.setVelocity(player.body, { x: 2, y: 10 });
       }
     }
   };
@@ -238,6 +252,10 @@ function drawplayer() {
 }
 
 function getplayerposition() {
+  if (reversing != true) {
+    Body.setStatic(player.body, false);
+  }
+
   newplayerposition = player.body.position;
   const { x: ballX, y: ballY } = newplayerposition;
 
