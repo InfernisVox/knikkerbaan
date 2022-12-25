@@ -25,9 +25,9 @@ let poly;
 
 let blocks = [];
 
-let screencounter = 1;
+let carouseloffset = 0;
 let player;
-let playerposition = [{ x: 0, y: 0 }];
+let playerposition = [{ x: 300, y: 80 }];
 let newplayerposition;
 let playerrotation = [0];
 let newplayerrotation;
@@ -144,8 +144,8 @@ function drawscreen1() {
     new Block(
       world,
       {
-        x: 100,
-        y: 400,
+        x: 100 + carouseloffset,
+        y: 400 + carouseloffset,
         w: 500,
         h: 10,
         color: "red",
@@ -158,8 +158,8 @@ function drawscreen1() {
     new BlockCore(
       world,
       {
-        x: windowWidth / 2,
-        y: 650,
+        x: windowWidth / 2 + carouseloffset,
+        y: 650 + carouseloffset,
         w: windowWidth * 4,
         h: 40,
         color: "gray",
@@ -174,9 +174,9 @@ function drawscreen2() {
     new Block(
       world,
       {
-        x: 100,
-        y: 400,
-        w: 500,
+        x: 100 + windowWidth + carouseloffset,
+        y: 400 + windowWidth + carouseloffset,
+        w: 900,
         h: 10,
         color: "blue",
       },
@@ -188,11 +188,11 @@ function drawscreen2() {
     new BlockCore(
       world,
       {
-        x: windowWidth / 2,
-        y: 650,
+        x: windowWidth / 2 + windowWidth + carouseloffset,
+        y: 650 + windowWidth + carouseloffset,
         w: windowWidth * 4,
         h: 40,
-        color: "gray",
+        color: "yellow",
       },
       { isStatic: true }
     )
@@ -202,19 +202,8 @@ function drawscreen2() {
 function boundaries() {
   if (player.body.position.x > 1280) {
     Matter.Body.setPosition(player.body, { x: 300, y: 80 });
-    blocks.forEach((block) => {
-      block.body.position = { x: -1000, y: -1000 };
-    });
-    World.remove(world, blocks);
-    screencounter++;
-    switch (screencounter) {
-      case 2:
-        drawscreen2();
-        break;
-      case 3:
-        screencounter = 1;
-        break;
-    }
+    carouseloffset += windowWidth;
+    console.log("screen" + carouseloffset / windowWidth);
   }
 
   if (
