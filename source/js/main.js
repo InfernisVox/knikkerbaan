@@ -1,7 +1,7 @@
 /*TODO LIST:
 - Add chain to character
 - Add screen change 
-- VERTICAL SCROLL @RON please first thing even before the chain i dont know naymore tried for an hour
+- SCREEN SCROLL @RON please first thing even before the chain i dont know naymore tried for an hour
 */
 
 //Clears the console
