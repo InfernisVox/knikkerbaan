@@ -4,6 +4,7 @@
  * TODO: SCREEN SCROLL @RON please first thing even before the chain i dont know anymore tried for an hour
  *
  * TODO: Please add JSDoc descriptions to new variables and functions for a cleaner and more semantic project scope
+ * TOODO: Cleanup code
  */
 
 console.clear();
@@ -29,8 +30,6 @@ let engine, world, runner;
 
 let isDragged = false;
 let isReversing = false;
-
-let carouselOffset = 0;
 
 // Miscellaneous
 let poly;
@@ -154,8 +153,8 @@ function screen01() {
     new Block(
       world,
       {
-        x: 100 + carouselOffset,
-        y: 400 + carouselOffset,
+        x: 100,
+        y: 400,
         w: 500,
         h: 10,
         color: "red",
@@ -168,41 +167,11 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: windowWidth / 2 + carouselOffset,
-        y: 650 + carouselOffset,
+        x: windowWidth / 2,
+        y: 650,
         w: windowWidth * 4,
         h: 40,
         color: "gray",
-      },
-      { isStatic: true }
-    )
-  );
-}
-
-function screen02() {
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 100 + windowWidth + carouselOffset,
-        y: 400 + windowWidth + carouselOffset,
-        w: 900,
-        h: 10,
-        color: "blue",
-      },
-      { isStatic: true, label: "Block", angle: 0.1 }
-    )
-  );
-
-  blocks.push(
-    new BlockCore(
-      world,
-      {
-        x: windowWidth / 2 + windowWidth + carouselOffset,
-        y: 650 + windowWidth + carouselOffset,
-        w: windowWidth * 4,
-        h: 40,
-        color: "yellow",
       },
       { isStatic: true }
     )
@@ -248,8 +217,6 @@ function initPlayer() {
 function setPlayerBoundaries() {
   if (player.body.position.x > 1280) {
     Body.setPosition(player.body, { x: 30, y: 80 });
-    carouselOffset += windowWidth;
-    console.log(`Screen #${carouselOffset / windowWidth}`);
   }
 
   if (
@@ -315,7 +282,19 @@ function setup() {
 }
 
 function draw() {
+  const zoom = map(mouseX, 0, width, 0.5, 2);
+  const shiftX = -player.body.position.x * zoom + width / 2;
+  const shiftY = -player.body.position.y * zoom + height / 2;
+
+  console.log(shiftX, shiftY);
+
+  push();
+  translate(shiftX, shiftY);
+  scale(zoom);
   background(200, 150, 100);
+  player.draw();
+  pop();
+
   Engine.update(engine);
 
   setPlayerBoundaries();
