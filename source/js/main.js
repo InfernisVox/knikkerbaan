@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
     if (e.code === "Space") {
       console.log("i have arrived");
-      Body.setPosition(player.body);
+      Body.setPosition(player.body, playerPositions[playerPositions.length]);
       Body.setStatic(player.body, false);
       isReversing = false;
     }
@@ -177,7 +177,21 @@ function screen01() {
         h: 10,
         color: "red",
       },
-      { isStatic: true, label: "Block", angle: 0.1 }
+      { isStatic: true, angle: 0.1 }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 1200,
+        y: 560,
+        w: 500,
+        h: 10,
+        color: "yellow",
+      },
+      { isStatic: true, angle: -0.3 }
     )
   );
 
