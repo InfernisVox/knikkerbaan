@@ -292,7 +292,6 @@ function draw() {
   translate(shiftX, shiftY);
   scale(zoom);
   background(200, 150, 100);
-  player.draw();
   pop();
 
   Engine.update(engine);
