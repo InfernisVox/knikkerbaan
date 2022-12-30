@@ -304,7 +304,7 @@ function draw() {
   savePlayerProperties();
 
   once(() => {
-    translate(shiftX, -30);
+    translate(shiftX, 70);
     //scale(zoom);
     blocks.forEach((block) => block.draw());
     player.draw();
