@@ -226,7 +226,7 @@ function initPlayer() {
  */
 function setPlayerBoundaries() {
   if (player.body.position.x > 1280) {
-    Body.setPosition(player.body, { x: 30, y: 80 });
+    /*ö*/
   }
 
   if (
@@ -295,8 +295,7 @@ function draw() {
   background(200, 150, 100);
   Engine.update(engine);
 
-  //const zoom = map(mouseX, 0, width, 0.5, 2);
-  const shiftX = (-player.body.position.x /* * zoom*/ + width) / 2;
+  const shiftX = -player.body.position.x + windowWidth / 2;
   // const shiftY = -player.body.position.y * zoom + height / 2;
 
   // console.log(shiftX, shiftY);
@@ -305,7 +304,6 @@ function draw() {
 
   once(() => {
     translate(shiftX, 70);
-    //scale(zoom);
     blocks.forEach((block) => block.draw());
     player.draw();
     mouse.draw();
