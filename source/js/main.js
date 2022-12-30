@@ -135,8 +135,16 @@ document.addEventListener("DOMContentLoaded", () => {
           isReversing = false;
         }
       } else {
-        Body.setVelocity(player.body, { x: 2, y: 10 });
+        Body.setVelocity(player.body, { x: 4, y: 12 });
       }
+    }
+  };
+  document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
+    if (e.code === "Space") {
+      console.log("i have arrived");
+      Body.setPosition(player.body);
+      Body.setStatic(player.body, false);
+      isReversing = false;
     }
   };
 });
@@ -179,7 +187,7 @@ function screen01() {
       {
         x: windowWidth / 2,
         y: 650,
-        w: windowWidth * 4,
+        w: windowWidth * 100,
         h: 40,
         color: "gray",
       },
@@ -306,6 +314,7 @@ function draw() {
     translate(shiftX, 70);
     blocks.forEach((block) => block.draw());
     player.draw();
+    mouse.setOffset({ x: -shiftX, y: -70 });
     mouse.draw();
   });
 }
