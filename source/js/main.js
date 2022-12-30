@@ -4,7 +4,7 @@
  * TODO: SCREEN SCROLL @RON please first thing even before the chain i dont know anymore tried for an hour
  *
  * TODO: Please add JSDoc descriptions to new variables and functions for a cleaner and more semantic project scope
- * TOODO: Cleanup code
+ * TODO: Cleanup code
  */
 
 console.clear();
@@ -45,6 +45,16 @@ let poly;
 function loadingMessage(currentAsset) {
   console.clear();
   console.log(`Loading assets ... ${currentAsset} / 1`);
+}
+
+/**
+ *
+ * @param {function(): void} callback
+ */
+function once(callback) {
+  push();
+  callback();
+  pop();
 }
 
 // Initializations ##########################################################
@@ -282,24 +292,22 @@ function setup() {
 }
 
 function draw() {
-  const zoom = map(mouseX, 0, width, 0.5, 2);
-  const shiftX = -player.body.position.x * zoom + width / 2;
-  const shiftY = -player.body.position.y * zoom + height / 2;
-
-  console.log(shiftX, shiftY);
-
-  push();
-  translate(shiftX, shiftY);
-  scale(zoom);
   background(200, 150, 100);
-  pop();
-
   Engine.update(engine);
 
+  const zoom = map(mouseX, 0, width, 0.5, 2);
+  const shiftX = -player.body.position.x * zoom + width / 2;
+  // const shiftY = -player.body.position.y * zoom + height / 2;
+
+  // console.log(shiftX, shiftY);
   setPlayerBoundaries();
   savePlayerProperties();
 
-  blocks.forEach((block) => block.draw());
-  player.draw();
-  mouse.draw();
+  once(() => {
+    translate(shiftX, -30);
+    scale(zoom);
+    blocks.forEach((block) => block.draw());
+    player.draw();
+    mouse.draw();
+  });
 }
