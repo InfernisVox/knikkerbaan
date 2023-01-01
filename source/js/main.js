@@ -1,8 +1,9 @@
 /**
  * TODO: Add chain to character
- * TODO: Add screen change
- * TODO: SCREEN SCROLL @RON please first thing even before the chain i dont know anymore tried for an hour
+ * TODO: Sound function not working Error : (Uncaught (in promise) DOMException: The media resource indicated by the src attribute or assigned media provider object was not suitable.)
  *
+ *
+ * Important lateron:
  * TODO: Please add JSDoc descriptions to new variables and functions for a cleaner and more semantic project scope
  * TODO: Cleanup code
  */
@@ -19,6 +20,7 @@ let engine, world, runner;
 /** @type {Mouse} */ let mouse;
 
 /** @type {(BlockCore | Block | Ball | ?)[]} */ let blocks = [];
+sensors = [];
 /** @type {(() => void)[]} */ let screens;
 
 /** @type {Ball} */ let player;
@@ -141,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
     if (e.code === "Space") {
-      console.log("i have arrived");
       Body.setPosition(player.body, playerPositions[playerPositions.length]);
       Body.setStatic(player.body, false);
       isReversing = false;
@@ -208,6 +209,39 @@ function screen01() {
       { isStatic: true }
     )
   );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 2000,
+        y: 650,
+        w: 50,
+        h: windowHeight,
+        color: "gray",
+      },
+      { isStatic: true, isSensor: true }
+    )
+  );
+}
+
+function screenevents() {
+  //check if Wollknauel collided with sensors[0]
+  console.log("ehm");
+
+  Matter.Events.on(engine, "collisionStart", (event) => {
+    let pairs = event.pairs;
+    for (const pair of pairs) {
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
+        console.log("target hit");
+      }
+    }
+  });
+}
+
+function playsound() {
+  let audio = new Audio("../assets/audio/xylophone/F7.mp3");
+  audio.play();
 }
 
 // Player ##########################################################
@@ -311,13 +345,14 @@ function setup() {
   screens = [screen01 /*, screen02 */];
 
   initScreens(screens);
+  screenevents();
 }
 
 function draw() {
   background(200, 150, 100);
   Engine.update(engine);
 
-  const shiftX = -player.body.position.x + windowWidth / 2;
+  const shiftX = -player.body.position.x + windowWidth / 2.28;
   // const shiftY = -player.body.position.y * zoom + height / 2;
 
   // console.log(shiftX, shiftY);
@@ -327,6 +362,7 @@ function draw() {
   once(() => {
     translate(shiftX, 70);
     blocks.forEach((block) => block.draw());
+    sensors.forEach((sensor) => sensor.draw());
     player.draw();
     mouse.setOffset({ x: -shiftX, y: -70 });
     mouse.draw();
