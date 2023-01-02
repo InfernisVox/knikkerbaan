@@ -35,6 +35,7 @@ let isReversing = false;
 
 // Miscellaneous
 let rotator = 0;
+let automove = true;
 let assetcalc = null;
 let assettotal = null;
 let poly;
@@ -251,6 +252,34 @@ function screen01() {
       { isStatic: true, angle: 0, label: "spin" }
     )
   );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 4000,
+        y: 600,
+        w: 300,
+        h: 50,
+        color: "purple",
+      },
+      { isStatic: true, label: "canon" }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 4170,
+        y: 600,
+        w: 50,
+        h: 50,
+        color: "green",
+      },
+      { isStatic: true, isSensor: true }
+    )
+  );
 }
 
 function screenevents() {
@@ -261,6 +290,19 @@ function screenevents() {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
         console.log("Collided with sensor 0");
         Body.setVelocity(player.body, { x: 40, y: 0 });
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
+        console.log("Collided with sensor 1");
+        blocks.forEach((block) => {
+          if (block.body.label === "canon") {
+            automove = false;
+            Body.applyForce(block.body, block.body.position, {
+              x: 1,
+              y: 0,
+            });
+          }
+        });
       }
     }
   });
@@ -389,7 +431,9 @@ function draw() {
   background(200, 150, 100);
   rotator -= 0.05;
   Body.setAngle(blocks[3].body, rotator);
-  Body.setAngularVelocity(player.body, 0.01);
+  if (automove === true) {
+    Body.setAngularVelocity(player.body, 0.01);
+  }
 
   Engine.update(engine);
 
