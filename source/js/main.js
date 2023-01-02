@@ -34,6 +34,9 @@ let isDragged = false;
 let isReversing = false;
 
 // Miscellaneous
+let rotator = 0;
+let assetcalc = null;
+let assettotal = null;
 let poly;
 // let lengthValue = 10;
 
@@ -44,9 +47,17 @@ let poly;
  *
  * @param {number} currentAsset
  */
-function loadingMessage(currentAsset) {
-  console.clear();
-  console.log(`Loading assets ... ${currentAsset} / 1`);
+function loadingMessage(currentAsset, assetname) {
+  if (assetname === undefined) {
+    assetname = "Unknown";
+  }
+
+  assetname = assetname.split("/").pop();
+
+  console.log(
+    `%cLoading asset ${currentAsset}: %c${assetname}`,
+    "color: #7289DA; font-weight: bold;"
+  );
 }
 
 /**
@@ -137,11 +148,14 @@ document.addEventListener("DOMContentLoaded", () => {
           isReversing = false;
         }
       } else {
-        Body.setVelocity(player.body, { x: 4, y: 12 });
+        Body.applyForce(player.body, player.body.position, {
+          x: 0.04,
+          y: 0.15,
+        });
       }
     }
   };
-  document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
+  document.body.onkeyup = function (/** @type {KeyboardEvent} */) {
     if (e.code === "Space") {
       Body.setPosition(player.body, playerPositions[playerPositions.length]);
       Body.setStatic(player.body, false);
@@ -223,24 +237,37 @@ function screen01() {
       { isStatic: true, isSensor: true }
     )
   );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 3000,
+        y: 500,
+        w: 50,
+        h: 300,
+        color: "red",
+      },
+      { isStatic: true, angle: 0, label: "spin" }
+    )
+  );
 }
 
 function screenevents() {
   //check if Wollknauel collided with sensors[0]
-  console.log("ehm");
-
   Matter.Events.on(engine, "collisionStart", (event) => {
     let pairs = event.pairs;
     for (const pair of pairs) {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
-        console.log("target hit");
+        console.log("Collided with sensor 0");
+        Body.setVelocity(player.body, { x: 40, y: 0 });
       }
     }
   });
 }
 
 function playsound() {
-  let audio = new Audio("../assets/audio/xylophone/F7.mp3");
+  let audio = new Audio("../assets/audio/xylophone/F5.mp3");
   audio.play();
 }
 
@@ -332,9 +359,19 @@ function savePlayerProperties() {
 
 // ##########################################################
 function preload() {
-  loadingMessage(0);
-  playerImage = loadImage("./assets/images/Wollball.png");
-  loadingMessage(1);
+  //Only for loading assets, no adding empty lines or comments
+  assetcalc = -new Error().lineNumber;
+
+  playerimagesrc = "./assets/images/Wollball.png";
+  playerImage = loadImage(playerimagesrc);
+  loadingMessage(1, playerimagesrc);
+
+  assetcalc += new Error().lineNumber;
+  assettotal = (assetcalc - 3) / 3;
+  console.log(
+    `%c\n-------------------------\nTotal assets loaded: %c${assettotal}`,
+    "color: #7289DA; font-weight: bold;"
+  );
 }
 
 function setup() {
@@ -350,6 +387,10 @@ function setup() {
 
 function draw() {
   background(200, 150, 100);
+  rotator -= 0.05;
+  Body.setAngle(blocks[3].body, rotator);
+  Body.setAngularVelocity(player.body, 0.01);
+
   Engine.update(engine);
 
   const shiftX = -player.body.position.x + windowWidth / 2.28;
