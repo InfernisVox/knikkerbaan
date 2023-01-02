@@ -1,6 +1,5 @@
 /**
  * TODO: Add chain to character
- * TODO: Sound function not working Error : (Uncaught (in promise) DOMException: The media resource indicated by the src attribute or assigned media provider object was not suitable.)
  *
  *
  * Important lateron:
@@ -25,6 +24,7 @@ sensors = [];
 
 /** @type {Ball} */ let player;
 /** @type {object} */ let playerImage;
+/** @type {object} */ let psychedelic;
 /** @type {Matter.Vector[]} */ let playerPositions = [{ x: 300, y: 80 }];
 /** @type {Matter.Vector} */ let playerPosition_New;
 /** @type {number[]} */ let playerRotations = [0];
@@ -34,6 +34,7 @@ let isDragged = false;
 let isReversing = false;
 
 // Miscellaneous
+let sensorcolor;
 let rotator = 0;
 let automove = true;
 let assetcalc = null;
@@ -156,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   };
-  document.body.onkeyup = function (/** @type {KeyboardEvent} */) {
+  document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
     if (e.code === "Space") {
       Body.setPosition(player.body, playerPositions[playerPositions.length]);
       Body.setStatic(player.body, false);
@@ -183,6 +184,8 @@ function initScreens(screens) {
 }
 
 function screen01() {
+  sensorcolor = color(0, 255, 50, 100);
+
   blocks.push(
     new Block(
       world,
@@ -233,7 +236,7 @@ function screen01() {
         y: 650,
         w: 50,
         h: windowHeight,
-        color: "gray",
+        color: sensorcolor,
       },
       { isStatic: true, isSensor: true }
     )
@@ -253,29 +256,39 @@ function screen01() {
     )
   );
 
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 4000,
-        y: 600,
-        w: 300,
-        h: 50,
-        color: "purple",
-      },
-      { isStatic: true, label: "canon" }
-    )
+  let canon = new Block(
+    world,
+    {
+      x: 4000,
+      y: 605,
+      w: 300,
+      h: 50,
+      color: "purple",
+    },
+    { isStatic: false, angle: 0, label: "canon" }
   );
+
+  blocks.push(canon);
+
+  canon.constrainTo(null, {
+    pointA: { x: 0, y: 0 },
+    pointB: { x: canon.body.position.x, y: canon.body.position.y },
+    length: 0,
+    stiffness: 0.001,
+    draw: true,
+    color: color(255, 0, 0),
+    width: 2,
+  });
 
   sensors.push(
     new BlockCore(
       world,
       {
         x: 4170,
-        y: 600,
-        w: 50,
-        h: 50,
-        color: "green",
+        y: 605,
+        w: 70,
+        h: 70,
+        color: sensorcolor,
       },
       { isStatic: true, isSensor: true }
     )
@@ -290,28 +303,24 @@ function screenevents() {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
         console.log("Collided with sensor 0");
         Body.setVelocity(player.body, { x: 40, y: 0 });
+        xylophoneA0sound.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
-        blocks.forEach((block) => {
-          if (block.body.label === "canon") {
-            automove = false;
-            Body.applyForce(block.body, block.body.position, {
-              x: 1,
-              y: 0,
-            });
-          }
-        });
+        automove = false;
+        Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
+        xylophoneA1sound.play();
+
+        setTimeout(function () {
+          automove = true;
+        }, 1000);
       }
     }
   });
 }
 
-function playsound() {
-  let audio = new Audio("../assets/audio/xylophone/F5.mp3");
-  audio.play();
-}
+function raycasting() {}
 
 // Player ##########################################################
 
@@ -404,12 +413,24 @@ function preload() {
   //Only for loading assets, no adding empty lines or comments
   assetcalc = -new Error().lineNumber;
 
-  playerimagesrc = "./assets/images/Wollball.png";
+  let playerimagesrc = "./assets/images/Wollball.png";
   playerImage = loadImage(playerimagesrc);
   loadingMessage(1, playerimagesrc);
 
+  let psychedelicgifsrc = "./assets/images/psychedelic.gif";
+  psychedelicGif = loadImage(psychedelicgifsrc);
+  loadingMessage(2, psychedelicgifsrc);
+
+  let xylophoneA0soundsrc = "./assets/audio/xylophone/A0.mp3";
+  xylophoneA0sound = loadSound(xylophoneA0soundsrc);
+  loadingMessage(2, xylophoneA0soundsrc);
+
+  let xylophoneA1soundsrc = "./assets/audio/xylophone/A1.mp3";
+  xylophoneA1sound = loadSound(xylophoneA1soundsrc);
+  loadingMessage(2, xylophoneA1soundsrc);
+
   assetcalc += new Error().lineNumber;
-  assettotal = (assetcalc - 3) / 3;
+  assettotal = (assetcalc - 2) / 4;
   console.log(
     `%c\n-------------------------\nTotal assets loaded: %c${assettotal}`,
     "color: #7289DA; font-weight: bold;"
@@ -429,7 +450,13 @@ function setup() {
 
 function draw() {
   background(200, 150, 100);
+  image(psychedelicGif, 0, 0, 100, 100);
   rotator -= 0.05;
+  raycasting();
+
+  Body.setAngle(sensors[1].body, 0);
+  Body.setPosition(sensors[1].body, { x: sensors[1].body.position.x, y: 605 });
+
   Body.setAngle(blocks[3].body, rotator);
   if (automove === true) {
     Body.setAngularVelocity(player.body, 0.01);
