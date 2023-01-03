@@ -34,12 +34,20 @@ let isDragged = false;
 let isReversing = false;
 
 // Miscellaneous
+let count = 0;
+let canvascontent = [];
+let avgr = 0;
+let avgg = 0;
+let avgb = 0;
+let avga = 0;
+
 let sensorcolor;
 let rotator = 0;
 let automove = true;
 let assetcalc = null;
 let assettotal = null;
 let poly;
+
 // let lengthValue = 10;
 
 // Utilities ##########################################################
@@ -320,8 +328,48 @@ function screenevents() {
   });
 }
 
-function raycasting() {}
+function getcanvascontent() {
+  // Function will consume lots of memory
+  // Only call for flex.
 
+  let c = document.getElementById("defaultCanvas0");
+  let ctx = c.getContext("2d");
+  let chunkSize = 4;
+
+  if (count > 10) {
+    canvascontent = ctx.getImageData(
+      canvas.width / 2,
+      canvas.height / 2,
+      canvas.width / 2,
+      canvas.height / 2
+    );
+    canvascontent = canvascontent.data;
+
+    const canvasfilter = [];
+    for (let i = 0; i < canvascontent.length; i += chunkSize) {
+      const chunk = canvascontent.slice(i, i + chunkSize);
+      canvasfilter.push(chunk);
+    }
+    canvascontent = canvasfilter;
+
+    canvascontent.forEach((element) => {
+      avgr += element[0];
+      avgg += element[1];
+      avgb += element[2];
+      avga += element[3];
+    });
+
+    avgr = avgr / canvascontent.length;
+    avgg = avgg / canvascontent.length;
+    avgb = avgb / canvascontent.length;
+    avga = avga / canvascontent.length;
+
+    document.body.style.background = color(avgr, avgg, avgb, avga);
+
+    count = 0;
+  }
+  count++;
+}
 // Player ##########################################################
 
 /**
@@ -429,6 +477,10 @@ function preload() {
   xylophoneA1sound = loadSound(xylophoneA1soundsrc);
   loadingMessage(2, xylophoneA1soundsrc);
 
+  let roomimagesrc = "./assets/images/room.png";
+  roomimage = loadImage(roomimagesrc);
+  loadingMessage(2, roomimagesrc);
+
   assetcalc += new Error().lineNumber;
   assettotal = (assetcalc - 2) / 4;
   console.log(
@@ -450,9 +502,7 @@ function setup() {
 
 function draw() {
   background(200, 150, 100);
-  image(psychedelicGif, 0, 0, 100, 100);
   rotator -= 0.05;
-  raycasting();
 
   Body.setAngle(sensors[1].body, 0);
   Body.setPosition(sensors[1].body, { x: sensors[1].body.position.x, y: 605 });
@@ -473,10 +523,17 @@ function draw() {
 
   once(() => {
     translate(shiftX, 70);
+    push();
+    scale(-1, 1);
+    image(roomimage, 300, -80, 5085, 720);
+    pop();
+    image(roomimage, -400, -80, 5085, 720);
+    image(psychedelicGif, 0, 0, 100, 100);
     blocks.forEach((block) => block.draw());
     sensors.forEach((sensor) => sensor.draw());
     player.draw();
     mouse.setOffset({ x: -shiftX, y: -70 });
     mouse.draw();
   });
+  getcanvascontent();
 }
