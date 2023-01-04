@@ -336,6 +336,7 @@ function getcanvascontent() {
   let ctx = c.getContext("2d");
   let chunkSize = 4;
 
+  // Start function which reduces load on device
   if (count > 10) {
     canvascontent = ctx.getImageData(
       canvas.width / 2,
