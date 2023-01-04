@@ -1,16 +1,7 @@
 class Ray {
-  constructor(pos, dir, angle) {
-    this.pos = pos; // Position
-    this.parentDir = dir; // Direction
-    this.relativeDir = p5.Vector.fromAngle(angle); // Offset angle from the particle direction
-    this.dir = p5.Vector.fromAngle(this.parentDir.heading() + angle); // Actual angle
-  }
-
-  update() {
-    // Set the ray direction (angle) from the direction of the Particle, and the ray offset
-    const parentAngle = this.parentDir.heading();
-    const relativeAngle = this.relativeDir.heading();
-    this.dir = p5.Vector.fromAngle(parentAngle + relativeAngle);
+  constructor(pos, angle) {
+    this.pos = pos;
+    this.dir = p5.Vector.fromAngle(angle);
   }
 
   show() {
@@ -21,9 +12,13 @@ class Ray {
     pop();
   }
 
+  lookAt(x, y) {
+    this.dir.x = x - this.pos.x;
+    this.dir.y = y - this.pos.y;
+    this.dir.normalize();
+  }
+
   cast(wall) {
-    // Checks if the ray intersects with a wall
-    // If it does, check where and return the point
     const x1 = wall.a.x;
     const y1 = wall.a.y;
     const x2 = wall.b.x;

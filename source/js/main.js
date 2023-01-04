@@ -1,6 +1,12 @@
 /**
+ * VERY HIGH priority:
  * TODO: Add chain to character
+ * TODO: LEVELDESIGN
+ * TODO: Get "canon" to work properly
  *
+ * Low priority:
+ * TODO: Shader
+ * TODO: fix raycasting :)
  *
  * Important lateron:
  * TODO: Please add JSDoc descriptions to new variables and functions for a cleaner and more semantic project scope
@@ -49,6 +55,10 @@ let automove = true;
 let assetcalc = null;
 let assettotal = null;
 let poly;
+
+// Raycasting.
+let walls = [];
+let particle;
 
 // let lengthValue = 10;
 
@@ -161,8 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } else {
         Body.applyForce(player.body, player.body.position, {
-          x: 0.04,
-          y: 0.15,
+          x: 0.015,
+          y: 0.07,
         });
       }
     }
@@ -356,6 +366,24 @@ function screen01() {
   );
 }
 
+function raycasting() {
+  console.log("1");
+  blocks.forEach((block) => {
+    console.log(block + "2");
+    let wall = new Boundary(
+      block.body.position.x,
+      block.body.position.y,
+      block.body.width,
+      block.body.height,
+      block.body.angle
+    );
+    console.log("3");
+    console.log(wall);
+    walls.push(wall);
+  });
+  particle = new Particle(player.body.position.x, player.body.position.y);
+}
+
 function screenevents() {
   //check if Wollknauel collided with sensors[0]
   Matter.Events.on(engine, "collisionStart", (event) => {
@@ -470,11 +498,7 @@ function setPlayerBoundaries() {
     /*ö*/
   }
 
-  if (
-    player.body.position.y < 0 ||
-    player.body.position.y > 750 ||
-    player.body.position.x < 0
-  ) {
+  if (player.body.position.y > 750 || player.body.position.x < 0) {
     playerPositions = [{ x: 0, y: 0 }];
     playerRotations = [0];
     Body.setPosition(player.body, { x: 300, y: 80 });
@@ -561,6 +585,7 @@ function setup() {
 
   initScreens(screens);
   screenevents();
+  raycasting();
 }
 
 function draw() {
@@ -594,6 +619,12 @@ function draw() {
     image(psychedelicGif, 0, 0, 100, 100);
     blocks.forEach((block) => block.draw());
     sensors.forEach((sensor) => sensor.draw());
+    particle.update(player.body.position.x - 200, player.body.position.y - 200);
+    particle.show();
+    particle.look(walls);
+    for (let wall of walls) {
+      wall.show();
+    }
     player.draw();
     mouse.setOffset({ x: -shiftX, y: -70 });
     mouse.draw();
