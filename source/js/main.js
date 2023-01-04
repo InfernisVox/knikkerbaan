@@ -42,7 +42,9 @@ let avgb = 0;
 let avga = 0;
 
 let sensorcolor;
+let blockcolor;
 let rotator = 0;
+let spin;
 let automove = true;
 let assetcalc = null;
 let assettotal = null;
@@ -193,18 +195,70 @@ function initScreens(screens) {
 
 function screen01() {
   sensorcolor = color(0, 255, 50, 100);
+  blockcolor = color(255, 0, 255, 100);
 
   blocks.push(
     new Block(
       world,
       {
-        x: 100,
-        y: 400,
-        w: 500,
+        x: 310,
+        y: 165,
+        w: 40,
         h: 10,
-        color: "red",
+        color: blockcolor,
       },
-      { isStatic: true, angle: 0.1 }
+      { isStatic: true, angle: 0.15 }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 440,
+        y: 215,
+        w: 170,
+        h: 10,
+        color: blockcolor,
+      },
+      { isStatic: true, angle: 0.25 }
+    )
+  );
+
+  let board = new Block(
+    world,
+    {
+      x: 630,
+      y: 270,
+      w: 250,
+      h: 10,
+      color: "black",
+    },
+    { isStatic: false, frictionAir: 0.01 }
+  );
+  board.constrainTo(null, {
+    pointA: { x: 0, y: 0 },
+    pointB: { x: board.body.position.x, y: board.body.position.y },
+    length: 0,
+    stiffness: 1,
+    draw: true,
+    color: color(255, 0, 0),
+    width: 2,
+  });
+
+  blocks.push(board);
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 630,
+        y: windowHeight / 2,
+        w: 50,
+        h: windowHeight * 2,
+        color: sensorcolor,
+      },
+      { isStatic: true, isSensor: true }
     )
   );
 
@@ -216,7 +270,7 @@ function screen01() {
         y: 560,
         w: 500,
         h: 10,
-        color: "yellow",
+        color: blockcolor,
       },
       { isStatic: true, angle: -0.3 }
     )
@@ -250,19 +304,18 @@ function screen01() {
     )
   );
 
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 3000,
-        y: 500,
-        w: 50,
-        h: 300,
-        color: "red",
-      },
-      { isStatic: true, angle: 0, label: "spin" }
-    )
+  spin = new Block(
+    world,
+    {
+      x: 3000,
+      y: 500,
+      w: 50,
+      h: 300,
+      color: "red",
+    },
+    { isStatic: true, angle: 0, label: "spin" }
   );
+  blocks.push(spin);
 
   let canon = new Block(
     world,
@@ -310,12 +363,17 @@ function screenevents() {
     for (const pair of pairs) {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
         console.log("Collided with sensor 0");
-        Body.setVelocity(player.body, { x: 40, y: 0 });
-        xylophoneA0sound.play();
+        guitarAmajorsound.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
+        Body.setVelocity(player.body, { x: 40, y: 0 });
+        xylophoneA0sound.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[2].body) {
+        console.log("Collided with sensor 2");
         automove = false;
         Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
         xylophoneA1sound.play();
@@ -383,7 +441,7 @@ function initPlayer() {
     world,
     {
       x: 300,
-      y: 80,
+      y: -10,
       r: 30,
       color: "blue",
       image: playerImage,
@@ -392,9 +450,9 @@ function initPlayer() {
     {
       label: "Wollknäuel",
       isStatic: false,
-      density: 0.001,
-      restitution: 0.75,
-      friction: 0.001,
+      density: 0.0005,
+      restitution: 0.8,
+      friction: 0.01,
       frictionAir: 0.005,
       angle: 0,
     }
@@ -470,17 +528,21 @@ function preload() {
   psychedelicGif = loadImage(psychedelicgifsrc);
   loadingMessage(2, psychedelicgifsrc);
 
-  let xylophoneA0soundsrc = "./assets/audio/xylophone/A0.mp3";
-  xylophoneA0sound = loadSound(xylophoneA0soundsrc);
-  loadingMessage(2, xylophoneA0soundsrc);
+  let guitarAmajorsoundsrc = "./assets/audio/instruments/amajor.wav";
+  guitarAmajorsound = loadSound(guitarAmajorsoundsrc);
+  loadingMessage(3, guitarAmajorsoundsrc);
 
-  let xylophoneA1soundsrc = "./assets/audio/xylophone/A1.mp3";
+  let xylophoneA0soundsrc = "./assets/audio/instruments/A0.mp3";
+  xylophoneA0sound = loadSound(xylophoneA0soundsrc);
+  loadingMessage(4, xylophoneA0soundsrc);
+
+  let xylophoneA1soundsrc = "./assets/audio/instruments/A1.mp3";
   xylophoneA1sound = loadSound(xylophoneA1soundsrc);
-  loadingMessage(2, xylophoneA1soundsrc);
+  loadingMessage(5, xylophoneA1soundsrc);
 
   let roomimagesrc = "./assets/images/room.png";
   roomimage = loadImage(roomimagesrc);
-  loadingMessage(2, roomimagesrc);
+  loadingMessage(6, roomimagesrc);
 
   assetcalc += new Error().lineNumber;
   assettotal = (assetcalc - 2) / 4;
@@ -508,7 +570,7 @@ function draw() {
   Body.setAngle(sensors[1].body, 0);
   Body.setPosition(sensors[1].body, { x: sensors[1].body.position.x, y: 605 });
 
-  Body.setAngle(blocks[3].body, rotator);
+  Body.setAngle(spin.body, rotator);
   if (automove === true) {
     Body.setAngularVelocity(player.body, 0.01);
   }
@@ -526,9 +588,9 @@ function draw() {
     translate(shiftX, 70);
     push();
     scale(-1, 1);
-    image(roomimage, 300, -80, 5085, 720);
+    image(roomimage, 50, -80, 5085, 720);
     pop();
-    image(roomimage, -400, -80, 5085, 720);
+    image(roomimage, -205, -80, 5085, 720);
     image(psychedelicGif, 0, 0, 100, 100);
     blocks.forEach((block) => block.draw());
     sensors.forEach((sensor) => sensor.draw());
