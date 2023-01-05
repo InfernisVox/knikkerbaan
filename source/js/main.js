@@ -364,6 +364,20 @@ function screen01() {
       { isStatic: true, isSensor: true }
     )
   );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 1050,
+        y: 590,
+        w: 500,
+        h: 100,
+        color: color(255, 255, 255, 0),
+      },
+      { isStatic: true, angle: 0.15 }
+    )
+  );
 }
 
 function raycasting() {
@@ -471,7 +485,7 @@ function initPlayer() {
       x: 300,
       y: -10,
       r: 30,
-      color: "blue",
+      color: "red",
       image: playerImage,
       scale: 0.4,
     },
@@ -568,6 +582,10 @@ function preload() {
   roomimage = loadImage(roomimagesrc);
   loadingMessage(6, roomimagesrc);
 
+  let xylophoneimgsrc = "./assets/images/xylophone.svg";
+  xylophoneimg = loadImage(xylophoneimgsrc);
+  loadingMessage(7, xylophoneimgsrc);
+
   assetcalc += new Error().lineNumber;
   assettotal = (assetcalc - 2) / 4;
   console.log(
@@ -617,6 +635,7 @@ function draw() {
     pop();
     image(roomimage, -205, -80, 5085, 720);
     image(psychedelicGif, 0, 0, 100, 100);
+    image(xylophoneimg, 800, 450, 500, 200);
     blocks.forEach((block) => block.draw());
     sensors.forEach((sensor) => sensor.draw());
     particle.update(player.body.position.x - 200, player.body.position.y - 200);
