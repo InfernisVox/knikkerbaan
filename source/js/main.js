@@ -1,18 +1,19 @@
-/**
- * VERY HIGH priority:
- * TODO: Add chain to character
- * TODO: LEVELDESIGN
- * TODO: Get "canon" to work properly
- *
- * Low priority:
- * TODO: Shader
- * TODO: fix raycasting :)
- *
- * Important lateron:
- * TODO: Please add JSDoc descriptions to new variables and functions for a cleaner and more semantic project scope
- * TODO: Cleanup code
- */
+// @ts-check
+"use strict";
 
+// Definitions ##########################################################
+/** @typedef { import("../../@types/p5/index").Image } Image */
+/** @typedef { import("../../@types/p5/index").SoundFile } SoundFile */
+/** @typedef { import("../../@types/p5/index").Renderer } Renderer */
+/** @typedef { BlockCore | Block | Ball | Chain | Magnet | Parts | Polygon | PolygonFromPoints | PolygonFromSVG | Stack } Item */
+
+/** @enum {number} */
+const Canvas = {
+  WIDTH: 1280,
+  HEIGHT: 720,
+};
+
+// Setup ##########################################################
 console.clear();
 
 // Setting up the project
@@ -20,77 +21,54 @@ const Engine = Matter.Engine,
   Runner = Matter.Runner,
   Body = Matter.Body;
 
-let canvas;
-let engine, world, runner;
+/** @type {Renderer} */ let canvas;
+/** @type {Matter.Engine} */ let engine;
+/** @type {Matter.World} */ let world;
+/** @type {Matter.Runner} */ let runner;
 /** @type {Mouse} */ let mouse;
 
-/** @type {(BlockCore | Block | Ball | ?)[]} */ let blocks = [];
-sensors = [];
+/** @type {Item[]} */ let blocks = [];
+/** @type {Item[]} */ let sensors = [];
 /** @type {(() => void)[]} */ let screens;
 
 /** @type {Ball} */ let player;
-/** @type {object} */ let playerImage;
-/** @type {object} */ let psychedelic;
 /** @type {Matter.Vector[]} */ let playerPositions = [{ x: 300, y: 80 }];
 /** @type {Matter.Vector} */ let playerPosition_New;
 /** @type {number[]} */ let playerRotations = [0];
 /** @type {number} */ let playerRotation_New;
 
+// Assets
+/** @type {Image} */ let playerImage;
+/** @type {Image} */ let imgRoom;
+/** @type {Image} */ let imgXylophone;
+/** @type {Image} */ let gifPsychedelic;
+/** @type {SoundFile} */ let soundGuitarAMajor;
+/** @type {SoundFile} */ let soundXylophoneA0;
+/** @type {SoundFile} */ let soundXylophoneA1;
+
 let isDragged = false;
 let isReversing = false;
+let isAutoMoving = true;
 
 // Miscellaneous
 let count = 0;
-let canvascontent = [];
-let avgr = 0;
-let avgg = 0;
-let avgb = 0;
-let avga = 0;
+/** @type {ImageData} */ let canvasContent;
+let rAvg = 0;
+let gAvg = 0;
+let bAvg = 0;
+let aAvg = 0;
 
-let sensorcolor;
-let blockcolor;
+let sensorColor;
+let blockColor;
 let rotator = 0;
-let spin;
-let automove = true;
-let assetcalc = null;
-let assettotal = null;
+/** @type {Block} */ let spin;
+let assetCalc = null;
+let assetTotal = null;
 let poly;
 
 // Raycasting.
-let walls = [];
-let particle;
-
-// let lengthValue = 10;
-
-// Utilities ##########################################################
-/**
- * `loadingMessage` is considered a helper function. It is going to be used
- * for printing synchronous logs in the console when `preload` loads new media files.
- *
- * @param {number} currentAsset
- */
-function loadingMessage(currentAsset, assetname) {
-  if (assetname === undefined) {
-    assetname = "Unknown";
-  }
-
-  assetname = assetname.split("/").pop();
-
-  console.log(
-    `%cLoading asset ${currentAsset}: %c${assetname}`,
-    "color: #7289DA; font-weight: bold;"
-  );
-}
-
-/**
- *
- * @param {function(): void} callback
- */
-function once(callback) {
-  push();
-  callback();
-  pop();
-}
+/** @type {Boundary[]} */ let walls = [];
+/** @type {Particle} */ let particle;
 
 // Initializations ##########################################################
 /**
@@ -98,7 +76,7 @@ function once(callback) {
  * the canvas itself and additional properties relevant to p5 and matter.js.
  */
 function initCanvas() {
-  canvas = createCanvas(1280, 720);
+  canvas = createCanvas(Canvas.WIDTH, Canvas.HEIGHT);
   canvas.parent("canvas");
 
   engine = Engine.create();
@@ -116,11 +94,11 @@ function initCanvas() {
 function initMouse() {
   mouse = new Mouse(engine, canvas, { stroke: "blue", strokeWeight: 3 });
 
-  mouse.on("startdrag", (_) => {
+  mouse.on("startdrag", (/** @type {any} */ _) => {
     isDragged = true;
   });
 
-  mouse.on("mouseup", (e) => {
+  mouse.on("mouseup", (/** @type {any} */ e) => {
     if (!isDragged) {
       console.log(e.mouse.position.x, e.mouse.position.y);
       let ball = new Ball(
@@ -137,10 +115,8 @@ function initMouse() {
         x: 0,
         y: 2,
       });
-
       blocks.push(ball);
     }
-
     isDragged = false;
   });
 }
@@ -204,8 +180,8 @@ function initScreens(screens) {
 }
 
 function screen01() {
-  sensorcolor = color(0, 255, 50, 100);
-  blockcolor = color(255, 0, 255, 100);
+  sensorColor = color(0, 255, 50, 100);
+  blockColor = color(255, 0, 255, 100);
 
   blocks.push(
     new Block(
@@ -215,7 +191,7 @@ function screen01() {
         y: 165,
         w: 40,
         h: 10,
-        color: blockcolor,
+        color: blockColor,
       },
       { isStatic: true, angle: 0.15 }
     )
@@ -229,7 +205,7 @@ function screen01() {
         y: 215,
         w: 170,
         h: 10,
-        color: blockcolor,
+        color: blockColor,
       },
       { isStatic: true, angle: 0.25 }
     )
@@ -266,7 +242,7 @@ function screen01() {
         y: windowHeight / 2,
         w: 50,
         h: windowHeight * 2,
-        color: sensorcolor,
+        color: sensorColor,
       },
       { isStatic: true, isSensor: true }
     )
@@ -280,7 +256,7 @@ function screen01() {
         y: 560,
         w: 500,
         h: 10,
-        color: blockcolor,
+        color: blockColor,
       },
       { isStatic: true, angle: -0.3 }
     )
@@ -308,7 +284,7 @@ function screen01() {
         y: 650,
         w: 50,
         h: windowHeight,
-        color: sensorcolor,
+        color: sensorColor,
       },
       { isStatic: true, isSensor: true }
     )
@@ -359,7 +335,7 @@ function screen01() {
         y: 605,
         w: 70,
         h: 70,
-        color: sensorcolor,
+        color: sensorColor,
       },
       { isStatic: true, isSensor: true }
     )
@@ -380,92 +356,95 @@ function screen01() {
   );
 }
 
-function raycasting() {
+function rayCasting() {
   console.log("1");
   blocks.forEach((block) => {
     console.log(block + "2");
     let wall = new Boundary(
       block.body.position.x,
       block.body.position.y,
+      /** TODO: block.body does not provide its dimensions. Please elaborate on other solutions */
       block.body.width,
-      block.body.height,
-      block.body.angle
+      block.body.height
     );
     console.log("3");
     console.log(wall);
     walls.push(wall);
   });
+  /** TODO: Please complete the constructor of this class */
   particle = new Particle(player.body.position.x, player.body.position.y);
 }
 
-function screenevents() {
-  //check if Wollknauel collided with sensors[0]
+function screenEvents() {
+  // check if Wollknäuel collided with sensors[0]
   Matter.Events.on(engine, "collisionStart", (event) => {
     let pairs = event.pairs;
     for (const pair of pairs) {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
         console.log("Collided with sensor 0");
-        guitarAmajorsound.play();
+        soundGuitarAMajor.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
         Body.setVelocity(player.body, { x: 40, y: 0 });
-        xylophoneA0sound.play();
+        soundXylophoneA0.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[2].body) {
         console.log("Collided with sensor 2");
-        automove = false;
+        isAutoMoving = false;
         Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
-        xylophoneA1sound.play();
+        soundXylophoneA1.play();
 
         setTimeout(function () {
-          automove = true;
+          isAutoMoving = true;
         }, 1000);
       }
     }
   });
 }
 
-function getcanvascontent() {
+function getCanvasContent() {
   // Function will consume lots of memory
   // Only call for flex.
 
-  let c = document.getElementById("defaultCanvas0");
-  let ctx = c.getContext("2d");
+  /** @type {HTMLCanvasElement} */ let c = canvas.elt;
+  let ctx = /** @type {CanvasRenderingContext2D} */ c.getContext("2d");
   let chunkSize = 4;
 
   // Start function which reduces load on device
   if (count > 10) {
-    canvascontent = ctx.getImageData(
-      canvas.width / 2,
-      canvas.height / 2,
-      canvas.width / 2,
-      canvas.height / 2
+    canvasContent = ctx.getImageData(
+      width / 2,
+      height / 2,
+      width / 2,
+      height / 2
     );
-    canvascontent = canvascontent.data;
 
-    const canvasfilter = [];
-    for (let i = 0; i < canvascontent.length; i += chunkSize) {
-      const chunk = canvascontent.slice(i, i + chunkSize);
-      canvasfilter.push(chunk);
+    /** TODO: Please verify type compatibility of the following variables checked by ts */
+    canvasContent = canvasContent.data;
+
+    const canvasFilter = [];
+    for (let i = 0; i < canvasContent.length; i += chunkSize) {
+      const chunk = canvasContent.slice(i, i + chunkSize);
+      canvasFilter.push(chunk);
     }
-    canvascontent = canvasfilter;
+    canvasContent = canvasFilter;
 
-    canvascontent.forEach((element) => {
-      avgr += element[0];
-      avgg += element[1];
-      avgb += element[2];
-      avga += element[3];
+    canvasContent.forEach((element) => {
+      rAvg += element[0];
+      gAvg += element[1];
+      bAvg += element[2];
+      aAvg += element[3];
     });
 
-    avgr = avgr / canvascontent.length;
-    avgg = avgg / canvascontent.length;
-    avgb = avgb / canvascontent.length;
-    avga = avga / canvascontent.length;
+    rAvg = rAvg / canvasContent.length;
+    gAvg = gAvg / canvasContent.length;
+    bAvg = bAvg / canvasContent.length;
+    aAvg = aAvg / canvasContent.length;
 
-    document.body.style.background = color(avgr, avgg, avgb, avga);
+    document.body.style.background = `rgba(${rAvg}, ${gAvg}, ${bAvg}, ${aAvg})`;
 
     count = 0;
   }
@@ -556,40 +535,42 @@ function savePlayerProperties() {
 // ##########################################################
 function preload() {
   //Only for loading assets, no adding empty lines or comments
-  assetcalc = -new Error().lineNumber;
+  // @ts-ignore
+  assetCalc = -new Error().lineNumber;
 
-  let playerimagesrc = "./assets/images/Wollball.png";
-  playerImage = loadImage(playerimagesrc);
-  loadingMessage(1, playerimagesrc);
+  let playerImageSrc = "./assets/images/Wollball.png";
+  playerImage = loadImage(playerImageSrc);
+  loadingMessage(1, playerImageSrc);
 
-  let psychedelicgifsrc = "./assets/images/psychedelic.gif";
-  psychedelicGif = loadImage(psychedelicgifsrc);
-  loadingMessage(2, psychedelicgifsrc);
+  let gifPsychedelic_Src = "./assets/images/psychedelic.gif";
+  gifPsychedelic = loadImage(gifPsychedelic_Src);
+  loadingMessage(2, gifPsychedelic_Src);
 
-  let guitarAmajorsoundsrc = "./assets/audio/instruments/amajor.wav";
-  guitarAmajorsound = loadSound(guitarAmajorsoundsrc);
-  loadingMessage(3, guitarAmajorsoundsrc);
+  let soundGuitarAMajor_Src = "./assets/audio/instruments/amajor.wav";
+  soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);
+  loadingMessage(3, soundGuitarAMajor_Src);
 
-  let xylophoneA0soundsrc = "./assets/audio/instruments/A0.mp3";
-  xylophoneA0sound = loadSound(xylophoneA0soundsrc);
-  loadingMessage(4, xylophoneA0soundsrc);
+  let soundXylophoneA0_Src = "./assets/audio/instruments/A0.mp3";
+  soundXylophoneA0 = loadSound(soundXylophoneA0_Src);
+  loadingMessage(4, soundXylophoneA0_Src);
 
-  let xylophoneA1soundsrc = "./assets/audio/instruments/A1.mp3";
-  xylophoneA1sound = loadSound(xylophoneA1soundsrc);
-  loadingMessage(5, xylophoneA1soundsrc);
+  let soundXylophoneA1_Src = "./assets/audio/instruments/A1.mp3";
+  soundXylophoneA1 = loadSound(soundXylophoneA1_Src);
+  loadingMessage(5, soundXylophoneA1_Src);
 
-  let roomimagesrc = "./assets/images/room.png";
-  roomimage = loadImage(roomimagesrc);
-  loadingMessage(6, roomimagesrc);
+  let imgRoom_Src = "./assets/images/room.png";
+  imgRoom = loadImage(imgRoom_Src);
+  loadingMessage(6, imgRoom_Src);
 
-  let xylophoneimgsrc = "./assets/images/xylophone.svg";
-  xylophoneimg = loadImage(xylophoneimgsrc);
-  loadingMessage(7, xylophoneimgsrc);
+  let imgXylophone_Src = "./assets/images/xylophone.svg";
+  imgXylophone = loadImage(imgXylophone_Src);
+  loadingMessage(7, imgXylophone_Src);
 
-  assetcalc += new Error().lineNumber;
-  assettotal = (assetcalc - 2) / 4;
+  // @ts-ignore
+  assetCalc += new Error().lineNumber;
+  assetTotal = (assetCalc - 2) / 4;
   console.log(
-    `%c\n-------------------------\nTotal assets loaded: %c${assettotal}`,
+    `%c\n-------------------------\nTotal assets loaded: %c${assetTotal}`,
     "color: #7289DA; font-weight: bold;"
   );
 }
@@ -602,28 +583,25 @@ function setup() {
   screens = [screen01 /*, screen02 */];
 
   initScreens(screens);
-  screenevents();
-  raycasting();
+  screenEvents();
+  rayCasting();
 }
 
 function draw() {
   background(200, 150, 100);
+  Engine.update(engine);
+
   rotator -= 0.05;
 
   Body.setAngle(sensors[1].body, 0);
   Body.setPosition(sensors[1].body, { x: sensors[1].body.position.x, y: 605 });
-
   Body.setAngle(spin.body, rotator);
-  if (automove === true) {
-    Body.setAngularVelocity(player.body, 0.01);
-  }
 
-  Engine.update(engine);
+  if (isAutoMoving) Body.setAngularVelocity(player.body, 0.01);
 
-  const shiftX = -player.body.position.x + windowWidth / 2.28;
+  const shiftX = -player.body.position.x + width / 2.28;
   // const shiftY = -player.body.position.y * zoom + height / 2;
 
-  // console.log(shiftX, shiftY);
   setPlayerBoundaries();
   savePlayerProperties();
 
@@ -631,22 +609,29 @@ function draw() {
     translate(shiftX, 70);
     push();
     scale(-1, 1);
-    image(roomimage, 50, -80, 5085, 720);
+    image(imgRoom, 50, -80, 5085, 720);
     pop();
-    image(roomimage, -205, -80, 5085, 720);
-    image(psychedelicGif, 0, 0, 100, 100);
-    image(xylophoneimg, 800, 450, 500, 200);
+    image(imgRoom, -205, -80, 5085, 720);
+    image(gifPsychedelic, 0, 0, 100, 100);
+    image(imgXylophone, 800, 450, 500, 200);
+
     blocks.forEach((block) => block.draw());
+
     sensors.forEach((sensor) => sensor.draw());
+
     particle.update(player.body.position.x - 200, player.body.position.y - 200);
     particle.show();
     particle.look(walls);
+
     for (let wall of walls) {
       wall.show();
     }
+
     player.draw();
+
     mouse.setOffset({ x: -shiftX, y: -70 });
     mouse.draw();
   });
-  getcanvascontent();
+
+  getCanvasContent();
 }

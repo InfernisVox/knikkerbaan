@@ -1,4 +1,23 @@
+// @ts-check
+"use strict";
+
 class Particle {
+  /**
+   * A `p5` vector holding the x and y coordinates
+   * @type {Vector}
+   */
+  pos;
+
+  /**
+   * An array holding the rays
+   * @type {Ray[]}
+   */
+  rays;
+
+  /** TODO: Please add a description and / or explanation */
+  /**
+   * ...
+   */
   constructor() {
     this.pos = createVector(width / 2, height / 2);
     this.rays = [];
@@ -8,10 +27,20 @@ class Particle {
     }
   }
 
+  /**
+   * This function is a setter function for updating the position of the particle
+   * @param {number} x A new x value for the `pos` attribute
+   * @param {number} y A new y value for the `pos` attribute
+   */
   update(x, y) {
     this.pos.set(x, y);
   }
 
+  /** TODO: Please add a description and / or explanation */
+  /**
+   * ...
+   * @param {Boundary[]} walls An array holding all boundaries
+   */
   look(walls) {
     for (let ray of this.rays) {
       let closest = null;
@@ -20,6 +49,7 @@ class Particle {
       for (let wall of walls) {
         let pt = ray.cast(wall);
         if (pt) {
+          // @ts-ignore
           const d = p5.Vector.dist(this.pos, pt);
           if (d < record) {
             closest = pt;
@@ -36,6 +66,7 @@ class Particle {
     }
   }
 
+  /** Draw the particle using `fill` and `ellipse` */
   show() {
     noStroke();
     fill(255);

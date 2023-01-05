@@ -1,9 +1,33 @@
+// @ts-check
+"use strict";
+
 class Ray {
+  /**
+   * A `p5` vector holding the x and y coordinates
+   * @type {Vector}
+   */
+  pos;
+
+  /**
+   * A 2D vector which has been generated using `p5.Vector.fromAngle`
+   * @type {Vector}
+   */
+  dir;
+
+  /**
+   * The constructor takes two parameters. The first holds x and y
+   * coordinates whereas the last one just stores the angle at which
+   * the ray is going to be broadcast.
+   * @param {Vector} pos x and y coordinates of the ray within a simple object
+   * @param {number} angle angle of the ray
+   */
   constructor(pos, angle) {
     this.pos = pos;
+    // @ts-ignore
     this.dir = p5.Vector.fromAngle(angle);
   }
 
+  /** Draw the ray using `stroke` and `line` */
   show() {
     stroke(255);
     push();
@@ -12,12 +36,24 @@ class Ray {
     pop();
   }
 
+  /** TODO: Please add a description and / or explanation */
+  /**
+   * ...
+   * @param {number} x Value along the x-axis
+   * @param {number} y Value along the y-axis
+   */
   lookAt(x, y) {
     this.dir.x = x - this.pos.x;
     this.dir.y = y - this.pos.y;
     this.dir.normalize();
   }
 
+  /** TODO: Please add a description and / or explanation */
+  /**
+   * ...
+   * @param {Boundary} wall The boundary at which the calculation will take place
+   * @returns {Vector | null}
+   */
   cast(wall) {
     const x1 = wall.a.x;
     const y1 = wall.a.y;
