@@ -43,8 +43,16 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgXylophone;
 /** @type {Image} */ let gifPsychedelic;
 /** @type {SoundFile} */ let soundGuitarAMajor;
-/** @type {SoundFile} */ let soundXylophoneA0;
 /** @type {SoundFile} */ let soundXylophoneA1;
+/** @type {SoundFile} */ let soundXylophoneB1;
+/** @type {SoundFile} */ let soundXylophoneC1;
+/** @type {SoundFile} */ let soundXylophoneD1;
+/** @type {SoundFile} */ let soundXylophoneE1;
+/** @type {SoundFile} */ let soundXylophoneF1;
+/** @type {SoundFile} */ let soundXylophoneG1;
+/** @type {SoundFile} */ let soundXylophoneA2;
+/** @type {SoundFile} */ let soundXylophoneB2;
+/** @type {SoundFile} */ let soundXylophoneC2;
 
 let isDragged = false;
 let isReversing = false;
@@ -248,6 +256,22 @@ function screen01() {
     )
   );
 
+  for (let i = 0; i < 10; i++) {
+    sensors.push(
+      new BlockCore(
+        world,
+        {
+          x: 850 + i * 46,
+          y: windowHeight / 2,
+          w: 15,
+          h: windowHeight * 2,
+          color: sensorColor,
+        },
+        { isStatic: true, isSensor: true }
+      )
+    );
+  }
+
   blocks.push(
     new Block(
       world,
@@ -387,15 +411,74 @@ function screenEvents() {
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
-        Body.setVelocity(player.body, { x: 40, y: 0 });
-        soundXylophoneA0.play();
+        soundXylophoneA1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[2].body) {
         console.log("Collided with sensor 2");
+        soundXylophoneB1.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[3].body) {
+        console.log("Collided with sensor 3");
+        soundXylophoneC1.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[4].body) {
+        console.log("Collided with sensor 4");
+        soundXylophoneD1.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[5].body) {
+        console.log("Collided with sensor 5");
+        soundXylophoneE1.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[6].body) {
+        console.log("Collided with sensor 6");
+        soundXylophoneF1.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[7].body) {
+        console.log("Collided with sensor 7");
+        soundXylophoneG1.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[8].body) {
+        console.log("Collided with sensor 8");
+        soundXylophoneA2.play();
+      }
+
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[9].body) {
+        console.log("Collided with sensor 9");
+        soundXylophoneB2.play();
+      }
+
+      if (
+        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyB === sensors[10].body
+      ) {
+        console.log("Collided with sensor 10");
+        soundXylophoneC2.play();
+      }
+
+      if (
+        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyB === sensors[11].body
+      ) {
+        console.log("Collided with sensor 11");
+        Body.setVelocity(player.body, { x: 40, y: 0 });
+        soundXylophoneC2.play();
+      }
+
+      if (
+        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyB === sensors[12].body
+      ) {
+        console.log("Collided with sensor 12");
         isAutoMoving = false;
         Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
-        soundXylophoneA1.play();
+        soundXylophoneA2.play();
 
         setTimeout(function () {
           isAutoMoving = true;
@@ -550,13 +633,45 @@ function preload() {
   soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);
   loadingMessage(3, soundGuitarAMajor_Src);
 
-  let soundXylophoneA0_Src = "./assets/audio/instruments/A0.mp3";
-  soundXylophoneA0 = loadSound(soundXylophoneA0_Src);
-  loadingMessage(4, soundXylophoneA0_Src);
-
   let soundXylophoneA1_Src = "./assets/audio/instruments/A1.mp3";
   soundXylophoneA1 = loadSound(soundXylophoneA1_Src);
-  loadingMessage(5, soundXylophoneA1_Src);
+  loadingMessage(4, soundXylophoneA1_Src);
+
+  let soundXylophoneB1_Src = "./assets/audio/instruments/B1.mp3";
+  soundXylophoneB1 = loadSound(soundXylophoneB1_Src);
+  loadingMessage(4, soundXylophoneB1_Src);
+
+  let soundXylophoneC1_Src = "./assets/audio/instruments/C1.mp3";
+  soundXylophoneC1 = loadSound(soundXylophoneC1_Src);
+  loadingMessage(4, soundXylophoneC1_Src);
+
+  let soundXylophoneD1_Src = "./assets/audio/instruments/D1.mp3";
+  soundXylophoneD1 = loadSound(soundXylophoneD1_Src);
+  loadingMessage(4, soundXylophoneD1_Src);
+
+  let soundXylophoneE1_Src = "./assets/audio/instruments/E1.mp3";
+  soundXylophoneE1 = loadSound(soundXylophoneE1_Src);
+  loadingMessage(4, soundXylophoneE1_Src);
+
+  let soundXylophoneF1_Src = "./assets/audio/instruments/F1.mp3";
+  soundXylophoneF1 = loadSound(soundXylophoneF1_Src);
+  loadingMessage(4, soundXylophoneF1_Src);
+
+  let soundXylophoneG1_Src = "./assets/audio/instruments/G1.mp3";
+  soundXylophoneG1 = loadSound(soundXylophoneG1_Src);
+  loadingMessage(4, soundXylophoneG1_Src);
+
+  let soundXylophoneA2_Src = "./assets/audio/instruments/A2.mp3";
+  soundXylophoneA2 = loadSound(soundXylophoneA2_Src);
+  loadingMessage(5, soundXylophoneA2_Src);
+
+  let soundXylophoneB2_Src = "./assets/audio/instruments/B2.mp3";
+  soundXylophoneB2 = loadSound(soundXylophoneB2_Src);
+  loadingMessage(4, soundXylophoneB2_Src);
+
+  let soundXylophoneC2_Src = "./assets/audio/instruments/C2.mp3";
+  soundXylophoneC2 = loadSound(soundXylophoneC2_Src);
+  loadingMessage(4, soundXylophoneC2_Src);
 
   let imgRoom_Src = "./assets/images/room.png";
   imgRoom = loadImage(imgRoom_Src);
@@ -566,7 +681,6 @@ function preload() {
   imgXylophone = loadImage(imgXylophone_Src);
   loadingMessage(7, imgXylophone_Src);
 
-  // @ts-ignore
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;
   console.log(
