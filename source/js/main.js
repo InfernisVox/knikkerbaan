@@ -192,16 +192,17 @@ function screen01() {
   blockColor = color(255, 0, 255, 100);
 
   blocks.push(
-    new Block(
+    new PolygonFromSVG(
       world,
       {
-        x: 310,
-        y: 165,
-        w: 40,
-        h: 10,
-        color: blockColor,
+        x: 0,
+        y: 0,
+        fromId: "../assets/images/slide.svg",
+        scale: 0.6,
+        color: "lime",
+        force: { x: 0.0, y: -0.04 },
       },
-      { isStatic: true, angle: 0.15 }
+      { isStatic: true, friction: 0.0 }
     )
   );
 
@@ -300,17 +301,17 @@ function screen01() {
     )
   );
 
-  sensors.push(
-    new BlockCore(
+  blocks.push(
+    new Block(
       world,
       {
         x: 2000,
-        y: 650,
-        w: 50,
-        h: windowHeight,
-        color: sensorColor,
+        y: 560,
+        w: 10,
+        h: 100,
+        color: color(100, 100, 100),
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, angle: 0 }
     )
   );
 
@@ -385,11 +386,11 @@ function rayCasting() {
   blocks.forEach((block) => {
     console.log(block + "2");
     let wall = new Boundary(
-      block.body.position.x,
+      block.body.position.x + 100,
       block.body.position.y,
       /** TODO: block.body does not provide its dimensions. Please elaborate on other solutions */
-      block.body.width,
-      block.body.height
+      block.body.position.x - 100,
+      block.body.position.y
     );
     console.log("3");
     console.log(wall);
@@ -467,17 +468,8 @@ function screenEvents() {
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
-        Body.setVelocity(player.body, { x: 40, y: 0 });
-        soundXylophoneC2.play();
-      }
-
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[12].body
-      ) {
-        console.log("Collided with sensor 12");
         isAutoMoving = false;
-        Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
+        Body.setVelocity(sensors[11].body, { x: 10, y: 10 });
         soundXylophoneA2.play();
 
         setTimeout(function () {
@@ -734,7 +726,7 @@ function draw() {
     sensors.forEach((sensor) => sensor.draw());
 
     particle.update(player.body.position.x - 200, player.body.position.y - 200);
-    particle.show();
+    //particle.show();
     particle.look(walls);
 
     for (let wall of walls) {

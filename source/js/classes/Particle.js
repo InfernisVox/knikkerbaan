@@ -19,10 +19,12 @@ class Particle {
    * ...
    */
   constructor() {
+    this.angle = null;
     this.pos = createVector(width / 2, height / 2);
     this.rays = [];
-    let rays = 300;
+    let rays = 350;
     for (let a = 0; a < 359.9; a += 360 / rays) {
+      this.angle = radians(a);
       this.rays.push(new Ray(this.pos, radians(a)));
     }
   }
@@ -59,9 +61,9 @@ class Particle {
       }
 
       if (closest) {
-        stroke(255, 100);
+        stroke(0, 5);
         strokeWeight(4);
-        line(this.pos.x, this.pos.y, closest.x, closest.y);
+        line(closest.x, closest.y, closest.x * 50, closest.y * 50);
       }
     }
   }
