@@ -42,6 +42,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgRoom;
 /** @type {Image} */ let imgXylophone;
 /** @type {Image} */ let gifPsychedelic;
+/** @type {Image} */ let gifelgato;
 /** @type {SoundFile} */ let soundGuitarAMajor;
 /** @type {SoundFile} */ let soundXylophoneA1;
 /** @type {SoundFile} */ let soundXylophoneB1;
@@ -629,6 +630,10 @@ function preload() {
   gifPsychedelic = loadImage(gifPsychedelic_Src);
   loadingMessage(2, gifPsychedelic_Src);
 
+  let gifelgato_Src = "./assets/images/el_gato.gif";
+  gifelgato = loadImage(gifelgato_Src);
+  loadingMessage(2, gifelgato_Src);
+
   let soundGuitarAMajor_Src = "./assets/audio/instruments/amajor.wav";
   soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);
   loadingMessage(3, soundGuitarAMajor_Src);
@@ -727,6 +732,7 @@ function draw() {
     pop();
     image(imgRoom, -205, -80, 5085, 720);
     image(gifPsychedelic, 0, 0, 100, 100);
+    image(gifelgato, 0, 0, 1280/2, 720/2);
     image(imgXylophone, 800, 450, 500, 200);
 
     blocks.forEach((block) => block.draw());
