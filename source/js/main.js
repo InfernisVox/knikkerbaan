@@ -43,6 +43,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgXylophone;
 /** @type {Image} */ let gifPsychedelic;
 /** @type {Image} */ let gifelgato;
+/** @type {Image} */ let svgBall;
 /** @type {SoundFile} */ let soundGuitarAMajor;
 /** @type {SoundFile} */ let soundXylophoneA1;
 /** @type {SoundFile} */ let soundXylophoneB1;
@@ -136,24 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.code === "Space") {
       if (e.repeat) {
         isReversing = true;
-        if (playerPositions.length !== 2) {
-          Body.setStatic(player.body, true);
-
-          Body.setPosition(
-            player.body,
-            playerPositions[playerPositions.length - 1]
-          );
-
-          Body.setAngle(
-            player.body,
-            playerRotations[playerRotations.length - 1]
-          );
-
-          playerRotations.pop();
-          playerPositions.pop();
-        } else {
-          isReversing = false;
-        }
       } else {
         Body.applyForce(player.body, player.body.position, {
           x: 0.015,
@@ -196,20 +179,6 @@ function screen01() {
     new Block(
       world,
       {
-        x: 310,
-        y: 165,
-        w: 40,
-        h: 10,
-        color: blockColor,
-      },
-      { isStatic: true, angle: 0.15 }
-    )
-  );
-
-  blocks.push(
-    new Block(
-      world,
-      {
         x: 440,
         y: 215,
         w: 170,
@@ -217,6 +186,22 @@ function screen01() {
         color: blockColor,
       },
       { isStatic: true, angle: 0.25 }
+    )
+  );
+
+  blocks.push(
+    new BlockCore(
+      world,
+      {
+        x: 350,
+        y: 500,
+        w: 300,
+        h: 700,
+        color: color(100, 170, 50),
+      },
+      {
+        isStatic: true,
+      }
     )
   );
 
@@ -301,17 +286,31 @@ function screen01() {
     )
   );
 
-  sensors.push(
-    new BlockCore(
+  blocks.push(
+    new Block(
       world,
       {
         x: 2000,
-        y: 650,
-        w: 50,
-        h: windowHeight,
-        color: sensorColor,
+        y: 560,
+        w: 10,
+        h: 100,
+        color: color(100, 100, 100),
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, angle: 0 }
+    )
+  );
+
+  blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 400,
+        y: 400,
+        fromFile: "assets/images/Slide.svg",
+        scale: 1,
+        color: "white",
+      },
+      { isStatic: true, friction: 0.0 }
     )
   );
 
@@ -386,11 +385,11 @@ function rayCasting() {
   blocks.forEach((block) => {
     console.log(block + "2");
     let wall = new Boundary(
-      block.body.position.x,
+      block.body.position.x + 100,
       block.body.position.y,
       /** TODO: block.body does not provide its dimensions. Please elaborate on other solutions */
-      block.body.width,
-      block.body.height
+      block.body.position.x - 100,
+      block.body.position.y
     );
     console.log("3");
     console.log(wall);
@@ -468,17 +467,8 @@ function screenEvents() {
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
-        Body.setVelocity(player.body, { x: 40, y: 0 });
-        soundXylophoneC2.play();
-      }
-
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[12].body
-      ) {
-        console.log("Collided with sensor 12");
         isAutoMoving = false;
-        Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
+        Body.setVelocity(sensors[11].body, { x: 10, y: 10 });
         soundXylophoneA2.play();
 
         setTimeout(function () {
@@ -589,8 +579,6 @@ function setPlayerBoundaries() {
  * the *rewind* effect when the user presses the spacebar.
  */
 function savePlayerProperties() {
-  if (!isReversing) Body.setStatic(player.body, false);
-
   playerPosition_New = player.body.position;
   const { x: ballX, y: ballY } = playerPosition_New;
 
@@ -626,9 +614,9 @@ function preload() {
   playerImage = loadImage(playerImageSrc);
   loadingMessage(1, playerImageSrc);
 
-  let gifPsychedelic_Src = "./assets/images/psychedelic.gif";
-  gifPsychedelic = loadImage(gifPsychedelic_Src);
-  loadingMessage(2, gifPsychedelic_Src);
+  let svgBall_Src = "./assets/images/ball.svg";
+  svgBall = loadImage(svgBall_Src);
+  loadingMessage(2, svgBall_Src);
 
   let gifelgato_Src = "./assets/images/el_gato.gif";
   gifelgato = loadImage(gifelgato_Src);
@@ -703,12 +691,24 @@ function setup() {
 
   initScreens(screens);
   screenEvents();
-  rayCasting();
+  //rayCasting();
 }
 
 function draw() {
   background(200, 150, 100);
   Engine.update(engine);
+
+  reverser: if (isReversing) {
+    if (playerPositions.length <= 5 || isReversing === false) {
+      break reverser;
+    }
+
+    Body.setPosition(player.body, playerPositions[playerPositions.length - 1]);
+
+    Body.setAngle(player.body, playerRotations[playerRotations.length - 1]);
+    playerRotations.pop();
+    playerPositions.pop();
+  }
 
   rotator -= 0.05;
 
@@ -731,7 +731,6 @@ function draw() {
     image(imgRoom, 50, -80, 5085, 720);
     pop();
     image(imgRoom, -205, -80, 5085, 720);
-    image(gifPsychedelic, 0, 0, 100, 100);
     image(gifelgato, 0, 0, 1280/2, 720/2);
     image(imgXylophone, 800, 450, 500, 200);
 
@@ -739,9 +738,9 @@ function draw() {
 
     sensors.forEach((sensor) => sensor.draw());
 
-    particle.update(player.body.position.x - 200, player.body.position.y - 200);
-    particle.show();
-    particle.look(walls);
+    //particle.update(player.body.position.x - 200, player.body.position.y - 200);
+    //particle.show();
+    //particle.look(walls);
 
     for (let wall of walls) {
       wall.show();
