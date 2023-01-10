@@ -192,21 +192,6 @@ function screen01() {
   blockColor = color(255, 0, 255, 100);
 
   blocks.push(
-    new PolygonFromSVG(
-      world,
-      {
-        x: 0,
-        y: 0,
-        fromId: "../assets/images/slide.svg",
-        scale: 0.6,
-        color: "lime",
-        force: { x: 0.0, y: -0.04 },
-      },
-      { isStatic: true, friction: 0.0 }
-    )
-  );
-
-  blocks.push(
     new Block(
       world,
       {
@@ -217,6 +202,22 @@ function screen01() {
         color: blockColor,
       },
       { isStatic: true, angle: 0.25 }
+    )
+  );
+
+  blocks.push(
+    new BlockCore(
+      world,
+      {
+        x: 350,
+        y: 500,
+        w: 300,
+        h: 700,
+        color: color(100, 170, 50),
+      },
+      {
+        isStatic: true,
+      }
     )
   );
 
