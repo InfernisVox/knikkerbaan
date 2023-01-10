@@ -42,6 +42,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgRoom;
 /** @type {Image} */ let imgXylophone;
 /** @type {Image} */ let gifPsychedelic;
+/** @type {Image} */ let svgBall;
 /** @type {SoundFile} */ let soundGuitarAMajor;
 /** @type {SoundFile} */ let soundXylophoneA1;
 /** @type {SoundFile} */ let soundXylophoneB1;
@@ -313,6 +314,20 @@ function screen01() {
         color: color(100, 100, 100),
       },
       { isStatic: true, angle: 0 }
+    )
+  );
+
+  blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 400,
+        y: 400,
+        fromFile: "assets/images/Slide.svg",
+        scale: 1,
+        color: "white",
+      },
+      { isStatic: false, friction: 0.0 }
     )
   );
 
@@ -622,6 +637,10 @@ function preload() {
   gifPsychedelic = loadImage(gifPsychedelic_Src);
   loadingMessage(2, gifPsychedelic_Src);
 
+  let svgBall_Src = "./assets/images/ball.svg";
+  svgBall = loadImage(svgBall_Src);
+  loadingMessage(2, svgBall_Src);
+
   let soundGuitarAMajor_Src = "./assets/audio/instruments/amajor.wav";
   soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);
   loadingMessage(3, soundGuitarAMajor_Src);
@@ -691,7 +710,7 @@ function setup() {
 
   initScreens(screens);
   screenEvents();
-  rayCasting();
+  //rayCasting();
 }
 
 function draw() {
@@ -726,9 +745,9 @@ function draw() {
 
     sensors.forEach((sensor) => sensor.draw());
 
-    particle.update(player.body.position.x - 200, player.body.position.y - 200);
+    //particle.update(player.body.position.x - 200, player.body.position.y - 200);
     //particle.show();
-    particle.look(walls);
+    //particle.look(walls);
 
     for (let wall of walls) {
       wall.show();
