@@ -136,24 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.code === "Space") {
       if (e.repeat) {
         isReversing = true;
-        if (playerPositions.length !== 2) {
-          Body.setStatic(player.body, true);
-
-          Body.setPosition(
-            player.body,
-            playerPositions[playerPositions.length - 1]
-          );
-
-          Body.setAngle(
-            player.body,
-            playerRotations[playerRotations.length - 1]
-          );
-
-          playerRotations.pop();
-          playerPositions.pop();
-        } else {
-          isReversing = false;
-        }
       } else {
         Body.applyForce(player.body, player.body.position, {
           x: 0.015,
@@ -596,8 +578,6 @@ function setPlayerBoundaries() {
  * the *rewind* effect when the user presses the spacebar.
  */
 function savePlayerProperties() {
-  if (!isReversing) Body.setStatic(player.body, false);
-
   playerPosition_New = player.body.position;
   const { x: ballX, y: ballY } = playerPosition_New;
 
@@ -632,10 +612,6 @@ function preload() {
   let playerImageSrc = "./assets/images/Wollball.png";
   playerImage = loadImage(playerImageSrc);
   loadingMessage(1, playerImageSrc);
-
-  let gifPsychedelic_Src = "./assets/images/psychedelic.gif";
-  gifPsychedelic = loadImage(gifPsychedelic_Src);
-  loadingMessage(2, gifPsychedelic_Src);
 
   let svgBall_Src = "./assets/images/ball.svg";
   svgBall = loadImage(svgBall_Src);
@@ -717,6 +693,18 @@ function draw() {
   background(200, 150, 100);
   Engine.update(engine);
 
+  reverser: if (isReversing) {
+    if (playerPositions.length <= 5 || isReversing === false) {
+      break reverser;
+    }
+
+    Body.setPosition(player.body, playerPositions[playerPositions.length - 1]);
+
+    Body.setAngle(player.body, playerRotations[playerRotations.length - 1]);
+    playerRotations.pop();
+    playerPositions.pop();
+  }
+
   rotator -= 0.05;
 
   Body.setAngle(sensors[1].body, 0);
@@ -738,7 +726,6 @@ function draw() {
     image(imgRoom, 50, -80, 5085, 720);
     pop();
     image(imgRoom, -205, -80, 5085, 720);
-    image(gifPsychedelic, 0, 0, 100, 100);
     image(imgXylophone, 800, 450, 500, 200);
 
     blocks.forEach((block) => block.draw());
