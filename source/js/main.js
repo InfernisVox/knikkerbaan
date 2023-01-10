@@ -43,6 +43,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgXylophone;
 /** @type {Image} */ let gifPsychedelic;
 /** @type {Image} */ let gifelgato;
+/** @type {Image} */ let imgBed;
 /** @type {SoundFile} */ let soundGuitarAMajor;
 /** @type {SoundFile} */ let soundXylophoneA1;
 /** @type {SoundFile} */ let soundXylophoneB1;
@@ -193,7 +194,7 @@ function screen01() {
   sensorColor = color(0, 255, 50, 100);
   blockColor = color(255, 0, 255, 100);
 
-  blocks.push(
+  /*blocks.push(
     new Block(
       world,
       {
@@ -205,7 +206,7 @@ function screen01() {
       },
       { isStatic: true, angle: 0.15 }
     )
-  );
+  );*/
 
   blocks.push(
     new Block(
@@ -395,16 +396,31 @@ function screen01() {
       { isStatic: true, angle: 0.15 }
     )
   );
+
+  blocks.push(new PolygonFromSVG(
+    world, 
+    {
+      x: 320,
+      y: 500,
+      w: 685,
+      h: 511,
+      fromFile: "assets/images/bed.svg",
+      scale: 0.95,
+      color: color(255, 255, 255, 0),
+      image: imgBed,
+    }, { isStatic: true, angle: 0 }
+  ));
+
 }
 
-function rayCasting() {
+/*function rayCasting() {
   console.log("1");
   blocks.forEach((block) => {
     console.log(block + "2");
     let wall = new Boundary(
       block.body.position.x,
       block.body.position.y,
-      /** TODO: block.body does not provide its dimensions. Please elaborate on other solutions */
+      // TODO: block.body does not provide its dimensions. Please elaborate on other solutions 
       block.body.width,
       block.body.height
     );
@@ -412,9 +428,9 @@ function rayCasting() {
     console.log(wall);
     walls.push(wall);
   });
-  /** TODO: Please complete the constructor of this class */
+  // TODO: Please complete the constructor of this class 
   particle = new Particle(player.body.position.x, player.body.position.y);
-}
+}*/
 
 function screenEvents() {
   // check if Wollknäuel collided with sensors[0]
@@ -561,7 +577,7 @@ function initPlayer() {
   player = new Ball(
     world,
     {
-      x: 300,
+      x: 180,
       y: -10,
       r: 30,
       color: "red",
@@ -702,6 +718,10 @@ function preload() {
   imgRoom = loadImage(imgRoom_Src);
   loadingMessage(6, imgRoom_Src);
 
+  let imgBed_Src = "./assets/images/bed.png";
+  imgBed = loadImage(imgBed_Src);
+  loadingMessage(6, imgBed_Src);
+
   let imgXylophone_Src = "./assets/images/xylophone.svg";
   imgXylophone = loadImage(imgXylophone_Src);
   loadingMessage(7, imgXylophone_Src);
@@ -723,7 +743,7 @@ function setup() {
 
   initScreens(screens);
   screenEvents();
-  rayCasting();
+  //rayCasting();
 }
 
 function draw() {
@@ -752,16 +772,17 @@ function draw() {
     pop();
     image(imgRoom, -205, -80, 5085, 720);
     image(gifPsychedelic, 0, 0, 100, 100);
-    image(gifelgato, 0, 0, 1280/2, 720/2);
     image(imgXylophone, 800, 450, 500, 200);
+    //image(imgBed, 0, 165, 620, 465);
+    image(gifelgato, -60, -40, 470, 264);
 
     blocks.forEach((block) => block.draw());
 
     sensors.forEach((sensor) => sensor.draw());
 
-    particle.update(player.body.position.x - 200, player.body.position.y - 200);
-    particle.show();
-    particle.look(walls);
+    //particle.update(player.body.position.x - 200, player.body.position.y - 200);
+    //particle.show();
+    //particle.look(walls);
 
     for (let wall of walls) {
       wall.show();
