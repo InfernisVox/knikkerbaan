@@ -38,7 +38,7 @@ canvas {
 }
 
 #canvas::before {
-  content: "";
+  content: "knikkerbaan";
   position: absolute;
   top: 0;
   left: 0;
