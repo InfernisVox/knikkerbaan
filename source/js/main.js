@@ -327,7 +327,7 @@ function screen01() {
         scale: 1,
         color: "white",
       },
-      { isStatic: false, friction: 0.0 }
+      { isStatic: true, friction: 0.0 }
     )
   );
 
