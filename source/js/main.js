@@ -158,8 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } else {
         Body.applyForce(player.body, player.body.position, {
-          x: 0.015,
-          y: 0.07,
+          x: 0.08 ,
+          y: 0.05,
         });
       }
     }
@@ -400,7 +400,7 @@ function screen01() {
   blocks.push(new PolygonFromSVG(
     world, 
     {
-      x: 320,
+      x: 300,
       y: 500,
       w: 685,
       h: 511,
@@ -577,7 +577,7 @@ function initPlayer() {
   player = new Ball(
     world,
     {
-      x: 180,
+      x: 140,
       y: -10,
       r: 30,
       color: "red",
@@ -587,10 +587,10 @@ function initPlayer() {
     {
       label: "Wollknäuel",
       isStatic: false,
-      density: 0.0005,
-      restitution: 0.8,
+      density: 0.001,
+      restitution: 0.9,
       friction: 0.01,
-      frictionAir: 0.005,
+      frictionAir: 0.009,
       angle: 0,
     }
   );
@@ -773,8 +773,7 @@ function draw() {
     image(imgRoom, -205, -80, 5085, 720);
     image(gifPsychedelic, 0, 0, 100, 100);
     image(imgXylophone, 800, 450, 500, 200);
-    //image(imgBed, 0, 165, 620, 465);
-    image(gifelgato, -60, -40, 470, 264);
+    image(gifelgato, -70, -10, 470, 264);
 
     blocks.forEach((block) => block.draw());
 
