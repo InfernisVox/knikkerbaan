@@ -22,19 +22,36 @@ function screen01() {
   sensorColor = color(0, 255, 50, 100);
   blockColor = color(255, 0, 255, 100);
 
-  /*blocks.push(
+  blocks.push(
     new Block(
       world,
       {
-        x: 310,
-        y: 165,
-        w: 40,
-        h: 10,
-        color: blockColor,
+        x: 1000,
+        y: 590,
+        w: 480,
+        h: 80,
+        color: color(255, 255, 255, 0),
       },
-      { isStatic: true, angle: 0.15 }
+      { isStatic: true, angle: 0.06 }
     )
-  );*/
+  );
+
+  blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 300,
+        y: 500,
+        w: 685,
+        h: 511,
+        fromFile: "assets/images/bed.svg",
+        scale: 0.95,
+        color: color(255, 255, 255, 0),
+        image: imgBed,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
 
   blocks.push(
     new Block(
@@ -48,58 +65,6 @@ function screen01() {
         sound: catsound.play(),
       },
       { isStatic: true, angle: 0 }
-    )
-  );
-
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 440,
-        y: 215,
-        w: 170,
-        h: 10,
-        color: blockColor,
-      },
-      { isStatic: true, angle: 0.25 }
-    )
-  );
-
-  let board = new Block(
-    world,
-    {
-      x: 630,
-      y: 270,
-      w: 250,
-      h: 10,
-      color: "black",
-    },
-    { isStatic: false, frictionAir: 0.01 }
-  );
-
-  board.constrainTo(null, {
-    pointA: { x: 0, y: 0 },
-    pointB: { x: board.body.position.x, y: board.body.position.y },
-    length: 0,
-    stiffness: 1,
-    draw: true,
-    color: color(255, 0, 0),
-    width: 2,
-  });
-
-  blocks.push(board);
-
-  sensors.push(
-    new BlockCore(
-      world,
-      {
-        x: 630,
-        y: windowHeight / 2,
-        w: 50,
-        h: windowHeight * 2,
-        color: sensorColor,
-      },
-      { isStatic: true, isSensor: true }
     )
   );
 
@@ -146,51 +111,6 @@ function screen01() {
       { isStatic: true, isSensor: true }
     )
   );
-
-  sensors.push(
-    new BlockCore(
-      world,
-      {
-        x: 4170,
-        y: 605,
-        w: 70,
-        h: 70,
-        color: sensorColor,
-      },
-      { isStatic: true, isSensor: true }
-    )
-  );
-
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 1000,
-        y: 590,
-        w: 480,
-        h: 80,
-        color: color(255, 255, 255, 0),
-      },
-      { isStatic: true, angle: 0.06 }
-    )
-  );
-
-  blocks.push(
-    new PolygonFromSVG(
-      world,
-      {
-        x: 300,
-        y: 500,
-        w: 685,
-        h: 511,
-        fromFile: "assets/images/bed.svg",
-        scale: 0.95,
-        color: color(255, 255, 255, 0),
-        image: imgBed,
-      },
-      { isStatic: true, angle: 0 }
-    )
-  );
 }
 
 /**
@@ -235,52 +155,52 @@ function screenEvents() {
     for (const pair of pairs) {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
         console.log("Collided with sensor 0");
-        soundGuitarAMajor.play();
+        soundXylophoneA1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
-        soundXylophoneA1.play();
+        soundXylophoneB1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[2].body) {
         console.log("Collided with sensor 2");
-        soundXylophoneB1.play();
+        soundXylophoneC1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[3].body) {
         console.log("Collided with sensor 3");
-        soundXylophoneC1.play();
+        soundXylophoneD1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[4].body) {
         console.log("Collided with sensor 4");
-        soundXylophoneD1.play();
+        soundXylophoneE1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[5].body) {
         console.log("Collided with sensor 5");
-        soundXylophoneE1.play();
+        soundXylophoneF1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[6].body) {
         console.log("Collided with sensor 6");
-        soundXylophoneF1.play();
+        soundXylophoneG1.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[7].body) {
         console.log("Collided with sensor 7");
-        soundXylophoneG1.play();
+        soundXylophoneA2.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[8].body) {
         console.log("Collided with sensor 8");
-        soundXylophoneA2.play();
+        soundXylophoneB2.play();
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[9].body) {
         console.log("Collided with sensor 9");
-        soundXylophoneB2.play();
+        soundXylophoneC2.play();
       }
 
       if (
@@ -288,30 +208,8 @@ function screenEvents() {
         pair.bodyB === sensors[10].body
       ) {
         console.log("Collided with sensor 10");
-        soundXylophoneC2.play();
-      }
-
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[11].body
-      ) {
-        console.log("Collided with sensor 11");
         Body.setVelocity(player.body, { x: 40, y: 0 });
         soundXylophoneC2.play();
-      }
-
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[12].body
-      ) {
-        console.log("Collided with sensor 12");
-        isAutoMoving = false;
-        Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
-        soundXylophoneA2.play();
-
-        setTimeout(function () {
-          isAutoMoving = true;
-        }, 1000);
       }
     }
   });

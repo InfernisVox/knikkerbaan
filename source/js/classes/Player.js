@@ -205,7 +205,9 @@ class Player extends Ball {
    */
   setAutoMove(bool, velocity = 0.01) {
     if (bool) {
-      Matter.Body.setAngularVelocity(player.body, velocity);
+      if (isDragged != true) {
+        Matter.Body.setAngularVelocity(player.body, velocity);
+      }
     }
   }
 
