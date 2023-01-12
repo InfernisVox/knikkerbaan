@@ -179,15 +179,16 @@ function draw() {
     pop();
     image(imgRoom, -205, -80, 5085, 720);
     //image(gifPsychedelic, 0, 0, 100, 100);
+    image(gifelgato, -70, -10, 470, 264);
+
+    sensors.forEach((sensor) => sensor.draw());
+
+    blocks.forEach((block) => block.draw());
+
     push();
     rotate(0.01);
     image(imgXylophone, 750, 510, 540, 120);
     pop();
-    image(gifelgato, -70, -10, 470, 264);
-
-    blocks.forEach((block) => block.draw());
-
-    sensors.forEach((sensor) => sensor.draw());
 
     //particle.update(player.body.position.x - 200, player.body.position.y - 200);
     //particle.show();

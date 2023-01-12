@@ -6,7 +6,6 @@ function loadAssets() {
   // @ts-ignore
   assetCalc = -new Error().lineNumber;
 
-  // TODO: Dynamic implementation needed to save lines of code
   let playerImageSrc = "./assets/images/Wollball.png";
   playerImage = loadImage(playerImageSrc);
   loadingMessage(1, playerImageSrc);
@@ -79,9 +78,8 @@ function loadAssets() {
   imgXylophone = loadImage(imgXylophone_Src);
   loadingMessage(7, imgXylophone_Src);
 
-  // @ts-ignore
   assetCalc += new Error().lineNumber;
-  assetTotal = (assetCalc - 2) / 4;
+  assetTotal = (assetCalc - 2) / 4 - 11;
   console.log(
     `%c\n-------------------------\nTotal assets loaded: %c${assetTotal}`,
     "color: #7289DA; font-weight: bold;"
