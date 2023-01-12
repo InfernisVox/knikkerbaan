@@ -179,13 +179,13 @@ function screen01() {
     new PolygonFromSVG(
       world,
       {
-        x: 300,
-        y: 500,
+        x: 380,
+        y: 510,
         w: 685,
         h: 511,
         fromFile: "assets/images/bed.svg",
         scale: 0.95,
-        color: color(255, 255, 255),
+        color: color(255, 255, 255, 0),
         image: imgBed,
       },
       { isStatic: true, angle: 0 }
