@@ -179,7 +179,10 @@ function draw() {
     pop();
     image(imgRoom, -205, -80, 5085, 720);
     //image(gifPsychedelic, 0, 0, 100, 100);
-    image(imgXylophone, 750, 450, 500, 200);
+    push();
+    rotate(0.01);
+    image(imgXylophone, 750, 510, 540, 120);
+    pop();
     image(gifelgato, -70, -10, 470, 264);
 
     blocks.forEach((block) => block.draw());

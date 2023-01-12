@@ -185,7 +185,7 @@ function screen01() {
         h: 511,
         fromFile: "assets/images/bed.svg",
         scale: 0.95,
-        color: color(255, 255, 255, 0),
+        color: color(255, 255, 255),
         image: imgBed,
       },
       { isStatic: true, angle: 0 }
