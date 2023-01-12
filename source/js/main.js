@@ -290,7 +290,7 @@ function screen01() {
     );
   }
 
-  blocks.push(
+  /*blocks.push(
     new Block(
       world,
       {
@@ -302,7 +302,7 @@ function screen01() {
       },
       { isStatic: true, angle: -0.3 }
     )
-  );
+  );*/
 
   blocks.push(
     new BlockCore(
@@ -387,13 +387,13 @@ function screen01() {
     new Block(
       world,
       {
-        x: 1050,
+        x: 1000,
         y: 590,
-        w: 500,
-        h: 100,
+        w: 480,
+        h: 80,
         color: color(255, 255, 255, 0),
       },
-      { isStatic: true, angle: 0.15 }
+      { isStatic: true, angle: 0.06 }
     )
   );
 
@@ -487,27 +487,18 @@ function screenEvents() {
         soundXylophoneB2.play();
       }
 
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[10].body
-      ) {
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[10].body) {
         console.log("Collided with sensor 10");
         soundXylophoneC2.play();
       }
 
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[11].body
-      ) {
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[11].body) {
         console.log("Collided with sensor 11");
         Body.setVelocity(player.body, { x: 40, y: 0 });
         soundXylophoneC2.play();
       }
 
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[12].body
-      ) {
+      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[12].body) {
         console.log("Collided with sensor 12");
         isAutoMoving = false;
         Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
@@ -722,7 +713,7 @@ function preload() {
   imgBed = loadImage(imgBed_Src);
   loadingMessage(6, imgBed_Src);
 
-  let imgXylophone_Src = "./assets/images/xylophone.svg";
+  let imgXylophone_Src = "./assets/images/xylophone.png";
   imgXylophone = loadImage(imgXylophone_Src);
   loadingMessage(7, imgXylophone_Src);
 
@@ -771,8 +762,8 @@ function draw() {
     image(imgRoom, 50, -80, 5085, 720);
     pop();
     image(imgRoom, -205, -80, 5085, 720);
-    image(gifPsychedelic, 0, 0, 100, 100);
-    image(imgXylophone, 800, 450, 500, 200);
+    //image(gifPsychedelic, 0, 0, 100, 100);
+    image(imgXylophone, 750, 450, 500, 200);
     image(gifelgato, -70, -10, 470, 264);
 
     blocks.forEach((block) => block.draw());
