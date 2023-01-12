@@ -3,9 +3,6 @@
 
 Matter.use("matter-wrap");
 
-// @ts-check
-("use strict");
-
 // Definitions ##########################################################
 /** @typedef { import("../../@types/p5/index").Image } Image */
 /** @typedef { import("../../@types/p5/index").SoundFile } SoundFile */
