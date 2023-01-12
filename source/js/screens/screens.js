@@ -22,103 +22,6 @@ function screen01() {
   sensorColor = color(0, 255, 50, 100);
   blockColor = color(255, 0, 255, 100);
 
-  /*blocks.push(
-    new Block(
-      world,
-      {
-        x: 310,
-        y: 165,
-        w: 40,
-        h: 10,
-        color: blockColor,
-      },
-      { isStatic: true, angle: 0.15 }
-    )
-  );*/
-
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 0,
-        y: 0,
-        w: 10,
-        h: 10,
-        color: blockColor,
-        sound: catsound.play(),
-      },
-      { isStatic: true, angle: 0 }
-    )
-  );
-
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 440,
-        y: 215,
-        w: 170,
-        h: 10,
-        color: blockColor,
-      },
-      { isStatic: true, angle: 0.25 }
-    )
-  );
-
-  let board = new Block(
-    world,
-    {
-      x: 630,
-      y: 270,
-      w: 250,
-      h: 10,
-      color: "black",
-    },
-    { isStatic: false, frictionAir: 0.01 }
-  );
-
-  board.constrainTo(null, {
-    pointA: { x: 0, y: 0 },
-    pointB: { x: board.body.position.x, y: board.body.position.y },
-    length: 0,
-    stiffness: 1,
-    draw: true,
-    color: color(255, 0, 0),
-    width: 2,
-  });
-
-  blocks.push(board);
-
-  sensors.push(
-    new BlockCore(
-      world,
-      {
-        x: 630,
-        y: windowHeight / 2,
-        w: 50,
-        h: windowHeight * 2,
-        color: sensorColor,
-      },
-      { isStatic: true, isSensor: true }
-    )
-  );
-
-  for (let i = 0; i < 10; i++) {
-    sensors.push(
-      new BlockCore(
-        world,
-        {
-          x: 800 + i * 46,
-          y: windowHeight / 2,
-          w: 15,
-          h: windowHeight * 2,
-          color: sensorColor,
-        },
-        { isStatic: true, isSensor: true }
-      )
-    );
-  }
-
   blocks.push(
     new BlockCore(
       world,
@@ -130,34 +33,6 @@ function screen01() {
         color: "gray",
       },
       { isStatic: true }
-    )
-  );
-
-  sensors.push(
-    new BlockCore(
-      world,
-      {
-        x: 2000,
-        y: 650,
-        w: 50,
-        h: windowHeight,
-        color: sensorColor,
-      },
-      { isStatic: true, isSensor: true }
-    )
-  );
-
-  sensors.push(
-    new BlockCore(
-      world,
-      {
-        x: 4170,
-        y: 605,
-        w: 70,
-        h: 70,
-        color: sensorColor,
-      },
-      { isStatic: true, isSensor: true }
     )
   );
 
@@ -189,6 +64,65 @@ function screen01() {
         image: imgBed,
       },
       { isStatic: true, angle: 0 }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 150,
+        y: 100,
+        w: 120,
+        h: 250,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 0,
+        y: 0,
+        w: 10,
+        h: 10,
+        color: blockColor,
+        sound: catsound.play(),
+      },
+      { isStatic: true, angle: 0.25 }
+    )
+  );
+
+  for (let i = 0; i < 10; i++) {
+    sensors.push(
+      new BlockCore(
+        world,
+        {
+          x: 820 + i * 47,
+          y: windowHeight / 2,
+          w: 15,
+          h: windowHeight * 2,
+          color: sensorColor,
+        },
+        { isStatic: true, isSensor: true }
+      )
+    );
+  }
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 1700,
+        y: 600,
+        w: 120,
+        h: 100,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true }
     )
   );
 }
@@ -235,7 +169,14 @@ function screenEvents() {
     for (const pair of pairs) {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
         console.log("Collided with sensor 0");
-        soundGuitarAMajor.play();
+
+        // Not working
+        player.setAutoMove(false, 0);
+
+        setTimeout(function () {
+          Body.setAngularVelocity(player.body, 10);
+          console.log("inside");
+        }, 1);
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
@@ -296,22 +237,7 @@ function screenEvents() {
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
-        Body.setVelocity(player.body, { x: 40, y: 0 });
-        soundXylophoneC2.play();
-      }
-
-      if (
-        pair.bodyA.label === "Wollknäuel" &&
-        pair.bodyB === sensors[12].body
-      ) {
-        console.log("Collided with sensor 12");
-        isAutoMoving = false;
-        Body.setVelocity(sensors[1].body, { x: 10, y: 10 });
-        soundXylophoneA2.play();
-
-        setTimeout(function () {
-          isAutoMoving = true;
-        }, 1000);
+        console.log("Close door");
       }
     }
   });
