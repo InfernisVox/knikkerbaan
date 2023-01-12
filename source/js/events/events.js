@@ -1,48 +1,6 @@
 // @ts-check
 "use strict";
 
-// Events ##########################################################
-// document.addEventListener("DOMContentLoaded", () => {
-//   document.body.onkeydown = function (/** @type {KeyboardEvent} */ e) {
-//     if (e.code === "Space") {
-//       if (e.repeat) {
-//         isReversing = true;
-//         if (playerPositions.length !== 2) {
-//           Body.setStatic(player.body, true);
-
-//           Body.setPosition(
-//             player.body,
-//             playerPositions[playerPositions.length - 1]
-//           );
-
-//           Body.setAngle(
-//             player.body,
-//             playerRotations[playerRotations.length - 1]
-//           );
-
-//           playerRotations.pop();
-//           playerPositions.pop();
-//         } else {
-//           isReversing = false;
-//         }
-//       } else {
-//         Body.applyForce(player.body, player.body.position, {
-//           x: 0.08,
-//           y: 0.05,
-//         });
-//       }
-//     }
-//   };
-
-//   document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
-//     if (e.code === "Space") {
-//       Body.setPosition(player.body, playerPositions[playerPositions.length]);
-//       Body.setStatic(player.body, false);
-//       isReversing = false;
-//     }
-//   };
-// });
-
 /**
  * `initMouse` creates a new instance of the custom `Mouse` class. The
  * function specifies all the events that the mouse should listen to when

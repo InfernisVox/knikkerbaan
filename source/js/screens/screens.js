@@ -108,7 +108,7 @@ function screen01() {
       new BlockCore(
         world,
         {
-          x: 850 + i * 46,
+          x: 800 + i * 46,
           y: windowHeight / 2,
           w: 15,
           h: windowHeight * 2,
@@ -118,20 +118,6 @@ function screen01() {
       )
     );
   }
-
-  /*blocks.push(
-    new Block(
-      world,
-      {
-        x: 1200,
-        y: 560,
-        w: 500,
-        h: 10,
-        color: blockColor,
-      },
-      { isStatic: true, angle: -0.3 }
-    )
-  );*/
 
   blocks.push(
     new BlockCore(
@@ -160,43 +146,6 @@ function screen01() {
       { isStatic: true, isSensor: true }
     )
   );
-
-  spin = new Block(
-    world,
-    {
-      x: 3000,
-      y: 500,
-      w: 50,
-      h: 300,
-      color: "red",
-    },
-    { isStatic: true, angle: 0, label: "spin" }
-  );
-  blocks.push(spin);
-
-  let canon = new Block(
-    world,
-    {
-      x: 4000,
-      y: 605,
-      w: 300,
-      h: 50,
-      color: "purple",
-    },
-    { isStatic: false, angle: 0, label: "canon" }
-  );
-
-  blocks.push(canon);
-
-  canon.constrainTo(null, {
-    pointA: { x: 0, y: 0 },
-    pointB: { x: canon.body.position.x, y: canon.body.position.y },
-    length: 0,
-    stiffness: 0.001,
-    draw: true,
-    color: color(255, 0, 0),
-    width: 2,
-  });
 
   sensors.push(
     new BlockCore(
