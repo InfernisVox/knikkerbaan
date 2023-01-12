@@ -20,7 +20,7 @@ function initScreens(screens) {
 
 function screen01() {
   sensorColor = color(0, 255, 50, 100);
-  blockColor = color(255, 0, 255, 100);
+  blockColor = color(255, 0, 255);
 
   blocks.push(
     new BlockCore(
@@ -125,6 +125,76 @@ function screen01() {
       { isStatic: true, isSensor: true }
     )
   );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 2000,
+        y: 415,
+        w: 15,
+        h: 190,
+        color: blockColor,
+      },
+      { isStatic: true }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 2200,
+        y: 480,
+        w: 15,
+        h: 320,
+        color: blockColor,
+      },
+      { isStatic: true }
+    )
+  );
+
+  canon = new BlockCore(
+    world,
+    {
+      x: 2100,
+      y: 240,
+      w: 240,
+      h: 70,
+      color: blockColor,
+    },
+    { isStatic: true, angle: canonangle, isSensor: true }
+  );
+
+  blocks.push(canon);
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 2100,
+        y: 540,
+        w: 190,
+        h: 190,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true }
+    )
+  );
+
+  elevator = new Block(
+    world,
+    {
+      x: 2100,
+      y: windowHeight + 250,
+      w: 190,
+      h: 500,
+      color: blockColor,
+    },
+    { isStatic: true }
+  );
+
+  blocks.push(elevator);
 }
 
 /**
@@ -237,7 +307,16 @@ function screenEvents() {
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
-        console.log("Close door");
+        canoncanrotate = true;
+      }
+
+      if (
+        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyB === sensors[12].body
+      ) {
+        console.log("Collided with sensor 12");
+        player.setAutoMove(false, 0);
+        elevatormoving = true;
       }
     }
   });

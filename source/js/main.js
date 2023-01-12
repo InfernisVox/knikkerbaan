@@ -63,6 +63,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let gifPsychedelic;
 /** @type {Image} */ let gifelgato;
 /** @type {Image} */ let imgBed;
+/** @type {Image} */ let imgCanon;
 /** @type {SoundFile} */ let soundGuitarAMajor;
 /** @type {SoundFile} */ let soundXylophoneA1;
 /** @type {SoundFile} */ let soundXylophoneB1;
@@ -94,6 +95,14 @@ let blockColor;
 let assetCalc = null;
 let assetTotal = null;
 let poly;
+let canon = undefined;
+let canonangle = 0.6;
+let canonreverse = false;
+let canoncanrotate = false;
+let canondoor = false;
+
+let elevator = undefined;
+let elevatormoving = false;
 
 // Raycasting.
 /** @type {Boundary[]} */ let walls = [];
@@ -184,6 +193,31 @@ function draw() {
     sensors.forEach((sensor) => sensor.draw());
 
     blocks.forEach((block) => block.draw());
+
+    if (canoncanrotate) {
+      if (canonangle >= 0.6) {
+        canonreverse = true;
+      } else if (canonangle <= -0.6) {
+        canonreverse = false;
+      }
+
+      if (canonreverse) {
+        canonangle -= 0.005;
+      } else {
+        canonangle += 0.005;
+      }
+
+      Body.setAngle(canon.body, canonangle);
+    }
+
+    if (elevatormoving) {
+      if (elevator.body.position.y >= 580) {
+        Body.setPosition(elevator.body, {
+          x: elevator.body.position.x,
+          y: elevator.body.position.y - 0.3,
+        });
+      }
+    }
 
     push();
     rotate(0.01);
