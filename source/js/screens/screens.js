@@ -64,7 +64,45 @@ function screen01() {
         color: blockColor,
         sound: catsound.play(),
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0.25 }
+    )
+  );
+
+  let board = new Block(
+    world,
+    {
+      x: 630,
+      y: 270,
+      w: 250,
+      h: 10,
+      color: "black",
+    },
+    { isStatic: false, frictionAir: 0.01 }
+  );
+
+  board.constrainTo(null, {
+    pointA: { x: 0, y: 0 },
+    pointB: { x: board.body.position.x, y: board.body.position.y },
+    length: 0,
+    stiffness: 1,
+    draw: true,
+    color: color(255, 0, 0),
+    width: 2,
+  });
+
+  blocks.push(board);
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 630,
+        y: windowHeight / 2,
+        w: 50,
+        h: windowHeight * 2,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true }
     )
   );
 
