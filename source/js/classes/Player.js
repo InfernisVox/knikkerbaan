@@ -108,7 +108,7 @@ class Player extends Ball {
    * @param {number} [xFactor]
    * @param {boolean} [directionAware]
    */
-  #_jump(xFactor = 0.01, directionAware = false) {
+  #_jump(xFactor = 0.0005, directionAware = false) {
     if (directionAware) {
       // @ts-ignore
       if (this.body.position.x - this.body.positionPrev.x < 0)
