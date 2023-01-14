@@ -22,6 +22,20 @@ function screen01() {
   sensorColor = color(0, 255, 50, 100);
   blockColor = color(255, 0, 255);
 
+  elevator = new Block(
+    world,
+    {
+      x: 2100,
+      y: windowHeight + 250,
+      w: 190,
+      h: 500,
+      color: blockColor,
+    },
+    { isStatic: true }
+  );
+
+  blocks.push(elevator);
+
   blocks.push(
     new BlockCore(
       world,
@@ -31,6 +45,20 @@ function screen01() {
         w: windowWidth * 100,
         h: 40,
         color: "gray",
+      },
+      { isStatic: true }
+    )
+  );
+
+  blocks.push(
+    new BlockCore(
+      world,
+      {
+        x: -565,
+        y: windowHeight / 2,
+        w: 1000,
+        h: windowHeight * 2,
+        color: "black",
       },
       { isStatic: true }
     )
@@ -78,21 +106,6 @@ function screen01() {
         color: sensorColor,
       },
       { isStatic: true, isSensor: true }
-    )
-  );
-
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 0,
-        y: 0,
-        w: 10,
-        h: 10,
-        color: blockColor,
-        sound: catsound.play(),
-      },
-      { isStatic: true, angle: 0.25 }
     )
   );
 
@@ -158,8 +171,8 @@ function screen01() {
     world,
     {
       x: 2100,
-      y: 240,
-      w: 240,
+      y: 220,
+      w: 220,
       h: 70,
       color: blockColor,
     },
@@ -174,7 +187,7 @@ function screen01() {
       {
         x: 2100,
         y: 540,
-        w: 190,
+        w: 184,
         h: 190,
         color: sensorColor,
       },
@@ -182,19 +195,19 @@ function screen01() {
     )
   );
 
-  elevator = new Block(
+  canondoor = new BlockCore(
     world,
     {
-      x: 2100,
-      y: windowHeight + 250,
-      w: 190,
-      h: 500,
+      x: 2000,
+      y: 540,
+      w: 15,
+      h: 200,
       color: blockColor,
     },
     { isStatic: true }
   );
 
-  blocks.push(elevator);
+  blocks.push(canondoor);
 }
 
 /**
@@ -307,7 +320,11 @@ function screenEvents() {
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
-        canoncanrotate = true;
+        if (canondooropen == true) {
+          canondooropen = false;
+        } else {
+          canondooropen = true;
+        }
       }
 
       if (
@@ -317,6 +334,10 @@ function screenEvents() {
         console.log("Collided with sensor 12");
         player.setAutoMove(false, 0);
         elevatormoving = true;
+        canoncanrotate = true;
+        setTimeout(function () {
+          canondooropen = false;
+        }, 2000);
       }
     }
   });

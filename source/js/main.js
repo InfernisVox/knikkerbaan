@@ -99,7 +99,9 @@ let canon = undefined;
 let canonangle = 0.6;
 let canonreverse = false;
 let canoncanrotate = false;
-let canondoor = false;
+let canondooropen = true;
+let canondoor = undefined;
+let canonshoot = false;
 
 let elevator = undefined;
 let elevatormoving = false;
@@ -154,6 +156,7 @@ function setup() {
 
   initScreens(screens);
   screenEvents();
+  catsound.play();
 }
 
 function draw() {
@@ -182,10 +185,6 @@ function draw() {
     } else {
       translate(shiftX, 70);
     }
-    push();
-    scale(-1, 1);
-    image(imgRoom, 50, -80, 5085, 720);
-    pop();
     image(imgRoom, -205, -80, 5085, 720);
     //image(gifPsychedelic, 0, 0, 100, 100);
     image(gifelgato, -70, -10, 470, 264);
@@ -216,7 +215,25 @@ function draw() {
           x: elevator.body.position.x,
           y: elevator.body.position.y - 0.3,
         });
+      } else {
+        Body.setPosition(player.body, {
+          x: canon.body.position.x,
+          y: canon.body.position.y,
+        });
       }
+    }
+
+    if (canondooropen) {
+      Body.setPosition(canondoor.body, {
+        x: canondoor.body.position.x,
+        y: 1540,
+      });
+    } else {
+      Body.setPosition(canondoor.body, {
+        x: canondoor.body.position.x,
+        y: 540,
+      });
+      canonshoot = true;
     }
 
     push();
@@ -240,6 +257,7 @@ function draw() {
   });
 
   spacePressed();
+  // getCanvasContent();
 }
 
 // ##################################################
