@@ -21,6 +21,7 @@ const Jump = {
   SINGLE_DELAYED: 2,
   DOUBLE_IMMEDIATE: 3,
   DOUBLE_DELAYED: 4,
+  SHOOT_CANON: 5,
 };
 
 const IS_STATIC = true;
@@ -64,6 +65,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let gifelgato;
 /** @type {Image} */ let imgBed;
 /** @type {Image} */ let imgCanon;
+/** @type {Image} */ let imgWall;
 /** @type {SoundFile} */ let soundGuitarAMajor;
 /** @type {SoundFile} */ let soundXylophoneA1;
 /** @type {SoundFile} */ let soundXylophoneB1;
@@ -101,10 +103,12 @@ let canonreverse = false;
 let canoncanrotate = false;
 let canondooropen = true;
 let canondoor = undefined;
-let canonshoot = false;
 
 let elevator = undefined;
 let elevatormoving = false;
+
+let loop_right = undefined;
+let loop_left = undefined;
 
 // Raycasting.
 /** @type {Boundary[]} */ let walls = [];
@@ -220,6 +224,7 @@ function draw() {
           x: canon.body.position.x,
           y: canon.body.position.y,
         });
+        player.jumpWith(5);
       }
     }
 
@@ -233,7 +238,6 @@ function draw() {
         x: canondoor.body.position.x,
         y: 540,
       });
-      canonshoot = true;
     }
 
     push();
@@ -267,8 +271,12 @@ function keyPressed() {
     startTimer();
 
     isSpacePressed = true;
-
-    if (initiated) player.jumpWith(null);
+    if (initiated && !canoncanrotate) {
+      player.jumpWith(null);
+    } else {
+      player.jumpWith(5);
+      console.log("you may shoot now");
+    }
   }
 }
 

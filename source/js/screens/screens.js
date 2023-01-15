@@ -59,6 +59,7 @@ function screen01() {
         w: 1000,
         h: windowHeight * 2,
         color: "black",
+        image: imgWall,
       },
       { isStatic: true }
     )
@@ -208,6 +209,144 @@ function screen01() {
   );
 
   blocks.push(canondoor);
+
+  blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 3100,
+        y: 480,
+        w: 800,
+        h: 494,
+        fromFile: "assets/images/Hotwheels.svg",
+        scale: 0.95,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
+
+  blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 3250,
+        y: 450,
+        w: 438,
+        h: 112,
+        fromFile: "assets/images/Hotwheels_mid.svg",
+        scale: 0.95,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 2760,
+        y: 0,
+        w: 80,
+        h: 494,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true }
+    )
+  );
+
+  blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 3850,
+        y: 550,
+        w: 438,
+        h: 112,
+        fromFile: "assets/images/Landing_pad.svg",
+        scale: 0.95,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
+
+  loop_right = new PolygonFromSVG(
+    world,
+    {
+      x: 4400,
+      y: 337,
+      w: 494,
+      h: 449,
+      fromFile: "assets/images/Loop_right.svg",
+      scale: 0.95,
+      color: blockColor,
+    },
+    { isStatic: true, angle: 0 }
+  );
+
+  blocks.push(loop_right);
+
+  loop_left = new PolygonFromSVG(
+    world,
+    {
+      x: 4130,
+      y: 1337,
+      w: 494,
+      h: 449,
+      fromFile: "assets/images/Loop_left.svg",
+      scale: 0.95,
+      color: blockColor,
+    },
+    { isStatic: true, angle: 0 }
+  );
+
+  blocks.push(loop_left);
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 3900,
+        y: 500,
+        w: 80,
+        h: 200,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 4280,
+        y: 180,
+        w: 80,
+        h: 100,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true }
+    )
+  );
+
+  blocks.push(
+    new PolygonFromSVG(
+      world,
+      {
+        x: 4840,
+        y: 508,
+        w: 474,
+        h: 299,
+        fromFile: "assets/images/Jump_pad.svg",
+        scale: 0.95,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
 }
 
 /**
@@ -338,6 +477,36 @@ function screenEvents() {
         setTimeout(function () {
           canondooropen = false;
         }, 2000);
+      }
+
+      if (
+        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyB === sensors[13].body
+      ) {
+        console.log("Collided with sensor 13");
+        player.setAutoMove(false);
+      }
+
+      if (
+        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyB === sensors[14].body
+      ) {
+        console.log("Collided with sensor 13");
+        Body.setVelocity(player.body, { x: 24, y: 0 });
+      }
+
+      if (
+        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyB === sensors[15].body
+      ) {
+        console.log("Collided with sensor 13");
+        if (loop_left.body.position.y >= 1080) {
+          Body.setPosition(loop_left.body, { x: 4130, y: 337 });
+          Body.setPosition(loop_right.body, { x: 4400, y: 1337 });
+        } else {
+          Body.setPosition(loop_left.body, { x: 4130, y: 1337 });
+          Body.setPosition(loop_right.body, { x: 4400, y: 337 });
+        }
       }
     }
   });
