@@ -37,14 +37,14 @@ class Player extends Ball {
 
       if (
         ifTrue(
-          player.#positions.length
-            ? player.#positions[player.#positions.length - 1]
+          player.positions.length
+            ? player.positions[player.positions.length - 1]
             : player.startPosition,
           vec,
           Player.DIFFER_THRESHOLD_VECTOR
         )
       ) {
-        player.#positions.push(vec);
+        player.positions.push(vec);
       }
     }
   }
@@ -61,23 +61,23 @@ class Player extends Ball {
 
       if (
         ifTrue(
-          player.#angles.length
-            ? player.#angles[player.#angles.length - 1]
+          player.angles.length
+            ? player.angles[player.angles.length - 1]
             : player.startAngle,
           angle,
           Player.DIFFER_THRESHOLD_ANGLE
         )
       )
-        player.#angles.push(player.body.angle);
+        player.angles.push(player.body.angle);
     }
   }
 
   // ##################################################
 
-  /** @type {Matter.Vector[]} */ #positions;
-  /** @type {number[]} */ #angles;
-  /** @type {boolean} */ #isOnGround;
-  /** @type {number} */ #direction;
+  /** @type {Matter.Vector[]} */ positions;
+  /** @type {number[]} */ angles;
+  /** @type {boolean} */ isOnGround;
+  /** @type {number} */ direction;
 
   /**
    *
@@ -93,13 +93,13 @@ class Player extends Ball {
     this.height = this.width;
 
     this.startPosition = { x: attributes.x, y: attributes.y };
-    this.#positions = [];
+    this.positions = [];
     this.startAngle = options.angle;
-    this.#angles = [];
+    this.angles = [];
 
-    this.#direction = 1;
+    this.direction = 1;
 
-    this.#isOnGround = false;
+    this.isOnGround = false;
   }
 
   // ##################################################
@@ -108,18 +108,18 @@ class Player extends Ball {
    * @param {number} [xFactor]
    * @param {boolean} [directionAware]
    */
-  #_jump(xFactor = 0.0005, directionAware = false) {
+  jump(xFactor = 0.0005, directionAware = false) {
     if (directionAware) {
       // @ts-ignore
       if (this.body.position.x - this.body.positionPrev.x < 0)
-        this.#direction = -1;
-      else this.#direction = 1;
+        this.direction = -1;
+      else this.direction = 1;
     }
 
     Matter.Body.applyForce(
       this.body,
       { x: this.body.position.x, y: this.body.position.y },
-      { x: xFactor * this.#direction + this.body.velocity.x / 100, y: -0.1 }
+      { x: xFactor * this.direction + this.body.velocity.x / 100, y: -0.1 }
     );
   }
 
@@ -127,17 +127,17 @@ class Player extends Ball {
     // #################### Zeit anhalten: Matter.Runner.stop(runner);
     // #################### Super Slow Mo: Matter.Sleeping.set(body, true);
 
-    if (this.#positions.length) {
+    if (this.positions.length) {
       Matter.Body.setPosition(
         this.body,
-        this.#positions[this.#positions.length - 1]
+        this.positions[this.positions.length - 1]
       );
-      this.#positions.pop();
+      this.positions.pop();
     }
 
-    if (this.#angles.length) {
-      Matter.Body.setAngle(this.body, this.#angles[this.#angles.length - 1]);
-      this.#angles.pop();
+    if (this.angles.length) {
+      Matter.Body.setAngle(this.body, this.angles[this.angles.length - 1]);
+      this.angles.pop();
     }
   }
 
@@ -155,14 +155,14 @@ class Player extends Ball {
         rect(
           width / 2 - 200 / 2 + 2,
           height * 0.9 - 10 / 2 + 2,
-          196 * (this.#positions.length / maxCount),
+          196 * (this.positions.length / maxCount),
           6
         );
         noFill();
         stroke(color(255, 255, 255, 150));
         rectMode(CENTER);
 
-        if (!this.#positions.length) {
+        if (!this.positions.length) {
           let offset = !(frameCount % 30) ? -5 : 5;
 
           if (i <= 1) i += 0.5;
@@ -185,7 +185,7 @@ class Player extends Ball {
    */
   showAngle(bool) {
     if (bool) {
-      const { position: pos, angle, render } = this.body;
+      const { position: pos, angle } = this.body;
       once(() => {
         translate(pos.x, pos.y);
         rotate(angle);
@@ -205,71 +205,24 @@ class Player extends Ball {
    */
   setAutoMove(bool, velocity = 0.01) {
     if (bool) {
-      if (isDragged != true) {
+      if (!isDragged) {
         Matter.Body.setAngularVelocity(player.body, velocity);
       }
     }
   }
-
-  /**
-   *
-   * @param {number} [style]
-   */
-  jumpWith(style) {
-    switch (style) {
-      case Jump.SINGLE_IMMEDIATE: {
-      }
-      case Jump.SINGLE_DELAYED: {
-      }
-      case Jump.DOUBLE_IMMEDIATE: {
-      }
-      case Jump.DOUBLE_DELAYED: {
-      }
-      case Jump.SHOOT_CANON: {
-        Body.setAngularVelocity(player.body, 10);
-        console.log("shoot");
-        break;
-      }
-      default: {
-        if (progress < PLAYER_REWIND_THRESHOLD && this.isOnGround) {
-          player.#_jump(0.18);
-          jumpCount = 1;
-        } else if (
-          progress < PLAYER_REWIND_THRESHOLD &&
-          !this.isOnGround &&
-          jumpCount
-        ) {
-          player.#_jump(0.018);
-          jumpCount = 0;
-        }
-        break;
-      }
-    }
-  }
-
-  // ##################################################
-
-  get positions() {
-    return this.#positions;
-  }
-
-  get angles() {
-    return this.#angles;
-  }
-
-  get isOnGround() {
-    return this.#isOnGround;
-  }
-
-  set isOnGround(value) {
-    this.#isOnGround = value;
-  }
-
-  get direction() {
-    return this.#direction;
-  }
-
-  set direction(value) {
-    this.#direction = value;
-  }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.onkeydown = function (/** @type {KeyboardEvent} */ e) {
+    if (e.code === "Space" && !e.repeat) {
+      if (!jumpCount) player.jump(0.025, true);
+      jumpCount = 1;
+    }
+  };
+
+  document.body.onkeyup = async function (/** @type {KeyboardEvent} */ e) {
+    if (e.code === "Space") {
+      if (player.isOnGround && jumpCount === 1) jumpCount = 0;
+    }
+  };
+});
