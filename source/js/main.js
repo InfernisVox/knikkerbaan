@@ -110,6 +110,13 @@ let elevatormoving = false;
 let loop_right = undefined;
 let loop_left = undefined;
 
+let worldmask = 0x0001;
+let carmask = 0x0002;
+
+let carbody = undefined;
+let carwheel1 = undefined;
+let carwheel2 = undefined;
+
 // Raycasting.
 /** @type {Boundary[]} */ let walls = [];
 /** @type {Particle} */ let particle;
