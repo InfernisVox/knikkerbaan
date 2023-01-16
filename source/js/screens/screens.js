@@ -116,9 +116,9 @@ function screen01() {
         world,
         {
           x: 820 + i * 47,
-          y: windowHeight / 2,
+          y: 500 + i * 6,
           w: 15,
-          h: windowHeight * 2,
+          h: 100,
           color: sensorColor,
         },
         { isStatic: true, isSensor: true }
