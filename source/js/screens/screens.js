@@ -291,7 +291,7 @@ function screen01() {
   loop_left = new PolygonFromSVG(
     world,
     {
-      x: 4130,
+      x: 4230,
       y: 1298,
       w: 494,
       h: 449,
@@ -322,8 +322,8 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 4280,
-        y: 180,
+        x: 4360,
+        y: 140,
         w: 80,
         h: 100,
         color: sensorColor,
@@ -336,8 +336,8 @@ function screen01() {
     new PolygonFromSVG(
       world,
       {
-        x: 4840,
-        y: 508,
+        x: 4950,
+        y: 527,
         w: 474,
         h: 299,
         fromFile: "assets/images/Jump_pad.svg",
@@ -347,6 +347,93 @@ function screen01() {
       { isStatic: true, angle: 0 }
     )
   );
+
+  carbody = new Block(
+    world,
+    {
+      x: 500,
+      y: 100,
+      w: 200,
+      h: 40,
+      color: blockColor,
+      collisionFilter: {
+        category: carmask,
+        mask: worldmask,
+      },
+    },
+    {
+      isStatic: false,
+      angle: 0,
+      collisionFilter: {
+        category: carmask,
+        mask: worldmask,
+      },
+    }
+  );
+
+  blocks.push(carbody);
+
+  carwheel1 = new Ball(
+    world,
+    {
+      x: carbody.body.position.x - 80,
+      y: carbody.body.position.y,
+      r: 40,
+      color: blockColor,
+    },
+    {
+      isStatic: false,
+      angle: 0,
+      friction: 0.8,
+      collisionFilter: {
+        category: carmask,
+        mask: worldmask,
+      },
+    }
+  );
+
+  carwheel1.constrainTo(carbody, {
+    pointA: { x: 0, y: 0 },
+    pointB: { x: 0 - 80, y: 0 + 10 },
+    length: 0,
+    stiffness: 1,
+    draw: true,
+    color: color(255, 0, 0),
+    width: 2,
+  });
+
+  blocks.push(carwheel1);
+
+  carwheel2 = new Ball(
+    world,
+    {
+      x: carbody.body.position.x + 80,
+      y: carbody.body.position.y,
+      r: 40,
+      color: blockColor,
+    },
+    {
+      isStatic: false,
+      angle: 0,
+      friction: 0.8,
+      collisionFilter: {
+        category: carmask,
+        mask: worldmask,
+      },
+    }
+  );
+
+  carwheel2.constrainTo(carbody, {
+    pointA: { x: 0, y: 0 },
+    pointB: { x: 0 + 80, y: 0 + 10 },
+    length: 0,
+    stiffness: 1,
+    draw: true,
+    color: color(255, 0, 0),
+    width: 2,
+  });
+
+  blocks.push(carwheel2);
 }
 
 /**
@@ -404,46 +491,55 @@ function screenEvents() {
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
         soundXylophoneA1.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[2].body) {
         console.log("Collided with sensor 2");
         soundXylophoneB1.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[3].body) {
         console.log("Collided with sensor 3");
         soundXylophoneC1.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[4].body) {
         console.log("Collided with sensor 4");
         soundXylophoneD1.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[5].body) {
         console.log("Collided with sensor 5");
         soundXylophoneE1.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[6].body) {
         console.log("Collided with sensor 6");
         soundXylophoneF1.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[7].body) {
         console.log("Collided with sensor 7");
         soundXylophoneG1.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[8].body) {
         console.log("Collided with sensor 8");
         soundXylophoneA2.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[9].body) {
         console.log("Collided with sensor 9");
         soundXylophoneB2.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (
@@ -452,6 +548,7 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 10");
         soundXylophoneC2.play();
+        Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (
@@ -492,7 +589,7 @@ function screenEvents() {
         pair.bodyB === sensors[14].body
       ) {
         console.log("Collided with sensor 13");
-        Body.setVelocity(player.body, { x: 24, y: 0 });
+        Body.setVelocity(player.body, { x: 26, y: 0 });
       }
 
       if (
