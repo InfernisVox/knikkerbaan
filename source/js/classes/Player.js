@@ -225,11 +225,6 @@ class Player extends Ball {
       }
       case Jump.DOUBLE_DELAYED: {
       }
-      case Jump.SHOOT_CANON: {
-        Body.setAngularVelocity(player.body, 10);
-        console.log("shoot");
-        break;
-      }
       default: {
         if (progress < PLAYER_REWIND_THRESHOLD && this.isOnGround) {
           player.#_jump(0.18);
