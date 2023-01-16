@@ -176,7 +176,7 @@ function draw() {
   Player.savePositionsOf(player, !isSpacePressed, vectorDiffersFromBy);
   Player.saveAnglesOf(player, !isSpacePressed, angleDiffersFromBy);
 
-  const shiftX = -player.body.position.x + width / 2.28;
+  const shiftX = -player.body.position.x + width / 3;
   // const shiftY = -player.body.position.y * zoom + height / 2;
 
   once(() => {

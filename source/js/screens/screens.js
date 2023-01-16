@@ -214,8 +214,8 @@ function screen01() {
     new PolygonFromSVG(
       world,
       {
-        x: 3100,
-        y: 480,
+        x: 3020,
+        y: 360,
         w: 800,
         h: 494,
         fromFile: "assets/images/Hotwheels.svg",
@@ -231,7 +231,7 @@ function screen01() {
       world,
       {
         x: 3250,
-        y: 450,
+        y: 390,
         w: 438,
         h: 112,
         fromFile: "assets/images/Hotwheels_mid.svg",
@@ -275,8 +275,8 @@ function screen01() {
   loop_right = new PolygonFromSVG(
     world,
     {
-      x: 4400,
-      y: 337,
+      x: 4500,
+      y: 298,
       w: 494,
       h: 449,
       fromFile: "assets/images/Loop_right.svg",
@@ -292,7 +292,7 @@ function screen01() {
     world,
     {
       x: 4130,
-      y: 1337,
+      y: 1298,
       w: 494,
       h: 449,
       fromFile: "assets/images/Loop_left.svg",
@@ -501,11 +501,23 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 13");
         if (loop_left.body.position.y >= 1080) {
-          Body.setPosition(loop_left.body, { x: 4130, y: 337 });
-          Body.setPosition(loop_right.body, { x: 4400, y: 1337 });
+          Body.setPosition(loop_left.body, {
+            x: loop_left.body.position.x,
+            y: 298,
+          });
+          Body.setPosition(loop_right.body, {
+            x: loop_right.body.position.x,
+            y: 1298,
+          });
         } else {
-          Body.setPosition(loop_left.body, { x: 4130, y: 1337 });
-          Body.setPosition(loop_right.body, { x: 4400, y: 337 });
+          Body.setPosition(loop_left.body, {
+            x: loop_left.body.position.x,
+            y: 1298,
+          });
+          Body.setPosition(loop_right.body, {
+            x: loop_right.body.position.x,
+            y: 298,
+          });
         }
       }
     }

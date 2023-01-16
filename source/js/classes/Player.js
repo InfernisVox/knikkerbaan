@@ -149,7 +149,7 @@ class Player extends Ball {
   showBar(bool) {
     if (bool) {
       once(() => {
-        fill("white");
+        fill(color(255, 255, 255, 150));
         // w: 196
         rectMode(CORNER);
         rect(
@@ -159,7 +159,7 @@ class Player extends Ball {
           6
         );
         noFill();
-        stroke("white");
+        stroke(color(255, 255, 255, 150));
         rectMode(CENTER);
 
         if (!this.#positions.length) {
