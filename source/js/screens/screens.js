@@ -116,9 +116,9 @@ function screen01() {
         world,
         {
           x: 820 + i * 47,
-          y: 500 + i * 6,
+          y: windowHeight / 2,
           w: 15,
-          h: 80,
+          h: windowHeight * 2,
           color: sensorColor,
         },
         { isStatic: true, isSensor: true }
@@ -347,20 +347,6 @@ function screen01() {
       { isStatic: true, angle: 0 }
     )
   );
-
-  // Create a car
-  let carbod = new Block(
-    world,
-    {
-      x: 500,
-      y: 200,
-      w: 200,
-      h: 30,
-      color: blockColor,
-    },
-    { isStatic: false }
-  );
-  blocks.push(carbod);
 }
 
 /**
