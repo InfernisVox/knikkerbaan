@@ -233,7 +233,7 @@ function draw() {
           x: canon.body.position.x,
           y: canon.body.position.y,
         });
-        player.jumpWith(5);
+        player.jump(5);
       }
     }
 
@@ -280,12 +280,12 @@ function keyPressed() {
     startTimer();
 
     isSpacePressed = true;
-    if (initiated && !canoncanrotate) {
-      player.jumpWith(null);
-    } else {
-      player.jumpWith(5);
-      console.log("you may shoot now");
-    }
+    // if (initiated && !canoncanrotate) {
+    //   player.jump(null);
+    // } else {
+    //   player.jump(5);
+    //   console.log("you may shoot now");
+    // }
   }
 }
 
