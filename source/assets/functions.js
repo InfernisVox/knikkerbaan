@@ -1,6 +1,22 @@
 // @ts-check
 "use strict";
 
+let assetCalc = null;
+let assetTotal = null;
+
+/** @type {SoundFile} */ let soundGuitarAMajor;
+/** @type {SoundFile} */ let soundXylophoneA1;
+/** @type {SoundFile} */ let soundXylophoneB1;
+/** @type {SoundFile} */ let soundXylophoneC1;
+/** @type {SoundFile} */ let soundXylophoneD1;
+/** @type {SoundFile} */ let soundXylophoneE1;
+/** @type {SoundFile} */ let soundXylophoneF1;
+/** @type {SoundFile} */ let soundXylophoneG1;
+/** @type {SoundFile} */ let soundXylophoneA2;
+/** @type {SoundFile} */ let soundXylophoneB2;
+/** @type {SoundFile} */ let soundXylophoneC2;
+/** @type {SoundFile} */ let soundCat;
+
 function loadAssets() {
   //Only for loading assets, no adding empty lines or comments
   // @ts-ignore
@@ -14,9 +30,9 @@ function loadAssets() {
   gifelgato = loadImage(gifelgato_Src);
   loadingMessage(2, gifelgato_Src);
 
-  let catsound_Src = "./assets/audio/instruments/cat_sound.mp3";
-  catsound = loadSound(catsound_Src);
-  loadingMessage(3, catsound_Src);
+  let soundCat_Src = "./assets/audio/instruments/cat_sound.mp3";
+  soundCat = loadSound(soundCat_Src);
+  loadingMessage(3, soundCat_Src);
 
   let soundGuitarAMajor_Src = "./assets/audio/instruments/amajor.wav";
   soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);

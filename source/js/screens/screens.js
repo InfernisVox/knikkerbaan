@@ -18,7 +18,10 @@ function initScreens(screens) {
   for (let i = 0; i < screens.length; i++) screens[i]();
 }
 
+// #######################################
 function screen01() {
+  let sensorColor;
+  let blockColor;
   sensorColor = color(0, 255, 50, 100);
   blockColor = color(255, 0, 255);
 
@@ -459,11 +462,11 @@ function initMouse() {
   mouse = new Mouse(engine, canvas, { stroke: "blue", strokeWeight: 3 });
 
   mouse.on("startdrag", (/** @type {any} */ _) => {
-    isDragged = true;
+    isMouseDragged = true;
   });
 
   mouse.on("mouseup", (/** @type {any} */ e) => {
-    if (!isDragged) {
+    if (!isMouseDragged) {
       console.log(e.mouse.position.x, e.mouse.position.y);
       let ball = new Ball(
         world,
@@ -481,7 +484,7 @@ function initMouse() {
       });
       blocks.push(ball);
     }
-    isDragged = false;
+    isMouseDragged = false;
   });
 }
 
@@ -490,7 +493,7 @@ function screenEvents() {
   Matter.Events.on(engine, "collisionStart", (event) => {
     let pairs = event.pairs;
     for (const pair of pairs) {
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[0].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[0].body) {
         console.log("Collided with sensor 0");
 
         // Not working
@@ -502,62 +505,63 @@ function screenEvents() {
         }, 1);
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[1].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
+        console.log(sensors[1].body);
         soundXylophoneA1.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[2].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[2].body) {
         console.log("Collided with sensor 2");
         soundXylophoneB1.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[3].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[3].body) {
         console.log("Collided with sensor 3");
         soundXylophoneC1.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[4].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[4].body) {
         console.log("Collided with sensor 4");
         soundXylophoneD1.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[5].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[5].body) {
         console.log("Collided with sensor 5");
         soundXylophoneE1.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[6].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[6].body) {
         console.log("Collided with sensor 6");
         soundXylophoneF1.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[7].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[7].body) {
         console.log("Collided with sensor 7");
         soundXylophoneG1.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[8].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[8].body) {
         console.log("Collided with sensor 8");
         soundXylophoneA2.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === "Wollknäuel" && pair.bodyB === sensors[9].body) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[9].body) {
         console.log("Collided with sensor 9");
         soundXylophoneB2.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
       if (
-        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[10].body
       ) {
         console.log("Collided with sensor 10");
@@ -566,7 +570,7 @@ function screenEvents() {
       }
 
       if (
-        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
@@ -578,7 +582,7 @@ function screenEvents() {
       }
 
       if (
-        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[12].body
       ) {
         console.log("Collided with sensor 12");
@@ -591,7 +595,7 @@ function screenEvents() {
       }
 
       if (
-        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[13].body
       ) {
         console.log("Collided with sensor 13");
@@ -599,7 +603,7 @@ function screenEvents() {
       }
 
       if (
-        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[14].body
       ) {
         console.log("Collided with sensor 13");
@@ -607,7 +611,7 @@ function screenEvents() {
       }
 
       if (
-        pair.bodyA.label === "Wollknäuel" &&
+        pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[15].body
       ) {
         console.log("Collided with sensor 13");
@@ -640,7 +644,7 @@ function setCollisionEvents() {
     const pairs = event.pairs[0];
     const bodyA = pairs.bodyA;
     const bodyB = pairs.bodyB;
-    if (bodyA.label === PLAYER_LABEL || bodyB.label === PLAYER_LABEL) {
+    if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
       // isPlayerOnGround = true;
       player.isOnGround = true;
     }
@@ -650,7 +654,7 @@ function setCollisionEvents() {
     const pairs = event.pairs[0];
     const bodyA = pairs.bodyA;
     const bodyB = pairs.bodyB;
-    if (bodyA.label === PLAYER_LABEL || bodyB.label === PLAYER_LABEL) {
+    if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
       // isPlayerOnGround = false;
       player.isOnGround = false;
     }
@@ -658,22 +662,22 @@ function setCollisionEvents() {
 }
 
 function spacePressed() {
-  if (keyIsDown(SPACE)) {
+  if (keyIsDown(Keys.SPACE)) {
     runTimer();
 
-    if (progress > PLAYER_REWIND_THRESHOLD) {
+    if (progress > Player.THRESHOLD_REWIND) {
       if (!hasStarted) {
         maxCount = player.positions.length;
         hasStarted = true;
       }
 
       // console.log(maxCount, player.positions.length);
-      if (initiated) {
+      if (hasInitiated) {
         player.showBar(true);
         player.rewind();
       }
 
-      if (!isReversing && initiated) {
+      if (!isReversing && hasInitiated) {
         Matter.Body.setStatic(player.body, true);
         isReversing = true;
       }

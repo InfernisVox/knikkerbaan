@@ -105,58 +105,14 @@ function initPlayer() {
   );
 }
 
-/**
- * `setPlayerBoundaries` is a function which specifies edge cases when
- * the player might leave the visible canvas. Every time the player leaves
- * the defined bounds, the position and the angle of the player will
- * be both recorded and modified according to the conditional statements.
- */
-function setPlayerBoundaries() {
-  if (player.body.position.x > 1280) {
-    /*ö*/
-  }
-
-  if (player.body.position.y > 750 || player.body.position.x < 0) {
-    playerPositions = [{ x: 0, y: 0 }];
-    playerRotations = [0];
-    Body.setPosition(player.body, { x: 300, y: 80 });
-  }
-}
-
-/**
- * `savePlayerProperties` updates the player's body properties called
- * position and angle. It temporarily monitors their current values and pushes
- * them into the respective arrays for later access. They are needed for applying
- * the *rewind* effect when the user presses the spacebar.
- */
-function savePlayerProperties() {
-  if (!isReversing) Body.setStatic(player.body, false);
-
-  playerPosition_New = player.body.position;
-  const { x: ballX, y: ballY } = playerPosition_New;
-
-  playerRotation_New = player.body.angle;
-
-  if (
-    (ballX >= playerPositions[playerPositions.length - 1].x + 0.25 ||
-      ballY >= playerPositions[playerPositions.length - 1].y + 0.25 ||
-      ballX <= playerPositions[playerPositions.length - 1].x - 0.25 ||
-      ballY <= playerPositions[playerPositions.length - 1].y - 0.25) &&
-    !isReversing
-  ) {
-    playerPositions.push({ x: ballX, y: ballY });
-  }
-
-  if (
-    (playerRotation_New <= playerRotations[playerRotations.length - 1] - 0.1 ||
-      playerRotation_New >=
-        playerRotations[playerRotations.length - 1] + 0.1) &&
-    !isReversing
-  ) {
-    playerRotations.push(playerRotation_New);
-  }
-}
-
+// ######################################################
+// Miscellaneous
+let count = 0;
+/** @type {ImageData} */ let canvasContent;
+let rAvg = 0;
+let gAvg = 0;
+let bAvg = 0;
+let aAvg = 0;
 function getCanvasContent() {
   // Function will consume lots of memory
   // Only call for flex.
@@ -203,6 +159,10 @@ function getCanvasContent() {
   count++;
 }
 
+// #######
+/** @type {Boundary[]} */ let walls = [];
+/** @type {Particle} */ let particle;
+
 function rayCasting() {
   console.log("1");
   blocks.forEach((block) => {
@@ -241,156 +201,4 @@ function vectorDiffersFromBy({ x: x1, y: y1 }, { x: x2, y: y2 }, value) {
  */
 function angleDiffersFromBy(angle1, angle2, value) {
   return Math.abs(angle1 - angle2) >= value;
-}
-
-/**
- * ...
- * @param {Matter.Body} body
- * @param {boolean} trigger
- * @param {(...args: any[]) => boolean} ifTrue
- */
-function savePositionsOf(body, trigger, ifTrue) {
-  /* if (trigger) {
-    if (
-      ifTrue(
-        positions.length
-          ? positions[positions.length - 1]
-          : PLAYER_START_VECTOR,
-        body.position,
-        DIFFER_THRESHOLD_VECTOR
-      )
-    )
-      // @ts-ignore
-      positions.push(body.position);
-  } */
-
-  if (trigger) {
-    const { x: x0, y: y0 } = body.position;
-    const vec = { x: x0, y: y0 };
-
-    if (
-      ifTrue(
-        positions.length
-          ? positions[positions.length - 1]
-          : PLAYER_START_VECTOR,
-        vec,
-        DIFFER_THRESHOLD_VECTOR
-      )
-    ) {
-      // @ts-ignore
-      positions.push(vec);
-    }
-  }
-}
-
-/**
- * ...
- * @param {Matter.Body} body
- * @param {boolean} trigger
- * @param {(...args: any[]) => boolean} ifTrue
- */
-function saveAnglesOf(body, trigger, ifTrue) {
-  if (trigger) {
-    /** @type {number} */
-    let angle = angles.length ? angles[angles.length - 1] : PLAYER_START_ANGLE;
-
-    if (ifTrue(angle, body.angle, DIFFER_THRESHOLD_ANGLE))
-      angles.push(body.angle);
-  }
-}
-
-/**
- *
- * @param {Matter.Body} body
- * @param {boolean} bool
- */
-function setAutoMove(body, bool) {
-  if (bool) Matter.Body.setAngularVelocity(body, 0.01);
-}
-
-function showRewindBar() {
-  once(() => {
-    fill("gray");
-    // w: 196
-    rectMode(CORNER);
-    rect(
-      width / 2 - 200 / 2 + 2,
-      height * 0.9 - 10 / 2 + 2,
-      196 * (positions.length / maxCount),
-      6
-    );
-    noFill();
-    stroke("gray");
-    rectMode(CENTER);
-
-    if (!positions.length) {
-      let offset = !(frameCount % 30) ? -5 : 5;
-
-      if (i <= 1) i += 0.5;
-      else i = 0;
-
-      rect(width / 2 + offset * i, height * 0.9, 200, 10);
-    } else {
-      rect(width / 2, height * 0.9, 200, 10);
-    }
-  });
-}
-
-/**
- * ...
- * @param {Matter.Body} body
- */
-function rewind(body) {
-  // #################### Zeit anhalten: Matter.Runner.stop(runner);
-  // #################### Super Slow Mo: Matter.Sleeping.set(body, true);
-
-  if (positions.length) {
-    Matter.Body.setPosition(body, positions[positions.length - 1]);
-    positions.pop();
-  } /* #################### ohne Matter.Body.setStatic: else {
-    Matter.Body.setPosition(body, PLAYER_START_VECTOR);
-  } */
-
-  if (angles.length) {
-    Matter.Body.setAngle(body, angles[angles.length - 1]);
-    angles.pop();
-  } /* #################### ohne Matter.Body.setStatic: else {
-    Matter.Body.setAngle(body, PLAYER_START_ANGLE);
-  } */
-}
-
-/**
- * ...
- * @param {Matter.Body} body
- */
-function drawAngleLine(body) {
-  const { position: pos, angle, render } = body;
-
-  once(() => {
-    translate(pos.x, pos.y);
-    rotate(angle);
-    strokeWeight(2);
-    stroke("white");
-    line(0, 0, 30, 0);
-  });
-}
-
-/**
- *
- * @param {Matter.Body} body
- * @param {number} [xFactor]
- * @param {boolean} [directionAware]
- */
-function jump(body, xFactor = 0.01, directionAware = false) {
-  if (directionAware) {
-    // @ts-ignore
-    if (body.position.x - body.positionPrev.x < 0) direction = -1;
-    else direction = 1;
-  }
-
-  Matter.Body.applyForce(
-    body,
-    { x: body.position.x, y: body.position.y },
-    { x: xFactor * direction + body.velocity.x / 100, y: -0.1 }
-  );
 }

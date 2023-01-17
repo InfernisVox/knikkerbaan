@@ -16,22 +16,9 @@ const Canvas = {
 };
 
 /** @enum {number} */
-const Jump = {
-  SINGLE_IMMEDIATE: 1,
-  SINGLE_DELAYED: 2,
-  DOUBLE_IMMEDIATE: 3,
-  DOUBLE_DELAYED: 4,
-  SHOOT_CANON: 5,
+const Keys = {
+  SPACE: 32,
 };
-
-const IS_STATIC = true;
-const DIFFER_THRESHOLD_VECTOR = 10;
-const DIFFER_THRESHOLD_ANGLE = 0.5;
-const SPACE = 32;
-const PLAYER_START_VECTOR = { x: 300, y: -10 };
-const PLAYER_REWIND_THRESHOLD = 5.044000000059605;
-const PLAYER_START_ANGLE = 0;
-const PLAYER_LABEL = "Wollknäuel";
 
 // Setup ##########################################################
 console.clear();
@@ -52,51 +39,22 @@ const Engine = Matter.Engine,
 /** @type {(() => void)[]} */ let screens;
 
 /** @type {Player} */ let player;
-/** @type {Matter.Vector[]} */ let playerPositions = [{ x: 300, y: 80 }];
-/** @type {Matter.Vector} */ let playerPosition_New;
-/** @type {number[]} */ let playerRotations = [0];
-/** @type {number} */ let playerRotation_New;
 
 // Assets
 /** @type {Image} */ let playerImage;
 /** @type {Image} */ let imgRoom;
 /** @type {Image} */ let imgXylophone;
-/** @type {Image} */ let gifPsychedelic;
 /** @type {Image} */ let gifelgato;
 /** @type {Image} */ let imgBed;
 /** @type {Image} */ let imgCanon;
 /** @type {Image} */ let imgWall;
-/** @type {SoundFile} */ let soundGuitarAMajor;
-/** @type {SoundFile} */ let soundXylophoneA1;
-/** @type {SoundFile} */ let soundXylophoneB1;
-/** @type {SoundFile} */ let soundXylophoneC1;
-/** @type {SoundFile} */ let soundXylophoneD1;
-/** @type {SoundFile} */ let soundXylophoneE1;
-/** @type {SoundFile} */ let soundXylophoneF1;
-/** @type {SoundFile} */ let soundXylophoneG1;
-/** @type {SoundFile} */ let soundXylophoneA2;
-/** @type {SoundFile} */ let soundXylophoneB2;
-/** @type {SoundFile} */ let soundXylophoneC2;
-/** @type {SoundFile} */ let catsound;
 
-let isDragged = false;
+let isMouseDragged = false;
 let isReversing = false;
-let isAutoMoving = true;
+let isSpacePressed = false;
+let hasStarted = false;
+let hasInitiated = false;
 
-// Miscellaneous
-let count = 0;
-/** @type {ImageData} */ let canvasContent;
-let rAvg = 0;
-let gAvg = 0;
-let bAvg = 0;
-let aAvg = 0;
-
-let sensorColor;
-let blockColor;
-/** @type {Block} */ let spin;
-let assetCalc = null;
-let assetTotal = null;
-let poly;
 let canon = undefined;
 let canonangle = 0.6;
 let canonreverse = false;
@@ -119,36 +77,8 @@ let carwheel2 = undefined;
 
 let baseballglove = undefined;
 
-// Raycasting.
-/** @type {Boundary[]} */ let walls = [];
-/** @type {Particle} */ let particle;
-
-// https://stackoverflow.com/questions/69524578/measuring-how-long-a-key-is-pressed-using-p5-js-and-javascript
-let timeToPickUp = 5000; //ms of time to pick up
-let startOfPickUp = 0; // var to save timeStamp to
-let progress = 0; // var to save progress value
-
-let isPlayerOnGround = false;
-/** @type {number} */ let jumpCount;
-/** @type {number} */ let direction;
-let isSpacePressed = false;
-
-// let isReversing = false;
-let hasStarted = false;
-let initiated = false;
 let i = 0;
-
 /** @type {number} */ let maxCount;
-
-/** @type {number | null} */
-let start = null;
-/** @type {number | null} */
-let end = null;
-/** @type {number[]} */
-let avgValues = [];
-
-/** @type {Matter.Vector[]} */ let positions = [];
-/** @type {number[]} */ let angles = [];
 
 // ##################################################
 
@@ -169,7 +99,7 @@ function setup() {
 
   initScreens(screens);
   screenEvents();
-  catsound.play();
+  soundCat.play();
 }
 
 function draw() {
@@ -179,7 +109,7 @@ function draw() {
   // Body.setAngle(sensors[1].body, 0);
   // Body.setPosition(sensors[1].body, { x: sensors[1].body.position.x, y: 605 });
 
-  if (!initiated) player.setAutoMove(true, 0.0075);
+  if (!hasInitiated) player.setAutoMove(true, 0.0075);
   else player.setAutoMove(true);
 
   Player.savePositionsOf(player, !isSpacePressed, vectorDiffersFromBy);
@@ -189,16 +119,16 @@ function draw() {
   // const shiftY = -player.body.position.y * zoom + height / 2;
 
   once(() => {
-    if (!initiated) {
+    if (!hasInitiated) {
       if (player.body.position.x >= 690) {
-        initiated = true;
+        hasInitiated = true;
         if (i !== 1) i += 0.01;
         translate(i < 1 ? shiftX * i : shiftX, 70);
       }
     } else {
       translate(shiftX, 70);
     }
-    image(imgRoom, -205, -80, 5085, 720);
+    // image(imgRoom, -205, -80, 5085, 720);
     //image(gifPsychedelic, 0, 0, 100, 100);
     image(gifelgato, -70, -10, 470, 264);
 
@@ -276,16 +206,10 @@ function draw() {
 // ##################################################
 
 function keyPressed() {
-  if (keyCode === SPACE) {
+  if (keyCode === Keys.SPACE) {
     startTimer();
 
     isSpacePressed = true;
-    // if (initiated && !canoncanrotate) {
-    //   player.jump(null);
-    // } else {
-    //   player.jump(5);
-    //   console.log("you may shoot now");
-    // }
   }
 }
 

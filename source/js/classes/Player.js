@@ -4,16 +4,21 @@
 /** @typedef {import("../../../@types/p5/index").Color} Color */
 /** @typedef {{x: number; y: number; r: number; color: string | Color; image: Image; scale: number; [key: string]: any}} PlayerAttributes */
 
+/** @type {number} */ let jumpCount;
+/** @type {number} */ let direction;
+
 class Player extends Ball {
-  static DIFFER_THRESHOLD_VECTOR = 10;
-  static DIFFER_THRESHOLD_ANGLE = 0.5;
+  static THRESHOLD_VECTOR = 10;
+  static THRESHOLD_ANGLE = 0.5;
+  static THRESHOLD_REWIND = 5.044000000059605;
+  static LABEL = "Wollknäuel";
 
   /**
    *
    * @param {number} value
    */
   static setVectorThreshold(value) {
-    Player.DIFFER_THRESHOLD_VECTOR = value;
+    Player.THRESHOLD_VECTOR = value;
   }
 
   /**
@@ -21,7 +26,7 @@ class Player extends Ball {
    * @param {number} value
    */
   static setAngleThreshold(value) {
-    Player.DIFFER_THRESHOLD_ANGLE = value;
+    Player.THRESHOLD_ANGLE = value;
   }
 
   /**
@@ -41,7 +46,7 @@ class Player extends Ball {
             ? player.positions[player.positions.length - 1]
             : player.startPosition,
           vec,
-          Player.DIFFER_THRESHOLD_VECTOR
+          Player.THRESHOLD_VECTOR
         )
       ) {
         player.positions.push(vec);
@@ -65,7 +70,7 @@ class Player extends Ball {
             ? player.angles[player.angles.length - 1]
             : player.startAngle,
           angle,
-          Player.DIFFER_THRESHOLD_ANGLE
+          Player.THRESHOLD_ANGLE
         )
       )
         player.angles.push(player.body.angle);
@@ -103,23 +108,11 @@ class Player extends Ball {
   }
 
   // ##################################################
-  /**
-   *
-   * @param {number} [xFactor]
-   * @param {boolean} [directionAware]
-   */
-  jump(xFactor = 0.0005, directionAware = false) {
-    if (directionAware) {
-      // @ts-ignore
-      if (this.body.position.x - this.body.positionPrev.x < 0)
-        this.direction = -1;
-      else this.direction = 1;
-    }
-
+  jump() {
     Matter.Body.applyForce(
       this.body,
       { x: this.body.position.x, y: this.body.position.y },
-      { x: xFactor * this.direction + this.body.velocity.x / 100, y: -0.1 }
+      { x: 0.018 * this.direction + this.body.velocity.x / 100, y: -0.1 }
     );
   }
 
@@ -205,7 +198,7 @@ class Player extends Ball {
    */
   setAutoMove(bool, velocity = 0.01) {
     if (bool) {
-      if (!isDragged) {
+      if (!isMouseDragged) {
         Matter.Body.setAngularVelocity(player.body, velocity);
       }
     }
@@ -215,12 +208,12 @@ class Player extends Ball {
 document.addEventListener("DOMContentLoaded", () => {
   document.body.onkeydown = function (/** @type {KeyboardEvent} */ e) {
     if (e.code === "Space" && !e.repeat) {
-      if (!jumpCount) player.jump(0.025, true);
+      if (!jumpCount) player.jump();
       jumpCount = 1;
     }
   };
 
-  document.body.onkeyup = async function (/** @type {KeyboardEvent} */ e) {
+  document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
     if (e.code === "Space") {
       if (player.isOnGround && jumpCount === 1) jumpCount = 0;
     }
