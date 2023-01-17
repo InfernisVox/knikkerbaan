@@ -117,6 +117,8 @@ let carbody = undefined;
 let carwheel1 = undefined;
 let carwheel2 = undefined;
 
+let baseballglove = undefined;
+
 // Raycasting.
 /** @type {Boundary[]} */ let walls = [];
 /** @type {Particle} */ let particle;

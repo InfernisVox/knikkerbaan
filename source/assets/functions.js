@@ -10,10 +10,6 @@ function loadAssets() {
   playerImage = loadImage(playerImageSrc);
   loadingMessage(1, playerImageSrc);
 
-  let gifPsychedelic_Src = "./assets/images/psychedelic.gif";
-  gifPsychedelic = loadImage(gifPsychedelic_Src);
-  loadingMessage(2, gifPsychedelic_Src);
-
   let gifelgato_Src = "./assets/images/el_gato.gif";
   gifelgato = loadImage(gifelgato_Src);
   loadingMessage(2, gifelgato_Src);

@@ -351,7 +351,7 @@ function screen01() {
   carbody = new Block(
     world,
     {
-      x: 500,
+      x: 5000,
       y: 100,
       w: 200,
       h: 40,
@@ -379,7 +379,7 @@ function screen01() {
       x: carbody.body.position.x - 80,
       y: carbody.body.position.y,
       r: 40,
-      color: blockColor,
+      color: "lightblue",
     },
     {
       isStatic: false,
@@ -410,7 +410,7 @@ function screen01() {
       x: carbody.body.position.x + 80,
       y: carbody.body.position.y,
       r: 40,
-      color: blockColor,
+      color: "lightblue",
     },
     {
       isStatic: false,
@@ -434,6 +434,20 @@ function screen01() {
   });
 
   blocks.push(carwheel2);
+
+  baseballglove = new PolygonFromSVG(
+    world,
+    {
+      x: 2770,
+      y: 80,
+      w: 174,
+      h: 183,
+      fromFile: "assets/images/Baseballglove.svg",
+      color: blockColor,
+    },
+    { isStatic: false, angle: 0 }
+  );
+  blocks.push(baseballglove);
 }
 
 /**
