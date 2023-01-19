@@ -118,15 +118,14 @@ function draw() {
 
 function keyPressed() {
   if (keyCode === Keys.SPACE) {
-    startTimer();
+    player.timer.start();
 
     spaceIsPressed = true;
   }
 }
 
 function keyReleased() {
-  // logTimer();
-  resetTimer();
+  player.timer.reset();
 
   player.isReversing = false;
   player.hasRewindStarted = false;

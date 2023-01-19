@@ -662,9 +662,9 @@ function setCollisionEvents() {
 
 function spacePressed() {
   if (keyIsDown(Keys.SPACE)) {
-    runTimer();
+    player.timer.run();
 
-    if (progress > Player.THRESHOLD_REWIND) {
+    if (player.timer.progress > Player.THRESHOLD_TIMER_PERCENT) {
       if (!player.hasRewindStarted) {
         player.positionsLengthMax = player.positions.length;
         player.hasRewindStarted = true;

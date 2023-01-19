@@ -7,7 +7,7 @@
 class Player extends Ball {
   static THRESHOLD_VECTOR = 10;
   static THRESHOLD_ANGLE = 0.5;
-  static THRESHOLD_REWIND = 5.044000000059605;
+  static THRESHOLD_TIMER_PERCENT = 5.044000000059605;
   static LABEL = "Wollknäuel";
 
   /**
@@ -80,6 +80,7 @@ class Player extends Ball {
   /** @type {number[]} */ angles;
   /** @type {boolean} */ isOnGround;
   /** @type {number} */ direction;
+  /** @type {ProgressTimer} */ timer;
 
   /**
    * Specifies the state at which the rewind effect actually takes place
@@ -111,6 +112,8 @@ class Player extends Ball {
 
     this.isReversing = false;
     this.hasRewindStarted = false;
+
+    this.timer = new ProgressTimer();
 
     this.i = 0;
     this.jumpCount = 0;

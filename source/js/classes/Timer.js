@@ -1,26 +1,33 @@
 //@ts-check
 "use strict";
 
-// https://stackoverflow.com/questions/69524578/measuring-how-long-a-key-is-pressed-using-p5-js-and-javascript
-let timeToPickUp = 5000; //ms of time to pick up
-let startOfPickUp = 0; // var to save timeStamp to
-let progress = 0; // var to save progress value
-
-const startTimer = () => {
-  startOfPickUp = millis(); // get start
-};
-
-const runTimer = () => {
-  if (startOfPickUp > 0 && progress < 100) {
-    progress = ((millis() - startOfPickUp) / timeToPickUp) * 100;
+/**
+ * @see https://stackoverflow.com/questions/69524578/measuring-how-long-a-key-is-pressed-using-p5-js-and-javascript
+ */
+class ProgressTimer {
+  constructor(pickUp = 5000) {
+    this.timeToPickUp = pickUp;
+    this.startOfPickUp = 0;
+    this.progress = 0;
   }
-};
 
-const logTimer = () => {
-  console.log(progress);
-};
+  start() {
+    this.startOfPickUp = millis();
+  }
 
-const resetTimer = () => {
-  startOfPickUp = 0;
-  progress = 0;
-};
+  run() {
+    if (this.startOfPickUp > 0 && this.progress < 100) {
+      this.progress =
+        ((millis() - this.startOfPickUp) / this.timeToPickUp) * 100;
+    }
+  }
+
+  log() {
+    console.log(this.progress);
+  }
+
+  reset() {
+    this.startOfPickUp = 0;
+    this.progress = 0;
+  }
+}

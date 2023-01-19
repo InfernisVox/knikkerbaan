@@ -205,10 +205,7 @@ function angleDiffersFromBy(angle1, angle2, value) {
 }
 
 function drawCanvas() {
-  cam.delay(() => player.body.position.x >= CANVAS_BREAKPOINT);
-
-  // image(imgRoom, -205, -80, 5085, 720);
-  // image(gifPsychedelic, 0, 0, 100, 100);
+  cam.swivelBehind(() => player.body.position.x >= CANVAS_BREAKPOINT);
 
   image(gifElGato, -70, -10, 470, 264);
 

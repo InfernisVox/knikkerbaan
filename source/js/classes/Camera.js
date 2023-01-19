@@ -20,12 +20,13 @@ class Camera {
   }
 
   /**
-   *
-   * @param {(...args: any[]) => any} func
+   * A function to allow the camera to remain static at the
+   * beginning until the condition is met.
+   * @param {(...args: any[]) => any} ifTrue
    */
-  delay(func) {
+  swivelBehind(ifTrue) {
     if (!marbleRun.hasBeenStarted) {
-      if (func()) {
+      if (ifTrue()) {
         marbleRun.hasBeenStarted = true;
         if (this.i !== 1) this.i += 0.01;
         translate(this.i < 1 ? this.shiftX * this.i : this.shiftX, 0);
