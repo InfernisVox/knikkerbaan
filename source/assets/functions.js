@@ -27,7 +27,7 @@ function loadAssets() {
   loadingMessage(1, playerImageSrc);
 
   let gifelgato_Src = "./assets/images/el_gato.gif";
-  gifelgato = loadImage(gifelgato_Src);
+  gifElGato = loadImage(gifelgato_Src);
   loadingMessage(2, gifelgato_Src);
 
   let soundCat_Src = "./assets/audio/instruments/cat_sound.mp3";

@@ -4,9 +4,6 @@
 /** @typedef {import("../../../@types/p5/index").Color} Color */
 /** @typedef {{x: number; y: number; r: number; color: string | Color; image: Image; scale: number; [key: string]: any}} PlayerAttributes */
 
-/** @type {number} */ let jumpCount;
-/** @type {number} */ let direction;
-
 class Player extends Ball {
   static THRESHOLD_VECTOR = 10;
   static THRESHOLD_ANGLE = 0.5;
@@ -85,6 +82,15 @@ class Player extends Ball {
   /** @type {number} */ direction;
 
   /**
+   * Specifies the state at which the rewind effect actually takes place
+   */
+  isReversing;
+  /**
+   * Specifies the state at which the rewind has beein initialized
+   */
+  hasRewindStarted;
+
+  /**
    *
    * @param {Matter.World} world
    * @param {PlayerAttributes} attributes
@@ -95,13 +101,19 @@ class Player extends Ball {
 
     this.r = attributes.r;
     this.width = 2 * this.r;
-    this.height = this.width;
+    this.height = 2 * this.r;
 
     this.startPosition = { x: attributes.x, y: attributes.y };
     this.positions = [];
+    this.positionsLengthMax = this.positions.length;
     this.startAngle = options.angle;
     this.angles = [];
 
+    this.isReversing = false;
+    this.hasRewindStarted = false;
+
+    this.i = 0;
+    this.jumpCount = 0;
     this.direction = 1;
 
     this.isOnGround = false;
@@ -142,27 +154,38 @@ class Player extends Ball {
   showBar(bool) {
     if (bool) {
       once(() => {
-        fill(color(255, 255, 255, 150));
-        // w: 196
-        rectMode(CORNER);
-        rect(
-          width / 2 - 200 / 2 + 2,
-          height * 0.9 - 10 / 2 + 2,
-          196 * (this.positions.length / maxCount),
-          6
-        );
-        noFill();
-        stroke(color(255, 255, 255, 150));
-        rectMode(CENTER);
-
         if (!this.positions.length) {
           let offset = !(frameCount % 30) ? -5 : 5;
 
-          if (i <= 1) i += 0.5;
-          else i = 0;
+          if (this.i <= 1) this.i += 0.5;
+          else this.i = 0;
 
-          rect(width / 2 + offset * i, height * 0.9, 200, 10);
+          fill(color(255, 255, 255, 150));
+          // w: 196
+          rectMode(CORNER);
+          rect(
+            width / 2 - 200 / 2 + 2 + offset * this.i,
+            height * 0.9 - 10 / 2 + 2,
+            196 * (this.positions.length / player.positionsLengthMax),
+            6
+          );
+          noFill();
+          stroke(color(255, 255, 255, 150));
+          rectMode(CENTER);
+          rect(width / 2 + offset * this.i, height * 0.9, 200, 10);
         } else {
+          fill(color(255, 255, 255, 150));
+          // w: 196
+          rectMode(CORNER);
+          rect(
+            width / 2 - 200 / 2 + 2,
+            height * 0.9 - 10 / 2 + 2,
+            196 * (this.positions.length / player.positionsLengthMax),
+            6
+          );
+          noFill();
+          stroke(color(255, 255, 255, 150));
+          rectMode(CENTER);
           rect(width / 2, height * 0.9, 200, 10);
         }
       });
@@ -198,7 +221,7 @@ class Player extends Ball {
    */
   setAutoMove(bool, velocity = 0.01) {
     if (bool) {
-      if (!isMouseDragged) {
+      if (!mouseIsDragged) {
         Matter.Body.setAngularVelocity(player.body, velocity);
       }
     }
@@ -208,14 +231,14 @@ class Player extends Ball {
 document.addEventListener("DOMContentLoaded", () => {
   document.body.onkeydown = function (/** @type {KeyboardEvent} */ e) {
     if (e.code === "Space" && !e.repeat) {
-      if (!jumpCount) player.jump();
-      jumpCount = 1;
+      if (!player.jumpCount) player.jump();
+      player.jumpCount = 1;
     }
   };
 
   document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
     if (e.code === "Space") {
-      if (player.isOnGround && jumpCount === 1) jumpCount = 0;
+      if (player.isOnGround && player.jumpCount === 1) player.jumpCount = 0;
     }
   };
 });

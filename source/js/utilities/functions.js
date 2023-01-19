@@ -113,57 +113,58 @@ let rAvg = 0;
 let gAvg = 0;
 let bAvg = 0;
 let aAvg = 0;
-function getCanvasContent() {
-  // Function will consume lots of memory
-  // Only call for flex.
 
-  /** @type {HTMLCanvasElement} */ let c = canvas.elt;
-  let ctx = /** @type {CanvasRenderingContext2D} */ c.getContext("2d");
-  let chunkSize = 4;
+// function getCanvasContent() {
+//   // Function will consume lots of memory
+//   // Only call for flex.
 
-  // Start function which reduces load on device
-  if (count > 10) {
-    canvasContent = ctx.getImageData(
-      width / 2,
-      height / 2,
-      width / 2,
-      height / 2
-    );
+//   /** @type {HTMLCanvasElement} */ let c = canvas.elt;
+//   let ctx = /** @type {CanvasRenderingContext2D} */ c.getContext("2d");
+//   let chunkSize = 4;
 
-    // TODO: Please verify type compatibility of the following variables checked by ts
-    canvasContent = canvasContent.data;
+//   // Start function which reduces load on device
+//   if (count > 10) {
+//     canvasContent = ctx.getImageData(
+//       width / 2,
+//       height / 2,
+//       width / 2,
+//       height / 2
+//     );
 
-    const canvasFilter = [];
-    for (let i = 0; i < canvasContent.length; i += chunkSize) {
-      const chunk = canvasContent.slice(i, i + chunkSize);
-      canvasFilter.push(chunk);
-    }
-    canvasContent = canvasFilter;
+//     // TODO: Please verify type compatibility of the following variables checked by ts
+//     canvasContent = canvasContent.data;
 
-    canvasContent.forEach((element) => {
-      rAvg += element[0];
-      gAvg += element[1];
-      bAvg += element[2];
-      aAvg += element[3];
-    });
+//     const canvasFilter = [];
+//     for (let i = 0; i < canvasContent.length; i += chunkSize) {
+//       const chunk = canvasContent.slice(i, i + chunkSize);
+//       canvasFilter.push(chunk);
+//     }
+//     canvasContent = canvasFilter;
 
-    rAvg = rAvg / canvasContent.length;
-    gAvg = gAvg / canvasContent.length;
-    bAvg = bAvg / canvasContent.length;
-    aAvg = aAvg / canvasContent.length;
+//     canvasContent.forEach((element) => {
+//       rAvg += element[0];
+//       gAvg += element[1];
+//       bAvg += element[2];
+//       aAvg += element[3];
+//     });
 
-    document.body.style.background = `rgba(${rAvg}, ${gAvg}, ${bAvg}, ${aAvg})`;
+//     rAvg = rAvg / canvasContent.length;
+//     gAvg = gAvg / canvasContent.length;
+//     bAvg = bAvg / canvasContent.length;
+//     aAvg = aAvg / canvasContent.length;
 
-    count = 0;
-  }
-  count++;
-}
+//     document.body.style.background = `rgba(${rAvg}, ${gAvg}, ${bAvg}, ${aAvg})`;
+
+//     count = 0;
+//   }
+//   count++;
+// }
 
 // #######
 /** @type {Boundary[]} */ let walls = [];
 /** @type {Particle} */ let particle;
 
-function rayCasting() {
+/* function rayCasting() {
   console.log("1");
   blocks.forEach((block) => {
     console.log(block + "2");
@@ -180,7 +181,7 @@ function rayCasting() {
   });
   // TODO: Please complete the constructor of this class
   particle = new Particle(player.body.position.x, player.body.position.y);
-}
+} */
 
 // ###########################################################################
 /**
@@ -201,4 +202,80 @@ function vectorDiffersFromBy({ x: x1, y: y1 }, { x: x2, y: y2 }, value) {
  */
 function angleDiffersFromBy(angle1, angle2, value) {
   return Math.abs(angle1 - angle2) >= value;
+}
+
+function drawCanvas() {
+  cam.delay(() => player.body.position.x >= CANVAS_BREAKPOINT);
+
+  // image(imgRoom, -205, -80, 5085, 720);
+  // image(gifPsychedelic, 0, 0, 100, 100);
+
+  image(gifElGato, -70, -10, 470, 264);
+
+  if (canCanonRotate) {
+    if (canonAngle >= 0.6) {
+      isCanonReversing = true;
+    } else if (canonAngle <= -0.6) {
+      isCanonReversing = false;
+    }
+
+    if (isCanonReversing) {
+      canonAngle -= 0.005;
+    } else {
+      canonAngle += 0.005;
+    }
+
+    Body.setAngle(canon.body, canonAngle);
+  }
+
+  if (isElevatorMoving) {
+    if (elevator.body.position.y >= 580) {
+      Body.setPosition(elevator.body, {
+        x: elevator.body.position.x,
+        y: elevator.body.position.y - 0.3,
+      });
+    } else {
+      Body.setPosition(player.body, {
+        x: canon.body.position.x,
+        y: canon.body.position.y,
+      });
+      player.jump();
+    }
+  }
+
+  if (isCanonDoorOpen) {
+    Body.setPosition(canonDoor.body, {
+      x: canonDoor.body.position.x,
+      y: 1540,
+    });
+  } else {
+    Body.setPosition(canonDoor.body, {
+      x: canonDoor.body.position.x,
+      y: 540,
+    });
+  }
+
+  push();
+  rotate(0.01);
+  image(imgXylophone, 750, 510, 540, 120);
+  pop();
+
+  drawCharacters();
+
+  mouse.setOffset({ x: -cam.shiftX, y: 0 });
+  mouse.draw();
+}
+
+function drawCharacters() {
+  // Body.setAngle(sensors[1].body, 0);
+  // Body.setPosition(sensors[1].body, { x: sensors[1].body.position.x, y: 605 });
+
+  if (!marbleRun.hasBeenStarted) player.setAutoMove(true, 0.0075);
+  else player.setAutoMove(true);
+
+  sensors.forEach((sensor) => sensor.draw());
+  blocks.forEach((block) => block.draw());
+
+  player.draw();
+  player.showAngle(false);
 }

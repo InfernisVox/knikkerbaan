@@ -20,11 +20,10 @@ function initScreens(screens) {
 
 // #######################################
 function screen01() {
-  let sensorColor;
-  let blockColor;
-  sensorColor = color(0, 255, 50, 100);
-  blockColor = color(255, 0, 255);
+  let sensorColor = color(0, 255, 50, 100);
+  let blockColor = color(255, 0, 255);
 
+  // TODO: Please correct the heights for the blocks as they are off by about 70 [px].
   elevator = new Block(
     world,
     {
@@ -180,7 +179,7 @@ function screen01() {
       h: 70,
       color: blockColor,
     },
-    { isStatic: true, angle: canonangle, isSensor: true }
+    { isStatic: true, angle: canonAngle, isSensor: true }
   );
 
   blocks.push(canon);
@@ -199,7 +198,7 @@ function screen01() {
     )
   );
 
-  canondoor = new BlockCore(
+  canonDoor = new BlockCore(
     world,
     {
       x: 2000,
@@ -211,7 +210,7 @@ function screen01() {
     { isStatic: true }
   );
 
-  blocks.push(canondoor);
+  blocks.push(canonDoor);
 
   blocks.push(
     new PolygonFromSVG(
@@ -275,7 +274,7 @@ function screen01() {
     )
   );
 
-  loop_right = new PolygonFromSVG(
+  loopRight = new PolygonFromSVG(
     world,
     {
       x: 4500,
@@ -289,9 +288,9 @@ function screen01() {
     { isStatic: true, angle: 0 }
   );
 
-  blocks.push(loop_right);
+  blocks.push(loopRight);
 
-  loop_left = new PolygonFromSVG(
+  loopLeft = new PolygonFromSVG(
     world,
     {
       x: 4230,
@@ -305,7 +304,7 @@ function screen01() {
     { isStatic: true, angle: 0 }
   );
 
-  blocks.push(loop_left);
+  blocks.push(loopLeft);
 
   sensors.push(
     new BlockCore(
@@ -351,7 +350,7 @@ function screen01() {
     )
   );
 
-  carbody = new Block(
+  carBody = new Block(
     world,
     {
       x: 5000,
@@ -360,27 +359,27 @@ function screen01() {
       h: 40,
       color: blockColor,
       collisionFilter: {
-        category: carmask,
-        mask: worldmask,
+        category: Masks.CAR,
+        mask: Masks.WORLD,
       },
     },
     {
       isStatic: false,
       angle: 0,
       collisionFilter: {
-        category: carmask,
-        mask: worldmask,
+        category: Masks.CAR,
+        mask: Masks.WORLD,
       },
     }
   );
 
-  blocks.push(carbody);
+  blocks.push(carBody);
 
-  carwheel1 = new Ball(
+  carWheel1 = new Ball(
     world,
     {
-      x: carbody.body.position.x - 80,
-      y: carbody.body.position.y,
+      x: carBody.body.position.x - 80,
+      y: carBody.body.position.y,
       r: 40,
       color: "lightblue",
     },
@@ -389,13 +388,13 @@ function screen01() {
       angle: 0,
       friction: 0.8,
       collisionFilter: {
-        category: carmask,
-        mask: worldmask,
+        category: Masks.CAR,
+        mask: Masks.WORLD,
       },
     }
   );
 
-  carwheel1.constrainTo(carbody, {
+  carWheel1.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
     pointB: { x: 0 - 80, y: 0 + 10 },
     length: 0,
@@ -405,13 +404,13 @@ function screen01() {
     width: 2,
   });
 
-  blocks.push(carwheel1);
+  blocks.push(carWheel1);
 
-  carwheel2 = new Ball(
+  carWheel2 = new Ball(
     world,
     {
-      x: carbody.body.position.x + 80,
-      y: carbody.body.position.y,
+      x: carBody.body.position.x + 80,
+      y: carBody.body.position.y,
       r: 40,
       color: "lightblue",
     },
@@ -420,13 +419,13 @@ function screen01() {
       angle: 0,
       friction: 0.8,
       collisionFilter: {
-        category: carmask,
-        mask: worldmask,
+        category: Masks.CAR,
+        mask: Masks.WORLD,
       },
     }
   );
 
-  carwheel2.constrainTo(carbody, {
+  carWheel2.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
     pointB: { x: 0 + 80, y: 0 + 10 },
     length: 0,
@@ -436,9 +435,9 @@ function screen01() {
     width: 2,
   });
 
-  blocks.push(carwheel2);
+  blocks.push(carWheel2);
 
-  baseballglove = new PolygonFromSVG(
+  baseballGlove = new PolygonFromSVG(
     world,
     {
       x: 2770,
@@ -450,7 +449,7 @@ function screen01() {
     },
     { isStatic: false, angle: 0 }
   );
-  blocks.push(baseballglove);
+  blocks.push(baseballGlove);
 }
 
 /**
@@ -462,11 +461,11 @@ function initMouse() {
   mouse = new Mouse(engine, canvas, { stroke: "blue", strokeWeight: 3 });
 
   mouse.on("startdrag", (/** @type {any} */ _) => {
-    isMouseDragged = true;
+    mouseIsDragged = true;
   });
 
   mouse.on("mouseup", (/** @type {any} */ e) => {
-    if (!isMouseDragged) {
+    if (!mouseIsDragged) {
       console.log(e.mouse.position.x, e.mouse.position.y);
       let ball = new Ball(
         world,
@@ -484,7 +483,7 @@ function initMouse() {
       });
       blocks.push(ball);
     }
-    isMouseDragged = false;
+    mouseIsDragged = false;
   });
 }
 
@@ -574,10 +573,10 @@ function screenEvents() {
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
-        if (canondooropen == true) {
-          canondooropen = false;
+        if (isCanonDoorOpen == true) {
+          isCanonDoorOpen = false;
         } else {
-          canondooropen = true;
+          isCanonDoorOpen = true;
         }
       }
 
@@ -587,10 +586,10 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 12");
         player.setAutoMove(false, 0);
-        elevatormoving = true;
-        canoncanrotate = true;
+        isElevatorMoving = true;
+        canCanonRotate = true;
         setTimeout(function () {
-          canondooropen = false;
+          isCanonDoorOpen = false;
         }, 2000);
       }
 
@@ -615,22 +614,22 @@ function screenEvents() {
         pair.bodyB === sensors[15].body
       ) {
         console.log("Collided with sensor 13");
-        if (loop_left.body.position.y >= 1080) {
-          Body.setPosition(loop_left.body, {
-            x: loop_left.body.position.x,
+        if (loopLeft.body.position.y >= 1080) {
+          Body.setPosition(loopLeft.body, {
+            x: loopLeft.body.position.x,
             y: 298,
           });
-          Body.setPosition(loop_right.body, {
-            x: loop_right.body.position.x,
+          Body.setPosition(loopRight.body, {
+            x: loopRight.body.position.x,
             y: 1298,
           });
         } else {
-          Body.setPosition(loop_left.body, {
-            x: loop_left.body.position.x,
+          Body.setPosition(loopLeft.body, {
+            x: loopLeft.body.position.x,
             y: 1298,
           });
-          Body.setPosition(loop_right.body, {
-            x: loop_right.body.position.x,
+          Body.setPosition(loopRight.body, {
+            x: loopRight.body.position.x,
             y: 298,
           });
         }
@@ -666,20 +665,20 @@ function spacePressed() {
     runTimer();
 
     if (progress > Player.THRESHOLD_REWIND) {
-      if (!hasStarted) {
-        maxCount = player.positions.length;
-        hasStarted = true;
+      if (!player.hasRewindStarted) {
+        player.positionsLengthMax = player.positions.length;
+        player.hasRewindStarted = true;
       }
 
       // console.log(maxCount, player.positions.length);
-      if (hasInitiated) {
+      if (marbleRun.hasBeenStarted) {
         player.showBar(true);
         player.rewind();
       }
 
-      if (!isReversing && hasInitiated) {
+      if (!player.isReversing && marbleRun.hasBeenStarted) {
         Matter.Body.setStatic(player.body, true);
-        isReversing = true;
+        player.isReversing = true;
       }
     }
   }
