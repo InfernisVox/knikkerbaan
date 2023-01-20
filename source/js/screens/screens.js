@@ -129,30 +129,30 @@ function screen01() {
   );
 
   towerLeft = new Block(
-      world,
-      {
-        x: 2010,
-        y: 460,
-        w: 80,
-        h: 300,
-        color: color(255, 255, 255, 0),
-      },
-      { isStatic: true }
-    );
-    
+    world,
+    {
+      x: 2010,
+      y: 460,
+      w: 80,
+      h: 300,
+      color: color(255, 255, 255, 0),
+    },
+    { isStatic: true }
+  );
+
   blocks.push(towerLeft);
 
   towerRight = new Block(
-      world,
-      {
-        x: 2160,
-        y: 500,
-        w: 80,
-        h: 380,
-        color: color(255, 255, 255, 0),
-      },
-      { isStatic: true }
-    );
+    world,
+    {
+      x: 2160,
+      y: 500,
+      w: 80,
+      h: 380,
+      color: color(255, 255, 255, 0),
+    },
+    { isStatic: true }
+  );
 
   blocks.push(towerRight);
 
@@ -218,7 +218,7 @@ function screen01() {
       world,
       {
         x: 3020,
-        y: 360,
+        y: 410,
         w: 800,
         h: 494,
         fromFile: "assets/images/Hotwheels.svg",
@@ -234,7 +234,7 @@ function screen01() {
       world,
       {
         x: 3250,
-        y: 390,
+        y: 490,
         w: 438,
         h: 112,
         fromFile: "assets/images/Hotwheels_mid.svg",
@@ -250,7 +250,7 @@ function screen01() {
       world,
       {
         x: 2760,
-        y: 0,
+        y: 50,
         w: 80,
         h: 494,
         color: sensorColor,
@@ -264,7 +264,7 @@ function screen01() {
       world,
       {
         x: 3850,
-        y: 550,
+        y: 600,
         w: 438,
         h: 112,
         fromFile: "assets/images/Landing_pad.svg",
@@ -279,7 +279,7 @@ function screen01() {
     world,
     {
       x: 4500,
-      y: 298,
+      y: 348,
       w: 494,
       h: 449,
       fromFile: "assets/images/Loop_right.svg",
@@ -295,7 +295,7 @@ function screen01() {
     world,
     {
       x: 4230,
-      y: 1298,
+      y: 1338,
       w: 494,
       h: 449,
       fromFile: "assets/images/Loop_left.svg",
@@ -312,7 +312,7 @@ function screen01() {
       world,
       {
         x: 3900,
-        y: 500,
+        y: 550,
         w: 80,
         h: 200,
         color: sensorColor,
@@ -326,7 +326,7 @@ function screen01() {
       world,
       {
         x: 4360,
-        y: 140,
+        y: 190,
         w: 80,
         h: 100,
         color: sensorColor,
@@ -340,7 +340,7 @@ function screen01() {
       world,
       {
         x: 4950,
-        y: 527,
+        y: 577,
         w: 474,
         h: 299,
         fromFile: "assets/images/Jump_pad.svg",
@@ -560,13 +560,19 @@ function screenEvents() {
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[10].body) {
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[10].body
+      ) {
         console.log("Collided with sensor 10");
         soundXylophoneC2.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[11].body) {
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[11].body
+      ) {
         console.log("Collided with sensor 11");
         if (isCanonDoorOpen == true) {
           isCanonDoorOpen = false;
@@ -575,7 +581,10 @@ function screenEvents() {
         }
       }
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[12].body) {
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[12].body
+      ) {
         console.log("Collided with sensor 12");
         player.setAutoMove(false, 0);
         isElevatorMoving = true;
@@ -585,35 +594,44 @@ function screenEvents() {
         }, 2000);
       }
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[13].body) {
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[13].body
+      ) {
         console.log("Collided with sensor 13");
         player.setAutoMove(false);
       }
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[14].body) {
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[14].body
+      ) {
         console.log("Collided with sensor 13");
         Body.setVelocity(player.body, { x: 26, y: 0 });
       }
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[15].body) {
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[15].body
+      ) {
         console.log("Collided with sensor 13");
         if (loopLeft.body.position.y >= 1080) {
           Body.setPosition(loopLeft.body, {
             x: loopLeft.body.position.x,
-            y: 298,
+            y: 348,
           });
           Body.setPosition(loopRight.body, {
             x: loopRight.body.position.x,
-            y: 1298,
+            y: 1348,
           });
         } else {
           Body.setPosition(loopLeft.body, {
             x: loopLeft.body.position.x,
-            y: 1298,
+            y: 1348,
           });
           Body.setPosition(loopRight.body, {
             x: loopRight.body.position.x,
-            y: 298,
+            y: 348,
           });
         }
       }
