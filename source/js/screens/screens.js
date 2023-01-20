@@ -24,86 +24,58 @@ function screen01() {
   let blockColor = color(255, 0, 255);
 
   // TODO: Please correct the heights for the blocks as they are off by about 70 [px].
-  elevator = new Block(
+  floorblock = new Block(
     world,
     {
-      x: 2100,
-      y: windowHeight + 250,
-      w: 190,
-      h: 500,
-      color: blockColor,
+      x: windowWidth / 2,
+      y: 700,
+      w: windowWidth * 50,
+      h: 40,
+      color: "gray",
     },
     { isStatic: true }
   );
 
-  blocks.push(elevator);
+  blocks.push(floorblock);
 
-  blocks.push(
-    new BlockCore(
-      world,
-      {
-        x: windowWidth / 2,
-        y: 650,
-        w: windowWidth * 100,
-        h: 40,
-        color: "gray",
-      },
-      { isStatic: true }
-    )
+  wall = new Block(
+    world,
+    {
+      x: -565,
+      y: windowHeight / 2,
+      w: 1000,
+      h: windowHeight * 2,
+      color: "black",
+      image: imgWall,
+    },
+    { isStatic: true }
   );
 
-  blocks.push(
-    new BlockCore(
-      world,
-      {
-        x: -565,
-        y: windowHeight / 2,
-        w: 1000,
-        h: windowHeight * 2,
-        color: "black",
-        image: imgWall,
-      },
-      { isStatic: true }
-    )
+  blocks.push(wall);
+
+  bed = new PolygonFromSVG(
+    world,
+    {
+      x: 410,
+      y: 560,
+      w: 685,
+      h: 511,
+      fromFile: "assets/images/bed.svg",
+      scale: 0.95,
+      color: color(255, 255, 255, 0),
+      image: imgBed,
+    },
+    { isStatic: true, angle: 0 }
   );
 
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 1000,
-        y: 590,
-        w: 480,
-        h: 80,
-        color: color(255, 255, 255, 0),
-      },
-      { isStatic: true, angle: 0.06 }
-    )
-  );
-
-  blocks.push(
-    new PolygonFromSVG(
-      world,
-      {
-        x: 380,
-        y: 510,
-        w: 685,
-        h: 511,
-        fromFile: "assets/images/bed.svg",
-        scale: 0.95,
-        color: color(255, 255, 255, 0),
-        image: imgBed,
-      },
-      { isStatic: true, angle: 0 }
-    )
-  );
+  blocks.push(bed);
 
   sensors.push(
     new BlockCore(
       world,
       {
         x: 150,
-        y: 100,
+        y: 150,
         w: 120,
         h: 250,
         color: sensorColor,
@@ -112,13 +84,27 @@ function screen01() {
     )
   );
 
+  xylophone = new Block(
+    world,
+    {
+      x: 1055,
+      y: 660,
+      w: 520,
+      h: 80,
+      color: color(255, 255, 255, 0),
+    },
+    { isStatic: true, angle: 0.07 }
+  );
+
+  blocks.push(xylophone);
+
   for (let i = 0; i < 10; i++) {
     sensors.push(
       new BlockCore(
         world,
         {
-          x: 820 + i * 47,
-          y: 500 + i * 6,
+          x: 850 + i * 48,
+          y: 560 + i * 4,
           w: 15,
           h: 100,
           color: sensorColor,
@@ -133,7 +119,7 @@ function screen01() {
       world,
       {
         x: 1700,
-        y: 600,
+        y: 650,
         w: 120,
         h: 100,
         color: sensorColor,
@@ -142,33 +128,33 @@ function screen01() {
     )
   );
 
-  blocks.push(
-    new Block(
+  towerLeft = new Block(
       world,
       {
-        x: 2000,
-        y: 415,
-        w: 15,
-        h: 190,
-        color: blockColor,
+        x: 2010,
+        y: 460,
+        w: 80,
+        h: 300,
+        color: color(255, 255, 255, 0),
       },
       { isStatic: true }
-    )
-  );
+    );
+    
+  blocks.push(towerLeft);
 
-  blocks.push(
-    new Block(
+  towerRight = new Block(
       world,
       {
-        x: 2200,
-        y: 480,
-        w: 15,
-        h: 320,
-        color: blockColor,
+        x: 2160,
+        y: 500,
+        w: 80,
+        h: 380,
+        color: color(255, 255, 255, 0),
       },
       { isStatic: true }
-    )
-  );
+    );
+
+  blocks.push(towerRight);
 
   canon = new BlockCore(
     world,
@@ -188,29 +174,44 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 2100,
-        y: 540,
-        w: 184,
-        h: 190,
+        x: 2090,
+        y: 590,
+        w: 100,
+        h: 200,
         color: sensorColor,
       },
       { isStatic: true, isSensor: true }
     )
   );
 
-  canonDoor = new BlockCore(
+  canonDoor = new Block(
     world,
     {
-      x: 2000,
-      y: 540,
-      w: 15,
-      h: 200,
-      color: blockColor,
+      x: 2005,
+      y: 648,
+      w: 80,
+      h: 107,
+      color: color(255, 255, 255, 0),
+      image: imgTowerDoor,
     },
     { isStatic: true }
   );
 
   blocks.push(canonDoor);
+
+  elevator = new Block(
+    world,
+    {
+      x: 2100,
+      y: windowHeight + 250,
+      w: 190,
+      h: 500,
+      color: blockColor,
+    },
+    { isStatic: true }
+  );
+
+  blocks.push(elevator);
 
   blocks.push(
     new PolygonFromSVG(
@@ -559,19 +560,13 @@ function screenEvents() {
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[10].body
-      ) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[10].body) {
         console.log("Collided with sensor 10");
         soundXylophoneC2.play();
         Body.setVelocity(player.body, { x: 0.5, y: 4 });
       }
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[11].body
-      ) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[11].body) {
         console.log("Collided with sensor 11");
         if (isCanonDoorOpen == true) {
           isCanonDoorOpen = false;
@@ -580,10 +575,7 @@ function screenEvents() {
         }
       }
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[12].body
-      ) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[12].body) {
         console.log("Collided with sensor 12");
         player.setAutoMove(false, 0);
         isElevatorMoving = true;
@@ -593,26 +585,17 @@ function screenEvents() {
         }, 2000);
       }
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[13].body
-      ) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[13].body) {
         console.log("Collided with sensor 13");
         player.setAutoMove(false);
       }
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[14].body
-      ) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[14].body) {
         console.log("Collided with sensor 13");
         Body.setVelocity(player.body, { x: 26, y: 0 });
       }
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[15].body
-      ) {
+      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[15].body) {
         console.log("Collided with sensor 13");
         if (loopLeft.body.position.y >= 1080) {
           Body.setPosition(loopLeft.body, {

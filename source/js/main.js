@@ -57,14 +57,23 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgBed;
 /** @type {Image} */ let imgCanon;
 /** @type {Image} */ let imgWall;
+/** @type {Image} */ let imgTowerDoor;
+/** @type {Image} */ let imgTowerFg;
+/** @type {Image} */ let imgTowerBg;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
 let spaceIsPressed = false;
 
 // Level items
+/** @type {Block} */ let floorblock;
+/** @type {Block} */ let wall;
+/** @type {Block} */ let bed;
+/** @type {Block} */ let xylophone;
 /** @type {BlockCore} */ let canon;
-/** @type {BlockCore} */ let canonDoor;
+/** @type {Block} */ let canonDoor;
+/** @type {Block} */ let towerLeft
+/** @type {Block} */ let towerRight;
 let canonAngle = 0.6;
 let isCanonReversing = false;
 let canCanonRotate = false;

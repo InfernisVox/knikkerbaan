@@ -94,6 +94,18 @@ function loadAssets() {
   imgWall = loadImage(imgWall_Src);
   loadingMessage(17, imgWall_Src);
 
+  let imgTowerDoor_Src = "./assets/images/tower_door.png";
+  imgTowerDoor = loadImage(imgTowerDoor_Src);
+  loadingMessage(18, imgTowerDoor_Src);
+
+  let imgTowerFg_Src = "./assets/images/tower_fg.png";
+  imgTowerFg = loadImage(imgTowerFg_Src);
+  loadingMessage(19, imgTowerFg_Src);
+
+  let imgTowerBg_Src = "./assets/images/tower_bg.png";
+  imgTowerBg = loadImage(imgTowerBg_Src);
+  loadingMessage(20, imgTowerBg_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 2;
   console.log(
