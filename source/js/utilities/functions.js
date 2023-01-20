@@ -210,8 +210,6 @@ function drawCanvas() {
   // image(imgRoom, -205, -80, 5085, 720);
   // image(gifPsychedelic, 0, 0, 100, 100);
 
-  image(gifElGato, -70, -10, 470, 264);
-
   if (canCanonRotate) {
     if (canonAngle >= 0.6) {
       isCanonReversing = true;
@@ -251,14 +249,11 @@ function drawCanvas() {
   } else {
     Body.setPosition(canonDoor.body, {
       x: canonDoor.body.position.x,
-      y: 540,
+      y: 650,
     });
   }
 
-  push();
-  rotate(0.01);
-  image(imgXylophone, 750, 510, 540, 120);
-  pop();
+
 
   drawCharacters();
 
@@ -276,6 +271,15 @@ function drawCharacters() {
   sensors.forEach((sensor) => sensor.draw());
   blocks.forEach((block) => block.draw());
 
+  image(gifElGato, -55, 45, 470, 264);
+  push();
+  rotate(0.01);
+  image(imgXylophone, 785, 560, 540, 120);
+  pop();
+  image(imgTowerBg, 1950, 285, 289, 428);
+
   player.draw();
+
+  image(imgTowerFg, 1950, 285, 289, 428);
   player.showAngle(false);
 }
