@@ -41,7 +41,7 @@ function screen01() {
   wall = new Block(
     world,
     {
-      x: -565,
+      x: -536,
       y: windowHeight / 2,
       w: 1000,
       h: windowHeight * 2,
@@ -441,16 +441,84 @@ function screen01() {
   baseballGlove = new PolygonFromSVG(
     world,
     {
-      x: 2770,
-      y: 80,
+      x: 2720,
+      y: 170,
       w: 174,
       h: 183,
       fromFile: "assets/images/Baseballglove.svg",
       color: blockColor,
     },
-    { isStatic: false, angle: 0 }
+    { isStatic: true, angle: 0 }
   );
   blocks.push(baseballGlove);
+
+  baseballGloveBack1 = new Block(
+    world,
+    {
+      x: 2810,
+      y: 150,
+      w: 30,
+      h: 100,
+      color: blockColor,
+    },
+    {
+      isStatic: true,
+      angle: 0.7,
+      collisionFilter: {
+        category: Masks.CAR,
+        mask: Masks.WORLD,
+      },
+    }
+  );
+
+  baseballGloveBack1.constrainTo(null, {
+    pointA: { x: -30, y: +30 },
+    pointB: {
+      x: baseballGloveBack1.body.position.x - 30,
+      y: baseballGloveBack1.body.position.y + 30,
+    },
+    length: 0,
+    stiffness: 1,
+    draw: true,
+    color: color(255, 0, 0),
+    width: 2,
+  });
+
+  blocks.push(baseballGloveBack1);
+
+  baseballGloveBack2 = new Block(
+    world,
+    {
+      x: 2818,
+      y: 68,
+      w: 30,
+      h: 110,
+      color: blockColor,
+    },
+    {
+      isStatic: true,
+      angle: -0.4,
+      collisionFilter: {
+        category: Masks.CAR,
+        mask: Masks.WORLD,
+      },
+    }
+  );
+
+  baseballGloveBack2.constrainTo(baseballGloveBack1, {
+    pointA: { x: +30, y: -30 },
+    pointB: {
+      x: +30,
+      y: -30,
+    },
+    length: 0,
+    stiffness: 1,
+    draw: true,
+    color: color(255, 0, 0),
+    width: 2,
+  });
+
+  blocks.push(baseballGloveBack2);
 }
 
 /**
@@ -599,6 +667,8 @@ function screenEvents() {
         pair.bodyB === sensors[13].body
       ) {
         console.log("Collided with sensor 13");
+        Body.setStatic(baseballGloveBack1.body, false);
+        Body.setStatic(baseballGloveBack2.body, false);
         player.setAutoMove(false);
       }
 

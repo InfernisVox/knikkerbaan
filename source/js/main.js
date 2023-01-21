@@ -60,6 +60,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgTowerDoor;
 /** @type {Image} */ let imgTowerFg;
 /** @type {Image} */ let imgTowerBg;
+let imgButtonPressed;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
@@ -72,7 +73,7 @@ let spaceIsPressed = false;
 /** @type {Block} */ let xylophone;
 /** @type {BlockCore} */ let canon;
 /** @type {Block} */ let canonDoor;
-/** @type {Block} */ let towerLeft
+/** @type {Block} */ let towerLeft;
 /** @type {Block} */ let towerRight;
 let canonAngle = 0.6;
 let isCanonReversing = false;
@@ -86,6 +87,8 @@ let isElevatorMoving = false;
 /** @type {Ball} */ let carWheel1;
 /** @type {Ball} */ let carWheel2;
 /** @type {PolygonFromSVG} */ let baseballGlove;
+let baseballGloveBack1;
+let baseballGloveBack2;
 
 // ##################################################
 
@@ -119,6 +122,8 @@ function draw() {
   Player.saveAnglesOf(player, !spaceIsPressed, angleDiffersFromBy);
 
   once(drawCanvas);
+
+  image(imgButtonPressed, 0, 0, 100, 100);
 
   spacePressed();
 }

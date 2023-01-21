@@ -250,8 +250,6 @@ function drawCanvas() {
     });
   }
 
-
-
   drawCharacters();
 
   mouse.setOffset({ x: -cam.shiftX, y: 0 });

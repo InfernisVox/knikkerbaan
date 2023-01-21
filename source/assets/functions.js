@@ -106,6 +106,10 @@ function loadAssets() {
   imgTowerBg = loadImage(imgTowerBg_Src);
   loadingMessage(20, imgTowerBg_Src);
 
+  let imgButtonPressed_Src = "./assets/images/button_pressed.png";
+  imgButtonPressed = loadImage(imgButtonPressed_Src);
+  loadingMessage(21, imgButtonPressed_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 2;
   console.log(
