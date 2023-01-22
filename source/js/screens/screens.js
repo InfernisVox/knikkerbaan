@@ -354,7 +354,7 @@ function screen01() {
   carBody = new Block(
     world,
     {
-      x: 5400,
+      x: 5300,
       y: 100,
       w: 200,
       h: 40,
@@ -388,6 +388,7 @@ function screen01() {
       isStatic: false,
       angle: 0,
       friction: 0.8,
+      label: "carwheel1",
       collisionFilter: {
         category: Masks.CAR,
         mask: Masks.WORLD,
@@ -419,6 +420,7 @@ function screen01() {
       isStatic: false,
       angle: 0,
       friction: 0.8,
+      label: "carwheel2",
       collisionFilter: {
         category: Masks.CAR,
         mask: Masks.WORLD,
@@ -481,17 +483,235 @@ function screen01() {
     )
   );
 
+  carconstraintsensor = new BlockCore(
+    world,
+    {
+      x: 5300,
+      y: 600,
+      w: 60,
+      h: 120,
+      color: sensorColor,
+    },
+    { isStatic: true, isSensor: true, label: "carsensor" }
+  );
+  sensors.push(carconstraintsensor);
+
+  carpushsensor = new BlockCore(
+    world,
+    {
+      x: 5550,
+      y: 1600,
+      w: 600,
+      h: 160,
+      color: sensorColor,
+    },
+    { isStatic: true, isSensor: true, label: "carpushsensor" }
+  );
+  sensors.push(carpushsensor);
+
+  loopRight2 = new PolygonFromSVG(
+    world,
+    {
+      x: 6800,
+      y: 373,
+      w: 494,
+      h: 449,
+      fromFile: "assets/images/Loop_right.svg",
+      scale: 1.4,
+      color: blockColor,
+    },
+    { isStatic: true, angle: 0 }
+  );
+
+  blocks.push(loopRight2);
+
+  loopLeft2 = new PolygonFromSVG(
+    world,
+    {
+      x: 6400,
+      y: 1373,
+      w: 494,
+      h: 449,
+      fromFile: "assets/images/Loop_left.svg",
+      scale: 1.4,
+      color: blockColor,
+    },
+    { isStatic: true, angle: 0 }
+  );
+  blocks.push(loopLeft2);
+
   sensors.push(
     new BlockCore(
       world,
       {
-        x: 5400,
-        y: 500,
-        w: 60,
-        h: 120,
+        x: 6600,
+        y: 130,
+        w: 110,
+        h: 170,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true, label: "carsensor" }
+      { isStatic: true, isSensor: true, label: "loopingswitchsensor2" }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 7400,
+        y: 730,
+        w: 400,
+        h: 200,
+        color: blockColor,
+      },
+      { isStatic: true, angle: -0.25 }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 7950,
+        y: 630,
+        w: 10,
+        h: 100,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 8100,
+        y: 630,
+        w: 290,
+        h: 100,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true, label: "carconstraintsensor2" }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 8250,
+        y: 630,
+        w: 10,
+        h: 100,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 8700,
+        y: 630,
+        w: 200,
+        h: 100,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0 }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 8980,
+        y: 630,
+        w: 200,
+        h: 200,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0.05 }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 9000,
+        y: 430,
+        w: 100,
+        h: 100,
+        color: blockColor,
+      },
+      {
+        isStatic: false,
+        angle: 0,
+        friction: 0.01,
+        airfriction: 0.001,
+        mass: 0.2,
+      }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 9340,
+        y: 705,
+        w: 600,
+        h: 200,
+        color: blockColor,
+      },
+      { isStatic: true, angle: 0.25 }
+    )
+  );
+
+  rocket = new PolygonFromSVG(
+    world,
+    {
+      x: 10000,
+      y: 550,
+      w: 295,
+      h: 504,
+      fromFile: "assets/images/rocket.svg",
+      scale: 1,
+      color: blockColor,
+    },
+    { isStatic: false, angle: 0, mass: 0.9, friction: 1, airfriction: 0.01 }
+  );
+  blocks.push(rocket);
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 10000,
+        y: 420,
+        w: 150,
+        h: 150,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true, label: "rocketlaunchsensor" }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 7100,
+        y: 620,
+        w: 30,
+        h: 150,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true, label: "rampboostsensor" }
     )
   );
 }
@@ -680,6 +900,7 @@ function screenEvents() {
           });
         }
       }
+
       if (
         pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[16].body
@@ -687,12 +908,99 @@ function screenEvents() {
         console.log("Collided with sensor 16");
         Body.setVelocity(player.body, { x: 15, y: 0 });
       }
+
       if (
         pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[17].body
       ) {
         console.log("Collided with sensor 17");
         Body.setVelocity(player.body, { x: 20, y: 0 });
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[18].body
+      ) {
+        console.log("Collided with sensor 18");
+        player.constrainTo(carBody, {
+          pointA: { x: 0, y: 0 },
+          pointB: { x: 0, y: 0 - 60 },
+          length: 0,
+          stiffness: 1,
+          draw: true,
+          color: color(255, 0, 0),
+          width: 2,
+        });
+        player.positions = [];
+        player.angles = [];
+        Body.setPosition(carconstraintsensor.body, {
+          x: carconstraintsensor.body.position.x,
+          y: 1600,
+        });
+        Body.setVelocity(carBody.body, { x: 20, y: 0 });
+        Body.setPosition(carpushsensor.body, {
+          x: carpushsensor.body.position.x,
+          y: 600,
+        });
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[19].body
+      ) {
+        console.log("Collided with sensor 19");
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[20].body
+      ) {
+        console.log("Collided with sensor 20");
+        if (loopLeft2.body.position.y >= 1080) {
+          Body.setPosition(loopLeft2.body, {
+            x: loopLeft2.body.position.x,
+            y: 373,
+          });
+          Body.setPosition(loopRight2.body, {
+            x: loopRight2.body.position.x,
+            y: 1373,
+          });
+        } else {
+          Body.setPosition(loopLeft2.body, {
+            x: loopLeft2.body.position.x,
+            y: 1373,
+          });
+          Body.setPosition(loopRight2.body, {
+            x: loopRight2.body.position.x,
+            y: 373,
+          });
+        }
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[21].body
+      ) {
+        console.log("Collided with sensor 21");
+        console.log("Constraints lösen");
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[22].body
+      ) {
+        console.log("Collided with sensor 22");
+        player.positions = [];
+        player.angles = [];
+        console.log("The End");
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[23].body
+      ) {
+        console.log("Collided with sensor 23");
+        Body.setVelocity(carBody.body, { x: 100, y: 0 });
       }
     }
   });

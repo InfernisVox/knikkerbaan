@@ -90,6 +90,11 @@ let isElevatorMoving = false;
 /** @type {PolygonFromSVG} */ let baseballGlove;
 let baseballGloveBack1;
 let baseballGloveBack2;
+let carconstraintsensor;
+let carpushsensor;
+let loopRight2;
+let loopLeft2;
+let rocket;
 
 // ##################################################
 
