@@ -224,7 +224,11 @@ class Player extends Ball {
    */
   setAutoMove(bool, velocity = 0.01) {
     if (bool) {
-      if (!mouseIsDragged) {
+      if (
+        !mouseIsDragged &&
+        this.body.velocity.x < 0.02 &&
+        this.body.velocity.x > -0.02
+      ) {
         Matter.Body.setAngularVelocity(player.body, velocity);
       }
     }
