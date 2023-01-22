@@ -268,7 +268,7 @@ function drawCharacters() {
       y: 1540,
     });
   } else {
-    image(imgButtonPressed, 1650, 665, 97, 28);
+    image(imgButtonPressed, 1650, 667, 97, 28);
     Body.setPosition(canonDoor.body, {
       x: canonDoor.body.position.x,
       y: 650,
