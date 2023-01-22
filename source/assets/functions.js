@@ -110,6 +110,10 @@ function loadAssets() {
   imgButtonPressed = loadImage(imgButtonPressed_Src);
   loadingMessage(21, imgButtonPressed_Src);
 
+  let imgButtonReleased_Src = "./assets/images/button_unpressed.png";
+  imgButtonReleased = loadImage(imgButtonReleased_Src);
+  loadingMessage(22, imgButtonReleased_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(

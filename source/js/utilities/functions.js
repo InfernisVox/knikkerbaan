@@ -238,18 +238,6 @@ function drawCanvas() {
     }
   }
 
-  if (isCanonDoorOpen) {
-    Body.setPosition(canonDoor.body, {
-      x: canonDoor.body.position.x,
-      y: 1540,
-    });
-  } else {
-    Body.setPosition(canonDoor.body, {
-      x: canonDoor.body.position.x,
-      y: 650,
-    });
-  }
-
   drawCharacters();
 
   mouse.setOffset({ x: -cam.shiftX, y: 0 });
@@ -273,8 +261,23 @@ function drawCharacters() {
   pop();
   image(imgTowerBg, 1950, 285, 289, 428);
 
+  if (isCanonDoorOpen) {
+    image(imgButtonReleased, 1650, 661, 96, 34);
+    Body.setPosition(canonDoor.body, {
+      x: canonDoor.body.position.x,
+      y: 1540,
+    });
+  } else {
+    image(imgButtonPressed, 1650, 667, 97, 28);
+    Body.setPosition(canonDoor.body, {
+      x: canonDoor.body.position.x,
+      y: 650,
+    });
+  }
+
   player.draw();
 
   image(imgTowerFg, 1950, 285, 289, 428);
+
   player.showAngle(false);
 }

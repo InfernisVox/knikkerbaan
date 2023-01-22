@@ -80,7 +80,7 @@ function screen01() {
         h: 250,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "bedsensor" }
     )
   );
 
@@ -104,12 +104,12 @@ function screen01() {
         world,
         {
           x: 850 + i * 48,
-          y: 560 + i * 4,
+          y: 580 + i * 4,
           w: 15,
-          h: 100,
+          h: 40,
           color: sensorColor,
         },
-        { isStatic: true, isSensor: true }
+        { isStatic: true, isSensor: true, label: "xylophonesensor" + i }
       )
     );
   }
@@ -120,11 +120,11 @@ function screen01() {
       {
         x: 1700,
         y: 650,
-        w: 120,
-        h: 100,
+        w: 90,
+        h: 60,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "canondoorsensor" }
     )
   );
 
@@ -180,7 +180,7 @@ function screen01() {
         h: 200,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "elevatorsensor" }
     )
   );
 
@@ -255,7 +255,7 @@ function screen01() {
         h: 494,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "baseballglovesensor" }
     )
   );
 
@@ -317,7 +317,7 @@ function screen01() {
         h: 200,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "speedboostloopingsensor" }
     )
   );
 
@@ -331,7 +331,7 @@ function screen01() {
         h: 100,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "loopingswitchsensor" }
     )
   );
 
@@ -463,7 +463,7 @@ function screen01() {
         h: 120,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "wheelshotmidspeedboostsensor" }
     )
   );
 
@@ -477,7 +477,21 @@ function screen01() {
         h: 120,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true }
+      { isStatic: true, isSensor: true, label: "jumppadspeedboostsensor" }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 5400,
+        y: 500,
+        w: 60,
+        h: 120,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true, label: "carsensor" }
     )
   );
 }
