@@ -992,6 +992,7 @@ function screenEvents() {
         console.log("Collided with sensor 22");
         player.positions = [];
         player.angles = [];
+        console.log("The End");
       }
 
       if (
