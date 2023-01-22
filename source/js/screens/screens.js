@@ -354,7 +354,7 @@ function screen01() {
   carBody = new Block(
     world,
     {
-      x: 5000,
+      x: 5400,
       y: 100,
       w: 200,
       h: 40,
@@ -441,84 +441,45 @@ function screen01() {
   baseballGlove = new PolygonFromSVG(
     world,
     {
-      x: 2720,
-      y: 170,
+      x: 2750,
+      y: 137,
       w: 174,
       h: 183,
       fromFile: "assets/images/Baseballglove.svg",
       color: blockColor,
     },
-    { isStatic: true, angle: 0 }
+    { isStatic: false, angle: 0 }
   );
+
   blocks.push(baseballGlove);
 
-  baseballGloveBack1 = new Block(
-    world,
-    {
-      x: 2810,
-      y: 150,
-      w: 30,
-      h: 100,
-      color: blockColor,
-    },
-    {
-      isStatic: true,
-      angle: 0.7,
-      collisionFilter: {
-        category: Masks.CAR,
-        mask: Masks.WORLD,
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 3350,
+        y: 580,
+        w: 20,
+        h: 120,
+        color: sensorColor,
       },
-    }
+      { isStatic: true, isSensor: true }
+    )
   );
 
-  baseballGloveBack1.constrainTo(null, {
-    pointA: { x: -30, y: +30 },
-    pointB: {
-      x: baseballGloveBack1.body.position.x - 30,
-      y: baseballGloveBack1.body.position.y + 30,
-    },
-    length: 0,
-    stiffness: 1,
-    draw: true,
-    color: color(255, 0, 0),
-    width: 2,
-  });
-
-  blocks.push(baseballGloveBack1);
-
-  baseballGloveBack2 = new Block(
-    world,
-    {
-      x: 2818,
-      y: 68,
-      w: 30,
-      h: 110,
-      color: blockColor,
-    },
-    {
-      isStatic: true,
-      angle: -0.4,
-      collisionFilter: {
-        category: Masks.CAR,
-        mask: Masks.WORLD,
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 4750,
+        y: 500,
+        w: 20,
+        h: 120,
+        color: sensorColor,
       },
-    }
+      { isStatic: true, isSensor: true }
+    )
   );
-
-  baseballGloveBack2.constrainTo(baseballGloveBack1, {
-    pointA: { x: +30, y: -30 },
-    pointB: {
-      x: +30,
-      y: -30,
-    },
-    length: 0,
-    stiffness: 1,
-    draw: true,
-    color: color(255, 0, 0),
-    width: 2,
-  });
-
-  blocks.push(baseballGloveBack2);
 }
 
 /**
@@ -667,8 +628,8 @@ function screenEvents() {
         pair.bodyB === sensors[13].body
       ) {
         console.log("Collided with sensor 13");
-        Body.setStatic(baseballGloveBack1.body, false);
-        Body.setStatic(baseballGloveBack2.body, false);
+        // Body.setStatic(baseballGloveBack1.body, false);
+        // Body.setStatic(baseballGloveBack2.body, false);
         player.setAutoMove(false);
       }
 
@@ -676,7 +637,7 @@ function screenEvents() {
         pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[14].body
       ) {
-        console.log("Collided with sensor 13");
+        console.log("Collided with sensor 14");
         Body.setVelocity(player.body, { x: 26, y: 0 });
       }
 
@@ -684,7 +645,7 @@ function screenEvents() {
         pair.bodyA.label === Player.LABEL &&
         pair.bodyB === sensors[15].body
       ) {
-        console.log("Collided with sensor 13");
+        console.log("Collided with sensor 15");
         if (loopLeft.body.position.y >= 1080) {
           Body.setPosition(loopLeft.body, {
             x: loopLeft.body.position.x,
@@ -704,6 +665,20 @@ function screenEvents() {
             y: 348,
           });
         }
+      }
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[16].body
+      ) {
+        console.log("Collided with sensor 16");
+        Body.setVelocity(player.body, { x: 15, y: 0 });
+      }
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[17].body
+      ) {
+        console.log("Collided with sensor 17");
+        Body.setVelocity(player.body, { x: 20, y: 0 });
       }
     }
   });

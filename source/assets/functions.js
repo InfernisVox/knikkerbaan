@@ -111,7 +111,7 @@ function loadAssets() {
   loadingMessage(21, imgButtonPressed_Src);
 
   assetCalc += new Error().lineNumber;
-  assetTotal = (assetCalc - 2) / 4 - 2;
+  assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
     `%c\n-------------------------\nTotal assets loaded: %c${assetTotal}`,
     "color: #7289DA; font-weight: bold;"
