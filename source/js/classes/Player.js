@@ -5,8 +5,9 @@
 /** @typedef {{x: number; y: number; r: number; color: string | Color; image: Image; scale: number; [key: string]: any}} PlayerAttributes */
 
 class Player extends Ball {
-  static THRESHOLD_VECTOR = 10;
+  static THRESHOLD_POSITION = 10;
   static THRESHOLD_ANGLE = 0.5;
+  static THRESHOLD_VELOCITY = 10;
   static THRESHOLD_TIMER_PERCENT = 5.044000000059605;
   static LABEL = "Wollknäuel";
 
@@ -15,7 +16,7 @@ class Player extends Ball {
    * @param {number} value
    */
   static setVectorThreshold(value) {
-    Player.THRESHOLD_VECTOR = value;
+    Player.THRESHOLD_POSITION = value;
   }
 
   /**
@@ -24,6 +25,14 @@ class Player extends Ball {
    */
   static setAngleThreshold(value) {
     Player.THRESHOLD_ANGLE = value;
+  }
+
+  /**
+   *
+   * @param {number} value
+   */
+  static setVelocityThreshold(value) {
+    Player.THRESHOLD_VELOCITY = value;
   }
 
   /**
@@ -43,7 +52,7 @@ class Player extends Ball {
             ? player.positions[player.positions.length - 1]
             : player.startPosition,
           vec,
-          Player.THRESHOLD_VECTOR
+          Player.THRESHOLD_POSITION
         )
       ) {
         player.positions.push(vec);
@@ -74,11 +83,36 @@ class Player extends Ball {
     }
   }
 
+  /**
+   * ...
+   * @param {Player} player
+   * @param {boolean} trigger
+   * @param {(...args: any[]) => boolean} ifTrue
+   */
+  static saveVelocityOf(player, trigger, ifTrue) {
+    if (trigger) {
+      let velocity = player.body.velocity;
+
+      if (
+        ifTrue(
+          player.velocities.length
+            ? player.velocities[player.velocities.length - 1]
+            : player.startVelocity,
+          velocity,
+          Player.THRESHOLD_VELOCITY
+        )
+      )
+        player.velocities.push(player.body.velocity);
+    }
+  }
+
   // ##################################################
 
   /** @type {Matter.Vector[]} */ positions;
   /** @type {number[]} */ angles;
+  /** @type {Matter.Vector[]} */ velocities;
   /** @type {boolean} */ isOnGround;
+  /** @type {boolean} */ hasJumped;
   /** @type {number} */ direction;
   /** @type {ProgressTimer} */ timer;
 
@@ -109,9 +143,12 @@ class Player extends Ball {
     this.positionsLengthMax = this.positions.length;
     this.startAngle = options.angle;
     this.angles = [];
+    this.velocities = [];
+    this.startVelocity = this.body.velocity;
 
     this.isReversing = false;
     this.hasRewindStarted = false;
+    this.hasJumped = false;
 
     this.timer = new ProgressTimer();
 
@@ -124,11 +161,12 @@ class Player extends Ball {
 
   // ##################################################
   jump() {
-    Matter.Body.applyForce(
-      this.body,
-      { x: this.body.position.x, y: this.body.position.y },
-      { x: 0.018 * this.direction + this.body.velocity.x / 100, y: -0.1 }
-    );
+    if (!this.hasJumped) {
+      Matter.Body.applyForce(this.body, this.body.position, {
+        x: 0,
+        y: -0.2,
+      });
+    }
   }
 
   rewind() {
@@ -146,6 +184,14 @@ class Player extends Ball {
     if (this.angles.length) {
       Matter.Body.setAngle(this.body, this.angles[this.angles.length - 1]);
       this.angles.pop();
+    }
+
+    if (this.velocities.length) {
+      Matter.Body.setVelocity(
+        this.body,
+        this.velocities[this.velocities.length - 1]
+      );
+      this.velocities.pop();
     }
   }
 
@@ -230,18 +276,3 @@ class Player extends Ball {
     }
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.body.onkeydown = function (/** @type {KeyboardEvent} */ e) {
-    if (e.code === "Space" && !e.repeat) {
-      if (!player.jumpCount) player.jump();
-      player.jumpCount = 1;
-    }
-  };
-
-  document.body.onkeyup = function (/** @type {KeyboardEvent} */ e) {
-    if (e.code === "Space") {
-      if (player.isOnGround && player.jumpCount === 1) player.jumpCount = 0;
-    }
-  };
-});
