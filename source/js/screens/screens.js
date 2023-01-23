@@ -1032,7 +1032,7 @@ function setCollisionEvents() {
     const bodyB = pairs.bodyB;
     if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
       player.isOnGround = true;
-      player.hasJumped = !player.isOnGround;
+      player.spaceHasBeenPressed = !player.isOnGround;
     }
   });
 
@@ -1042,7 +1042,7 @@ function setCollisionEvents() {
     const bodyB = pairs.bodyB;
     if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
       player.isOnGround = false;
-      player.hasJumped = !player.isOnGround;
+      player.spaceHasBeenPressed = !player.isOnGround;
     }
   });
 }

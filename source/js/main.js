@@ -25,6 +25,11 @@ const Masks = {
   WORLD: 0x0001,
   CAR: 0x0002,
 };
+/** @enum {number} */
+const FactoryFlag = {
+  SINGLE_JUMP: 0,
+  CANON_SHOOT: 1,
+};
 
 // Setup ##########################################################
 console.clear();
@@ -144,7 +149,7 @@ function keyPressed() {
 
     spaceIsPressed = true;
 
-    player.jump();
+    player.onSpacePress();
   }
 }
 
