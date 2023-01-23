@@ -126,6 +126,7 @@ function draw() {
 
   Player.savePositionsOf(player, !spaceIsPressed, vectorDiffersFromBy);
   Player.saveAnglesOf(player, !spaceIsPressed, angleDiffersFromBy);
+  Player.saveVelocityOf(player, !spaceIsPressed, velocityDiffersFromBy);
 
   once(drawCanvas);
 
@@ -139,6 +140,8 @@ function keyPressed() {
     player.timer.start();
 
     spaceIsPressed = true;
+
+    player.jump();
   }
 }
 
