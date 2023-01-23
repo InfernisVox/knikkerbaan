@@ -112,9 +112,11 @@ class Player extends Ball {
   /** @type {number[]} */ angles;
   /** @type {Matter.Vector[]} */ velocities;
   /** @type {boolean} */ isOnGround;
-  /** @type {boolean} */ hasJumped;
+  /** @type {boolean} */ spaceHasBeenPressed;
   /** @type {number} */ direction;
   /** @type {ProgressTimer} */ timer;
+
+  /** @type {() => void} */ onSpacePress;
 
   /**
    * Specifies the state at which the rewind effect actually takes place
@@ -148,7 +150,12 @@ class Player extends Ball {
 
     this.isReversing = false;
     this.hasRewindStarted = false;
-    this.hasJumped = false;
+    this.spaceHasBeenPressed = false;
+
+    this.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
+      this,
+      FactoryFlag.SINGLE_JUMP
+    );
 
     this.timer = new ProgressTimer();
 
@@ -160,14 +167,6 @@ class Player extends Ball {
   }
 
   // ##################################################
-  jump() {
-    if (!this.hasJumped) {
-      Matter.Body.applyForce(this.body, this.body.position, {
-        x: 0.05,
-        y: -0.15,
-      });
-    }
-  }
 
   rewind() {
     // #################### Zeit anhalten: Matter.Runner.stop(runner);
