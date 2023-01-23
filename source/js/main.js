@@ -62,6 +62,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgTowerBg;
 let imgButtonPressed;
 let imgButtonReleased;
+let imgCannonBase;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;

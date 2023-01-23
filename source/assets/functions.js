@@ -114,6 +114,10 @@ function loadAssets() {
   imgButtonReleased = loadImage(imgButtonReleased_Src);
   loadingMessage(22, imgButtonReleased_Src);
 
+  let imgCannonBase_Src = "./assets/images/cannon_base.png";
+  imgCannonBase = loadImage(imgCannonBase_Src);
+  loadingMessage(23, imgCannonBase_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
