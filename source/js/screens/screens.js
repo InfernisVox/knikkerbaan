@@ -714,6 +714,26 @@ function screen01() {
       { isStatic: true, isSensor: true, label: "rampboostsensor" }
     )
   );
+
+  console.log(blocks);
+  blocks.push(
+    new Stack(
+      world,
+      {
+        x: 8050,
+        y: 400,
+        cols: 8,
+        rows: 10,
+        colGap: 5,
+        rowGap: 5,
+        color: color(random(0, 256), random(0, 256), random(0, 256)),
+        create: (bx, by) =>
+          Matter.Bodies.circle(bx, by, 10, { restitution: 0.9, mass: 0.1 }),
+      },
+      { isStatic: false }
+    )
+  );
+  console.log(blocks);
 }
 
 /**
