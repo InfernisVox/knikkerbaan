@@ -163,8 +163,8 @@ class Player extends Ball {
   jump() {
     if (!this.hasJumped) {
       Matter.Body.applyForce(this.body, this.body.position, {
-        x: 0,
-        y: -0.2,
+        x: 0.05,
+        y: -0.15,
       });
     }
   }
