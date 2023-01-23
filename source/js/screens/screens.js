@@ -156,7 +156,7 @@ function screen01() {
 
   blocks.push(towerRight);
 
-  canon = new BlockCore(
+  canon = new Block(
     world,
     {
       x: 2100,
@@ -164,6 +164,7 @@ function screen01() {
       w: 220,
       h: 70,
       color: blockColor,
+      image: imgCannon,
     },
     { isStatic: true, angle: canonAngle, isSensor: true }
   );
