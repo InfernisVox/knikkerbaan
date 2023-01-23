@@ -590,7 +590,7 @@ function screen01() {
         x: 8100,
         y: 630,
         w: 290,
-        h: 100,
+        h: 300,
         color: sensorColor,
       },
       { isStatic: true, isSensor: true, label: "carconstraintsensor2" }
@@ -716,25 +716,22 @@ function screen01() {
     )
   );
 
-  console.log(blocks);
-  blocks.push(
-    new Stack(
-      world,
-      {
-        x: 8050,
-        y: 400,
-        cols: 8,
-        rows: 10,
-        colGap: 5,
-        rowGap: 5,
-        color: color(random(0, 256), random(0, 256), random(0, 256)),
-        create: (bx, by) =>
-          Matter.Bodies.circle(bx, by, 10, { restitution: 0.9, mass: 0.1 }),
-      },
-      { isStatic: false }
-    )
-  );
-  console.log(blocks);
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 15; j++) {
+      blocks.push(
+        new Ball(
+          world,
+          {
+            x: 8000 + i * 20,
+            y: 400 + j * 20,
+            r: 9,
+            color: color(random(20, 256), random(20, 256), random(20, 256)),
+          },
+          { isStatic: false, angle: 0, mass: 0.01, restitution: 0.5 }
+        )
+      );
+    }
+  }
 }
 
 /**
