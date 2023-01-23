@@ -122,6 +122,10 @@ function loadAssets() {
   imgCannon = loadImage(imgCannon_Src);
   loadingMessage(24, imgCannon_Src);
 
+  let imgBaseballGlove_Src = "./assets/images/baseballglove.png";
+  imgBaseballGlove = loadImage(imgBaseballGlove_Src);
+  loadingMessage(25, imgBaseballGlove_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
