@@ -118,6 +118,10 @@ function loadAssets() {
   imgCannonBase = loadImage(imgCannonBase_Src);
   loadingMessage(23, imgCannonBase_Src);
 
+  let imgCannon_Src = "./assets/images/cannon.png";
+  imgCannon = loadImage(imgCannon_Src);
+  loadingMessage(24, imgCannon_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
