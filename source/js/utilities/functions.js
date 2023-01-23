@@ -204,6 +204,16 @@ function angleDiffersFromBy(angle1, angle2, value) {
   return Math.abs(angle1 - angle2) >= value;
 }
 
+/**
+ *
+ * @param {Matter.Vector} velocity1
+ * @param {Matter.Vector} velocity2
+ * @param {number} value
+ */
+function velocityDiffersFromBy({ x: x1, y: y1 }, { x: x2, y: y2 }, value) {
+  return Math.abs(x1 - x2) >= value || Math.abs(y1 - y2) >= value;
+}
+
 function drawCanvas() {
   cam.swivelBehind(() => player.body.position.x >= CANVAS_BREAKPOINT);
 
@@ -278,6 +288,7 @@ function drawCharacters() {
   player.draw();
 
   image(imgTowerFg, 1950, 285, 289, 428);
+  image(imgCannonBase, 2020, 215, 128, 106);
 
   player.showAngle(false);
 }

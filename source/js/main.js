@@ -62,6 +62,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgTowerBg;
 let imgButtonPressed;
 let imgButtonReleased;
+let imgCannonBase;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
@@ -126,6 +127,7 @@ function draw() {
 
   Player.savePositionsOf(player, !spaceIsPressed, vectorDiffersFromBy);
   Player.saveAnglesOf(player, !spaceIsPressed, angleDiffersFromBy);
+  Player.saveVelocityOf(player, !spaceIsPressed, velocityDiffersFromBy);
 
   once(drawCanvas);
 
@@ -139,6 +141,8 @@ function keyPressed() {
     player.timer.start();
 
     spaceIsPressed = true;
+
+    player.jump();
   }
 }
 

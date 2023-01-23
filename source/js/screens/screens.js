@@ -1013,8 +1013,8 @@ function setCollisionEvents() {
     const bodyA = pairs.bodyA;
     const bodyB = pairs.bodyB;
     if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
-      // isPlayerOnGround = true;
       player.isOnGround = true;
+      player.hasJumped = !player.isOnGround;
     }
   });
 
@@ -1023,8 +1023,8 @@ function setCollisionEvents() {
     const bodyA = pairs.bodyA;
     const bodyB = pairs.bodyB;
     if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
-      // isPlayerOnGround = false;
       player.isOnGround = false;
+      player.hasJumped = !player.isOnGround;
     }
   });
 }
@@ -1039,7 +1039,6 @@ function spacePressed() {
         player.hasRewindStarted = true;
       }
 
-      // console.log(maxCount, player.positions.length);
       if (marbleRun.hasBeenStarted) {
         player.showBar(true);
         player.rewind();
