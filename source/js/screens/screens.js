@@ -493,7 +493,7 @@ function screen01() {
       h: 120,
       color: sensorColor,
     },
-    { isStatic: true, isSensor: true, label: "carsensor" }
+    { isStatic: true, isSensor: true, label: "carconstraintsensor" }
   );
   sensors.push(carconstraintsensor);
 
@@ -677,14 +677,14 @@ function screen01() {
     world,
     {
       x: 10000,
-      y: 550,
+      y: 450,
       w: 295,
       h: 504,
       fromFile: "assets/images/rocket.svg",
       scale: 1,
       color: blockColor,
     },
-    { isStatic: false, angle: 0, mass: 0.9, friction: 1, airfriction: 0.01 }
+    { isStatic: false, angle: 0, mass: 1, friction: 1, airfriction: 0.01 }
   );
   blocks.push(rocket);
 
@@ -725,13 +725,27 @@ function screen01() {
             x: 8000 + i * 20,
             y: 400 + j * 20,
             r: 9,
-            color: color(random(20, 256), random(20, 256), random(20, 256)),
+            color: color(random(0, 256), random(0, 256), random(0, 256)),
           },
           { isStatic: false, angle: 0, mass: 0.01, restitution: 0.5 }
         )
       );
     }
   }
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 6100,
+        y: 400,
+        w: 60,
+        h: 1000,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true, label: "windingupsensor" }
+    )
+  );
 }
 
 /**
@@ -954,10 +968,6 @@ function screenEvents() {
           y: 1600,
         });
         Body.setVelocity(carBody.body, { x: 20, y: 0 });
-        Body.setPosition(carpushsensor.body, {
-          x: carpushsensor.body.position.x,
-          y: 600,
-        });
       }
 
       if (
@@ -965,6 +975,7 @@ function screenEvents() {
         pair.bodyB === sensors[19].body
       ) {
         console.log("Collided with sensor 19");
+        windingup = true;
       }
 
       if (
@@ -998,7 +1009,6 @@ function screenEvents() {
         pair.bodyB === sensors[21].body
       ) {
         console.log("Collided with sensor 21");
-        console.log("Constraints lösen");
         player.constraints.forEach((constraint) => {
           Matter.World.remove(world, constraint);
         });
@@ -1020,6 +1030,19 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 23");
         Body.setVelocity(carBody.body, { x: 100, y: 0 });
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[24].body
+      ) {
+        console.log("Collided with sensor 24");
+        Body.setPosition(carpushsensor.body, {
+          x: carpushsensor.body.position.x,
+          y: 600,
+        });
+        playerpositioncar = [];
+        windingup = false;
       }
     }
   });

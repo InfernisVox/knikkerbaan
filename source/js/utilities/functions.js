@@ -248,6 +248,12 @@ function drawCanvas() {
     }
   }
 
+  if (windingup) {
+    playerpositioncar.push(player.body.position.x);
+    console.log(playerpositioncar);
+    Body.setVelocity(carBody.body, { x: playerpositioncar.length / 3, y: 0 });
+  }
+
   drawCharacters();
 
   mouse.setOffset({ x: -cam.shiftX, y: 0 });
