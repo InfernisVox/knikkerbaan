@@ -927,9 +927,7 @@ function screenEvents() {
           pointB: { x: 0, y: 0 - 60 },
           length: 0,
           stiffness: 1,
-          draw: true,
-          color: color(255, 0, 0),
-          width: 2,
+          draw: false,
         });
         player.positions = [];
         player.angles = [];
@@ -983,6 +981,9 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 21");
         console.log("Constraints lösen");
+        player.constraints.forEach((constraint) => {
+          Matter.World.remove(world, constraint);
+        });
       }
 
       if (
