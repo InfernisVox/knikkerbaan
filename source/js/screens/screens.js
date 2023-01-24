@@ -717,36 +717,57 @@ function screen01() {
     )
   );
 
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 20; j++) {
-      blocks.push(
-        new Ball(
-          world,
-          {
-            x: 8000 + i * 20,
-            y: 400 + j * 20,
-            r: 9,
-            color: color(random(0, 256), random(0, 256), random(0, 256)),
-          },
-          { isStatic: false, angle: 0, mass: 0.01, restitution: 0.5 }
-        )
-      );
-    }
-  }
-
-  sensors.push(
-    new BlockCore(
+  console.log(blocks);
+  blocks.push(
+    new Stack(
       world,
       {
-        x: 6100,
+        x: 8050,
         y: 400,
-        w: 60,
-        h: 1000,
-        color: sensorColor,
+        cols: 8,
+        rows: 10,
+        colGap: 5,
+        rowGap: 5,
+        color: color(random(0, 256), random(0, 256), random(0, 256)),
+        create: (bx, by) =>
+          Matter.Bodies.circle(bx, by, 10, { restitution: 0.9, mass: 0.1 }),
       },
-      { isStatic: true, isSensor: true, label: "windingupsensor" }
+      { isStatic: false }
     )
   );
+  console.log(blocks);
+
+  // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (1/2)
+  // for (let i = 0; i < 10; i++) {
+  //   for (let j = 0; j < 20; j++) {
+  //     blocks.push(
+  //       new Ball(
+  //         world,
+  //         {
+  //           x: 8000 + i * 20,
+  //           y: 400 + j * 20,
+  //           r: 9,
+  //           color: color(random(0, 256), random(0, 256), random(0, 256)),
+  //         },
+  //         { isStatic: false, angle: 0, mass: 0.01, restitution: 0.5 }
+  //       )
+  //     );
+  //   }
+  // }
+
+  // sensors.push(
+  //   new BlockCore(
+  //     world,
+  //     {
+  //       x: 6100,
+  //       y: 400,
+  //       w: 60,
+  //       h: 1000,
+  //       color: sensorColor,
+  //     },
+  //     { isStatic: true, isSensor: true, label: "windingupsensor" }
+  //   )
+  // );
 }
 
 /**
@@ -1031,18 +1052,19 @@ function screenEvents() {
         Body.setVelocity(carBody.body, { x: 100, y: 0 });
       }
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[24].body
-      ) {
-        console.log("Collided with sensor 24");
-        Body.setPosition(carpushsensor.body, {
-          x: carpushsensor.body.position.x,
-          y: 600,
-        });
-        playerpositioncar = [];
-        windingup = false;
-      }
+      // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (2/2)
+      // if (
+      //   pair.bodyA.label === Player.LABEL &&
+      //   pair.bodyB === sensors[24].body
+      // ) {
+      //   console.log("Collided with sensor 24");
+      //   Body.setPosition(carpushsensor.body, {
+      //     x: carpushsensor.body.position.x,
+      //     y: 600,
+      //   });
+      //   playerpositioncar = [];
+      //   windingup = false;
+      // }
     }
   });
 }
