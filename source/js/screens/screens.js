@@ -450,6 +450,7 @@ function screen01() {
       h: 183,
       fromFile: "assets/images/Baseballglove.svg",
       color: blockColor,
+      image: imgBaseballGlove,
     },
     { isStatic: false, angle: 0 }
   );

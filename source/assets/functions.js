@@ -78,7 +78,7 @@ function loadAssets() {
   soundXylophoneC2 = loadSound(soundXylophoneC2_Src);
   loadingMessage(13, soundXylophoneC2_Src);
 
-  let imgRoom_Src = "./assets/images/room.png";
+  let imgRoom_Src = "./assets/images/wallpaper.png";
   imgRoom = loadImage(imgRoom_Src);
   loadingMessage(14, imgRoom_Src);
 
@@ -121,6 +121,10 @@ function loadAssets() {
   let imgCannon_Src = "./assets/images/cannon.png";
   imgCannon = loadImage(imgCannon_Src);
   loadingMessage(24, imgCannon_Src);
+
+  let imgBaseballGlove_Src = "./assets/images/baseballglove.png";
+  imgBaseballGlove = loadImage(imgBaseballGlove_Src);
+  loadingMessage(25, imgBaseballGlove_Src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
