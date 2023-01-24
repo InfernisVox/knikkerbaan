@@ -3,128 +3,53 @@
 
 /** @typedef {import("../../../@types/p5/index").Color} Color */
 /** @typedef {{x: number; y: number; r: number; color: string | Color; image: Image; scale: number; [key: string]: any}} PlayerAttributes */
+/** @typedef {{p: Matter.Vector; a: number; v: Matter.Vector}} Data */
 
 class Player extends Ball {
-  static THRESHOLD_POSITION = 10;
-  static THRESHOLD_ANGLE = 0.5;
-  static THRESHOLD_VELOCITY = 10;
   static THRESHOLD_TIMER_PERCENT = 5.044000000059605;
+  static RECORDING_LENGTH_MAX = 5_000;
   static LABEL = "Wollknäuel";
 
   /**
-   *
-   * @param {number} value
-   */
-  static setVectorThreshold(value) {
-    Player.THRESHOLD_POSITION = value;
-  }
-
-  /**
-   *
-   * @param {number} value
-   */
-  static setAngleThreshold(value) {
-    Player.THRESHOLD_ANGLE = value;
-  }
-
-  /**
-   *
-   * @param {number} value
-   */
-  static setVelocityThreshold(value) {
-    Player.THRESHOLD_VELOCITY = value;
-  }
-
-  /**
    * ...
    * @param {Player} player
    * @param {boolean} trigger
-   * @param {(...args: any[]) => boolean} ifTrue
    */
-  static savePositionsOf(player, trigger, ifTrue) {
+  static recordDataOf(player, trigger) {
     if (trigger) {
-      const { x: x0, y: y0 } = player.body.position;
-      const vec = { x: x0, y: y0 };
+      const p = player.body.position;
+      const a = player.body.angle;
+      const v = player.body.velocity;
 
-      if (
-        ifTrue(
-          player.positions.length
-            ? player.positions[player.positions.length - 1]
-            : player.startPosition,
-          vec,
-          Player.THRESHOLD_POSITION
-        )
-      ) {
-        player.positions.push(vec);
+      player.recordedData.unshift({
+        p: {
+          x: p.x,
+          y: p.y,
+        },
+        a,
+        v: {
+          x: v.x,
+          y: v.y,
+        },
+      });
+
+      if (player.recordedData.length > Player.RECORDING_LENGTH_MAX) {
+        player.recordedData.pop();
       }
-    }
-  }
-
-  /**
-   * ...
-   * @param {Player} player
-   * @param {boolean} trigger
-   * @param {(...args: any[]) => boolean} ifTrue
-   */
-  static saveAnglesOf(player, trigger, ifTrue) {
-    if (trigger) {
-      let angle = player.body.angle;
-
-      if (
-        ifTrue(
-          player.angles.length
-            ? player.angles[player.angles.length - 1]
-            : player.startAngle,
-          angle,
-          Player.THRESHOLD_ANGLE
-        )
-      )
-        player.angles.push(player.body.angle);
-    }
-  }
-
-  /**
-   * ...
-   * @param {Player} player
-   * @param {boolean} trigger
-   * @param {(...args: any[]) => boolean} ifTrue
-   */
-  static saveVelocityOf(player, trigger, ifTrue) {
-    if (trigger) {
-      let velocity = player.body.velocity;
-
-      if (
-        ifTrue(
-          player.velocities.length
-            ? player.velocities[player.velocities.length - 1]
-            : player.startVelocity,
-          velocity,
-          Player.THRESHOLD_VELOCITY
-        )
-      )
-        player.velocities.push(player.body.velocity);
     }
   }
 
   // ##################################################
 
-  /** @type {Matter.Vector[]} */ positions;
-  /** @type {number[]} */ angles;
-  /** @type {Matter.Vector[]} */ velocities;
   /** @type {boolean} */ isOnGround;
   /** @type {boolean} */ spaceHasBeenPressed;
-  /** @type {number} */ direction;
   /** @type {ProgressTimer} */ timer;
 
   /** @type {() => void} */ onSpacePress;
 
-  /**
-   * Specifies the state at which the rewind effect actually takes place
-   */
+  /** @type {Data[]} */ recordedData;
+
   isReversing;
-  /**
-   * Specifies the state at which the rewind has beein initialized
-   */
   hasRewindStarted;
 
   /**
@@ -140,17 +65,12 @@ class Player extends Ball {
     this.width = 2 * this.r;
     this.height = 2 * this.r;
 
-    this.startPosition = { x: attributes.x, y: attributes.y };
-    this.positions = [];
-    this.positionsLengthMax = this.positions.length;
-    this.startAngle = options.angle;
-    this.angles = [];
-    this.velocities = [];
-    this.startVelocity = this.body.velocity;
-
     this.isReversing = false;
     this.hasRewindStarted = false;
     this.spaceHasBeenPressed = false;
+
+    this.recordedData = [];
+    this.recordedDataLength = this.recordedData.length;
 
     this.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
       this,
@@ -161,39 +81,29 @@ class Player extends Ball {
 
     this.i = 0;
     this.jumpCount = 0;
-    this.direction = 1;
 
     this.isOnGround = false;
   }
 
   // ##################################################
 
+  /**
+   *
+   * @returns {Player}
+   */
   rewind() {
     // #################### Zeit anhalten: Matter.Runner.stop(runner);
     // #################### Super Slow Mo: Matter.Sleeping.set(body, true);
 
-    if (this.positions.length) {
-      Matter.Body.setPosition(
-        this.body,
-        this.positions[this.positions.length - 1]
-      );
-      this.positions.pop();
+    const lastData = this.recordedData.shift();
+
+    if (lastData) {
+      Matter.Body.setPosition(this.body, lastData.p);
+      Matter.Body.setAngle(this.body, lastData.a);
+      Matter.Body.setVelocity(this.body, lastData.v);
     }
 
-    if (this.angles.length) {
-      Matter.Body.setAngle(this.body, this.angles[this.angles.length - 1]);
-      this.angles.pop();
-    }
-
-    if (this.velocities.length) {
-      Matter.Body.setVelocity(
-        this.body,
-        this.velocities[this.velocities.length - 1]
-      );
-      this.velocities.pop();
-    }
-
-    image(gifRewind, 0, 0, width, height);
+    return this;
   }
 
   /**
@@ -204,43 +114,29 @@ class Player extends Ball {
   showBar(bool) {
     if (bool) {
       once(() => {
-        if (!this.positions.length) {
+        if (!this.recordedData.length) {
           let offset = !(frameCount % 30) ? -5 : 5;
 
           if (this.i <= 1) this.i += 0.5;
           else this.i = 0;
 
-          fill(color(255, 255, 255, 150));
-          // w: 196
-          rectMode(CORNER);
-          rect(
-            width / 2 - 200 / 2 + 2 + offset * this.i,
-            height * 0.9 - 10 / 2 + 2,
-            196 * (this.positions.length / player.positionsLengthMax),
-            6
-          );
-          noFill();
-          stroke(color(255, 255, 255, 150));
-          rectMode(CENTER);
-          rect(width / 2 + offset * this.i, height * 0.9, 200, 10);
+          bar(player, color(0, 0, 0, 150), offset, this.i);
         } else {
-          fill(color(255, 255, 255, 150));
-          // w: 196
-          rectMode(CORNER);
-          rect(
-            width / 2 - 200 / 2 + 2,
-            height * 0.9 - 10 / 2 + 2,
-            196 * (this.positions.length / player.positionsLengthMax),
-            6
-          );
-          noFill();
-          stroke(color(255, 255, 255, 150));
-          rectMode(CENTER);
-          rect(width / 2, height * 0.9, 200, 10);
+          bar(player, color(0, 0, 0, 150));
         }
       });
     }
 
+    return this;
+  }
+
+  /**
+   *
+   * @param {boolean} bool
+   * @returns {Player}
+   */
+  showGlitch(bool) {
+    if (bool) image(gifRewind, 0, 0, width, height);
     return this;
   }
 

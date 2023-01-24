@@ -962,8 +962,7 @@ function screenEvents() {
           stiffness: 1,
           draw: false,
         });
-        player.positions = [];
-        player.angles = [];
+        player.recordedData = [];
         Body.setPosition(carconstraintsensor.body, {
           x: carconstraintsensor.body.position.x,
           y: 1600,
@@ -1020,8 +1019,7 @@ function screenEvents() {
         pair.bodyB === sensors[22].body
       ) {
         console.log("Collided with sensor 22");
-        player.positions = [];
-        player.angles = [];
+        player.recordedData = [];
         console.log("The End");
       }
 
@@ -1077,17 +1075,18 @@ function spacePressed() {
 
     if (player.timer.progress > Player.THRESHOLD_TIMER_PERCENT) {
       if (!player.hasRewindStarted) {
-        player.positionsLengthMax = player.positions.length;
+        player.recordedDataLength = player.recordedData.length;
         player.hasRewindStarted = true;
       }
 
       if (marbleRun.hasBeenStarted) {
-        player.showBar(true);
-        player.rewind();
+        player
+          .rewind()
+          .showBar(player.isReversing)
+          .showGlitch(!!player.recordedData.length);
       }
 
       if (!player.isReversing && marbleRun.hasBeenStarted) {
-        Matter.Body.setStatic(player.body, true);
         player.isReversing = true;
       }
     }

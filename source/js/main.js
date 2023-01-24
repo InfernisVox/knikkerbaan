@@ -136,9 +136,7 @@ function draw() {
   background(200, 150, 100);
   Engine.update(engine);
 
-  Player.savePositionsOf(player, !spaceIsPressed, vectorDiffersFromBy);
-  Player.saveAnglesOf(player, !spaceIsPressed, angleDiffersFromBy);
-  Player.saveVelocityOf(player, !spaceIsPressed, velocityDiffersFromBy);
+  Player.recordDataOf(player, !spaceIsPressed);
 
   once(drawCanvas);
 
@@ -164,6 +162,4 @@ function keyReleased() {
   player.hasRewindStarted = false;
 
   spaceIsPressed = false;
-
-  Matter.Body.setStatic(player.body, false);
 }
