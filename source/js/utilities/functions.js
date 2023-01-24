@@ -2,6 +2,12 @@
 "use strict";
 
 // Initializations ##########################################################
+function init() {
+  initCanvas();
+  initMouse();
+  initPlayer();
+}
+
 /**
  * `initCanvas` is responsible for initializing the entire project including both
  * the canvas itself and additional properties relevant to p5 and matter.js.

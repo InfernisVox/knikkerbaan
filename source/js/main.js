@@ -115,9 +115,7 @@ function preload() {
 }
 
 function setup() {
-  initCanvas();
-  initMouse();
-  initPlayer();
+  init();
 
   marbleRun = new MarbleRun();
   cam = new Camera(player.body);
@@ -148,18 +146,17 @@ function draw() {
 function keyPressed() {
   if (keyCode === Keys.SPACE) {
     player.timer.start();
+    player.onSpacePress();
 
     spaceIsPressed = true;
-
-    player.onSpacePress();
   }
 }
 
 function keyReleased() {
   player.timer.reset();
+  player.resetBooleans();
 
-  player.isReversing = false;
-  player.hasRewindStarted = false;
+  soundRewind.stop();
 
   spaceIsPressed = false;
 }

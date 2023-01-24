@@ -88,7 +88,6 @@ class Player extends Ball {
   // ##################################################
 
   /**
-   *
    * @returns {Player}
    */
   rewind() {
@@ -171,5 +170,10 @@ class Player extends Ball {
         Matter.Body.setAngularVelocity(player.body, velocity);
       }
     }
+  }
+
+  resetBooleans() {
+    this.isReversing = false;
+    this.hasRewindStarted = false;
   }
 }
