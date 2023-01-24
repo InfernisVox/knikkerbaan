@@ -78,7 +78,7 @@ function loadAssets() {
   soundXylophoneC2 = loadSound(soundXylophoneC2_Src);
   loadingMessage(13, soundXylophoneC2_Src);
 
-  let imgRoom_Src = "./assets/images/room.png";
+  let imgRoom_Src = "./assets/images/wallpaper.png";
   imgRoom = loadImage(imgRoom_Src);
   loadingMessage(14, imgRoom_Src);
 

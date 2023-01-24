@@ -217,6 +217,10 @@ function velocityDiffersFromBy({ x: x1, y: y1 }, { x: x2, y: y2 }, value) {
 function drawCanvas() {
   cam.swivelBehind(() => player.body.position.x >= CANVAS_BREAKPOINT);
 
+  for (let i = 0; i <= 5; i++) {
+    image(imgRoom, i * 1280, 0, 1280, 720);
+  }
+
   if (canCanonRotate) {
     if (canonAngle >= 0.6) {
       isCanonReversing = true;
