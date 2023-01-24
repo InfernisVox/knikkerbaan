@@ -116,9 +116,7 @@ function preload() {
 }
 
 function setup() {
-  initCanvas();
-  initMouse();
-  initPlayer();
+  init();
 
   marbleRun = new MarbleRun();
   cam = new Camera(player.body);
@@ -137,9 +135,7 @@ function draw() {
   background(200, 150, 100);
   Engine.update(engine);
 
-  Player.savePositionsOf(player, !spaceIsPressed, vectorDiffersFromBy);
-  Player.saveAnglesOf(player, !spaceIsPressed, angleDiffersFromBy);
-  Player.saveVelocityOf(player, !spaceIsPressed, velocityDiffersFromBy);
+  Player.recordDataOf(player, !spaceIsPressed);
 
   once(drawCanvas);
 
@@ -151,20 +147,17 @@ function draw() {
 function keyPressed() {
   if (keyCode === Keys.SPACE) {
     player.timer.start();
+    player.onSpacePress();
 
     spaceIsPressed = true;
-
-    player.onSpacePress();
   }
 }
 
 function keyReleased() {
   player.timer.reset();
+  player.resetBooleans();
 
-  player.isReversing = false;
-  player.hasRewindStarted = false;
+  soundRewind.stop();
 
   spaceIsPressed = false;
-
-  Matter.Body.setStatic(player.body, false);
 }
