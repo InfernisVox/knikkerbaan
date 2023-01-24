@@ -587,9 +587,9 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 8100,
+        x: 8175,
         y: 630,
-        w: 290,
+        w: 300,
         h: 300,
         color: sensorColor,
       },
@@ -601,7 +601,7 @@ function screen01() {
     new Block(
       world,
       {
-        x: 8250,
+        x: 8300,
         y: 630,
         w: 10,
         h: 100,
