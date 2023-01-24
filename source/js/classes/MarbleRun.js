@@ -14,8 +14,8 @@ class MarbleRun {
               player.body,
               { x: player.body.position.x, y: player.body.position.y },
               {
-                x: 0.075,
-                y: -0.15,
+                x: 0.065,
+                y: -0.09,
               }
             );
           }
