@@ -107,6 +107,7 @@ let balls;
 let playerpositioncar = [];
 let windingup = false;
 let gifRewind;
+let imgElevator;
 
 // ##################################################
 

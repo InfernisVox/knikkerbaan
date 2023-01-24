@@ -24,6 +24,21 @@ function screen01() {
   let blockColor = color(255, 0, 255);
 
   // TODO: Please correct the heights for the blocks as they are off by about 70 [px].
+
+  elevator = new Block(
+    world,
+    {
+      x: 2095,
+      y: windowHeight + 200,
+      w: 190,
+      h: 380,
+      image: imgElevator,
+    },
+    { isStatic: true }
+  );
+
+  blocks.push(elevator);
+
   floorblock = new Block(
     world,
     {
@@ -163,7 +178,6 @@ function screen01() {
       y: 220,
       w: 220,
       h: 70,
-      color: blockColor,
       image: imgCannon,
     },
     { isStatic: true, angle: canonAngle, isSensor: true }
@@ -199,20 +213,6 @@ function screen01() {
   );
 
   blocks.push(canonDoor);
-
-  elevator = new Block(
-    world,
-    {
-      x: 2100,
-      y: windowHeight + 250,
-      w: 190,
-      h: 500,
-      color: blockColor,
-    },
-    { isStatic: true }
-  );
-
-  blocks.push(elevator);
 
   blocks.push(
     new PolygonFromSVG(
@@ -449,7 +449,6 @@ function screen01() {
       w: 174,
       h: 183,
       fromFile: "assets/images/Baseballglove.svg",
-      color: blockColor,
       image: imgBaseballGlove,
     },
     { isStatic: false, angle: 0 }

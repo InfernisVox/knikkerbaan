@@ -238,7 +238,7 @@ function drawCanvas() {
   }
 
   if (isElevatorMoving) {
-    if (elevator.body.position.y >= 580) {
+    if (elevator.body.position.y >= 510) {
       Body.setPosition(elevator.body, {
         x: elevator.body.position.x,
         y: elevator.body.position.y - 0.3,
@@ -248,7 +248,7 @@ function drawCanvas() {
         x: canon.body.position.x,
         y: canon.body.position.y,
       });
-      player.jump();
+      console.log("kek");
     }
   }
 
@@ -272,6 +272,7 @@ function drawCharacters() {
   else player.setAutoMove(true);
 
   sensors.forEach((sensor) => sensor.draw());
+  image(imgTowerBg, 1950, 285, 289, 428);
   blocks.forEach((block) => block.draw());
 
   image(gifElGato, -55, 45, 470, 264);
@@ -279,7 +280,6 @@ function drawCharacters() {
   rotate(0.01);
   image(imgXylophone, 785, 560, 540, 120);
   pop();
-  image(imgTowerBg, 1950, 285, 289, 428);
 
   if (isCanonDoorOpen) {
     image(imgButtonReleased, 1650, 661, 96, 34);

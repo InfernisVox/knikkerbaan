@@ -133,7 +133,11 @@ function loadAssets() {
 
   let soundRewind_Src = "./assets/audio/rewind.wav";
   soundRewind = loadSound(soundRewind_Src);
-  loadingMessage(26, soundRewind_Src);
+  loadingMessage(27, soundRewind_Src);
+
+  let imgElevator_Src = "./assets/images/elevator.png";
+  imgElevator = loadImage(imgElevator_Src);
+  loadingMessage(28, imgElevator_Src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
