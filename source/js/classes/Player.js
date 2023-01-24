@@ -192,6 +192,8 @@ class Player extends Ball {
       );
       this.velocities.pop();
     }
+
+    image(gifRewind, 0, 0, width, height);
   }
 
   /**

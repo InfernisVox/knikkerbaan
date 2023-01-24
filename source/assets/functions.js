@@ -16,6 +16,7 @@ let assetTotal = null;
 /** @type {SoundFile} */ let soundXylophoneB2;
 /** @type {SoundFile} */ let soundXylophoneC2;
 /** @type {SoundFile} */ let soundCat;
+/** @type {SoundFile} */ let soundRewind;
 
 function loadAssets() {
   //Only for loading assets, no adding empty lines or comments
@@ -125,6 +126,14 @@ function loadAssets() {
   let imgBaseballGlove_Src = "./assets/images/baseballglove.png";
   imgBaseballGlove = loadImage(imgBaseballGlove_Src);
   loadingMessage(25, imgBaseballGlove_Src);
+
+  let gifRewind_Src = "./assets/images/rewind.gif";
+  gifRewind = loadImage(gifRewind_Src);
+  loadingMessage(26, gifRewind_Src);
+
+  let soundRewind_Src = "./assets/audio/rewind.wav";
+  soundRewind = loadSound(soundRewind_Src);
+  loadingMessage(26, soundRewind_Src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;

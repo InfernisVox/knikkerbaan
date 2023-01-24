@@ -574,7 +574,7 @@ function screen01() {
     new Block(
       world,
       {
-        x: 7950,
+        x: 7900,
         y: 630,
         w: 10,
         h: 100,
@@ -588,9 +588,9 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 8175,
+        x: 8100,
         y: 630,
-        w: 300,
+        w: 400,
         h: 300,
         color: sensorColor,
       },
@@ -718,7 +718,7 @@ function screen01() {
   );
 
   for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 15; j++) {
+    for (let j = 0; j < 20; j++) {
       blocks.push(
         new Ball(
           world,

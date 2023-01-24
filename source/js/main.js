@@ -106,6 +106,7 @@ let rocket;
 let balls;
 let playerpositioncar = [];
 let windingup = false;
+let gifRewind;
 
 // ##################################################
 
