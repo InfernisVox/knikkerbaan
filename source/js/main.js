@@ -108,6 +108,7 @@ let playerpositioncar = [];
 let windingup = false;
 let gifRewind;
 let imgElevator;
+let imgRocket;
 
 // ##################################################
 
@@ -132,7 +133,7 @@ function setup() {
 }
 
 function draw() {
-  background(200, 150, 100);
+  background(255, 255, 255);
   Engine.update(engine);
 
   Player.recordDataOf(player, !spaceIsPressed);

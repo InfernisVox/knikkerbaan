@@ -139,6 +139,10 @@ function loadAssets() {
   imgElevator = loadImage(imgElevator_Src);
   loadingMessage(28, imgElevator_Src);
 
+  let imgRocket_Src = "./assets/images/rocket.png";
+  imgRocket = loadImage(imgRocket_Src);
+  loadingMessage(29, imgRocket_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(

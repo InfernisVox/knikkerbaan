@@ -683,6 +683,7 @@ function screen01() {
       fromFile: "assets/images/rocket.svg",
       scale: 1,
       color: blockColor,
+      image: imgRocket,
     },
     { isStatic: false, angle: 0, mass: 1, friction: 1, airfriction: 0.01 }
   );
@@ -724,7 +725,7 @@ function screen01() {
         x: 8050,
         y: 400,
         cols: 8,
-        rows: 10,
+        rows: 30,
         colGap: 5,
         rowGap: 5,
         color: color(random(0, 256), random(0, 256), random(0, 256)),
