@@ -29,7 +29,7 @@ function screen01() {
     world,
     {
       x: 2095,
-      y: windowHeight + 200,
+      y: windowHeight + 50,
       w: 190,
       h: 380,
       image: imgElevator,
@@ -135,7 +135,7 @@ function screen01() {
       {
         x: 1700,
         y: 650,
-        w: 90,
+        w: 80,
         h: 60,
         color: sensorColor,
       },
@@ -776,7 +776,10 @@ function screen01() {
  * interacting with the canvas.
  */
 function initMouse() {
-  mouse = new Mouse(engine, canvas, { stroke: "blue", strokeWeight: 3 });
+  mouse = new Mouse(engine, canvas, {
+    stroke: color(random(0, 256), random(0, 256), random(0, 256)),
+    strokeWeight: 3,
+  });
 
   mouse.on("startdrag", (/** @type {any} */ _) => {
     mouseIsDragged = true;
@@ -891,6 +894,7 @@ function screenEvents() {
         pair.bodyB === sensors[11].body
       ) {
         console.log("Collided with sensor 11");
+        soundButton.play();
         if (isCanonDoorOpen == true) {
           isCanonDoorOpen = false;
         } else {
@@ -908,6 +912,7 @@ function screenEvents() {
         canCanonRotate = true;
         setTimeout(function () {
           isCanonDoorOpen = false;
+          soundElevator.play();
         }, 2000);
       }
 

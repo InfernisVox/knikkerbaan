@@ -17,6 +17,8 @@ let assetTotal = null;
 /** @type {SoundFile} */ let soundXylophoneC2;
 /** @type {SoundFile} */ let soundCat;
 /** @type {SoundFile} */ let soundRewind;
+/** @type {SoundFile} */ let soundButton;
+/** @type {SoundFile} */ let soundElevator;
 
 function loadAssets() {
   //Only for loading assets, no adding empty lines or comments
@@ -142,6 +144,14 @@ function loadAssets() {
   let imgRocket_Src = "./assets/images/rocket.png";
   imgRocket = loadImage(imgRocket_Src);
   loadingMessage(29, imgRocket_Src);
+
+  let soundButton_Src = "./assets/audio/buttonactivate.wav";
+  soundButton = loadSound(soundButton_Src);
+  loadingMessage(30, soundButton_Src);
+
+  let soundElevator_Src = "./assets/audio/elevatorsound.wav";
+  soundElevator = loadSound(soundElevator_Src);
+  loadingMessage(30, soundElevator_Src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
