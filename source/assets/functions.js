@@ -19,6 +19,8 @@ let assetTotal = null;
 /** @type {SoundFile} */ let soundRewind;
 /** @type {SoundFile} */ let soundButton;
 /** @type {SoundFile} */ let soundElevator;
+/** @type {SoundFile} */ let soundBaseballglove;
+/** @type {SoundFile} */ let soundWoolball;
 
 function loadAssets() {
   //Only for loading assets, no adding empty lines or comments
@@ -147,11 +149,19 @@ function loadAssets() {
 
   let soundButton_Src = "./assets/audio/buttonactivate.wav";
   soundButton = loadSound(soundButton_Src);
-  loadingMessage(30, soundButton_Src);
+  loadingMessage(31, soundButton_Src);
 
   let soundElevator_Src = "./assets/audio/elevatorsound.wav";
   soundElevator = loadSound(soundElevator_Src);
-  loadingMessage(30, soundElevator_Src);
+  loadingMessage(32, soundElevator_Src);
+
+  let soundBaseballglove_Src = "./assets/audio/baseballglove.wav";
+  soundBaseballglove = loadSound(soundBaseballglove_Src);
+  loadingMessage(33, soundBaseballglove_Src);
+
+  let soundWoolball_Src = "./assets/audio/woolball.wav";
+  soundWoolball = loadSound(soundWoolball_Src);
+  loadingMessage(34, soundWoolball_Src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;

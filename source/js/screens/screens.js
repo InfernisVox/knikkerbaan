@@ -921,8 +921,7 @@ function screenEvents() {
         pair.bodyB === sensors[13].body
       ) {
         console.log("Collided with sensor 13");
-        // Body.setStatic(baseballGloveBack1.body, false);
-        // Body.setStatic(baseballGloveBack2.body, false);
+        soundBaseballglove.play();
         player.setAutoMove(false);
       }
 
