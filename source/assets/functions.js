@@ -21,6 +21,7 @@ let assetTotal = null;
 /** @type {SoundFile} */ let soundElevator;
 /** @type {SoundFile} */ let soundBaseballglove;
 /** @type {SoundFile} */ let soundWoolball;
+/** @type {SoundFile} */ let soundCanonshoot;
 
 function loadAssets() {
   //Only for loading assets, no adding empty lines or comments
@@ -162,6 +163,10 @@ function loadAssets() {
   let soundWoolball_Src = "./assets/audio/woolball.wav";
   soundWoolball = loadSound(soundWoolball_Src);
   loadingMessage(34, soundWoolball_Src);
+
+  let soundCanonshoot_Src = "./assets/audio/canonshoot.wav";
+  soundCanonshoot = loadSound(soundCanonshoot_Src);
+  loadingMessage(35, soundCanonshoot_Src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;

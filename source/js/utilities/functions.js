@@ -97,6 +97,7 @@ function drawCanvas() {
         x: canon.body.position.x,
         y: canon.body.position.y,
       });
+      soundCanonshoot.play();
     }
   }
 
