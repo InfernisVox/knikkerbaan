@@ -97,7 +97,6 @@ function drawCanvas() {
         x: canon.body.position.x,
         y: canon.body.position.y,
       });
-      player.onSpacePress();
     }
   }
 
@@ -108,6 +107,10 @@ function drawCanvas() {
   }
 
   drawCharacters();
+
+  // setTimeout(function () {
+  //   soundWoolball.play();
+  // }, 1890);
 
   mouse.setOffset({ x: -cam.shiftX, y: 0 });
   mouse.draw();
