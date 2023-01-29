@@ -176,7 +176,7 @@ function screen01() {
     },
     { isStatic: true, angle: canonAngle, isSensor: true }
   );
-  blocks.push(canon);
+  // blocks.push(canon);
 
   sensors.push(
     new BlockCore(
@@ -716,6 +716,12 @@ function screen01() {
         colGap: 5,
         rowGap: 5,
         color: color(random(0, 256), random(0, 256), random(0, 256)),
+        /**
+         *
+         * @param {number} bx
+         * @param {number} by
+         * @returns {Matter.Body}
+         */
         create: (bx, by) =>
           Matter.Bodies.circle(bx, by, 10, { restitution: 0.9, mass: 0.1 }),
       },

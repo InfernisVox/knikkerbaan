@@ -24,19 +24,18 @@ class MarbleRun {
 
       case FactoryFlag.CANON_SHOOT: {
         return () => {
-          console.log("Hello World");
-          if (!player.spaceHasBeenPressed) {
-            soundCanonshoot.play();
+          if (player.body.isStatic) Matter.Body.setStatic(player.body, false);
 
-            Matter.Body.applyForce(
-              player.body,
-              { x: player.body.position.x, y: player.body.position.y },
-              {
-                x: 0.065,
-                y: canonAngle,
-              }
-            );
-          }
+          Matter.Body.applyForce(
+            player.body,
+            { x: player.body.position.x, y: player.body.position.y },
+            {
+              x: -canonAngle / 1.5,
+              y: -0.1,
+            }
+          );
+
+          soundCanonshoot.play();
         };
       }
     }

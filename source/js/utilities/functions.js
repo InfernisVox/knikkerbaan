@@ -45,7 +45,7 @@ function initPlayer() {
     world,
     {
       x: 135,
-      y: 110,
+      y: 135,
       r: 30,
       color: "red",
       image: playerImage,
@@ -65,16 +65,12 @@ function initPlayer() {
 }
 
 function drawCanvas() {
-  cam.swivelBehind(() => player.body.position.x >= CANVAS_BREAKPOINT);
-
-  for (let i = 0; i <= 15; i++) {
-    image(imgRoom, i * 1280, 0, 1280, 720);
-  }
+  cam.swivelBehind(() => player.body.position.x <= CANVAS_BREAKPOINT);
 
   if (canCanonRotate) {
-    if (canonAngle >= 0.6) {
+    if (canonAngle >= 0.35) {
       isCanonReversing = true;
-    } else if (canonAngle <= -0.6) {
+    } else if (canonAngle <= -0.55) {
       isCanonReversing = false;
     }
 
@@ -91,15 +87,17 @@ function drawCanvas() {
     if (elevator.body.position.y >= 510) {
       Body.setPosition(elevator.body, {
         x: elevator.body.position.x,
-        y: elevator.body.position.y - 0.3,
+        y: elevator.body.position.y - 0.95,
       });
     } else {
-      Body.setPosition(player.body, {
-        x: canon.body.position.x,
-        y: canon.body.position.y,
-      });
       if (!hasBeenSet) {
         hasBeenSet = true;
+
+        Body.setPosition(player.body, {
+          x: canon.body.position.x,
+          y: canon.body.position.y,
+        });
+        Matter.Body.setStatic(player.body, true);
         player.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
           player,
           FactoryFlag.CANON_SHOOT
@@ -144,8 +142,14 @@ function drawCharacters() {
     });
   }
 
-  player.setAutoMove(true, movingUpward ? -0.02 : 0.04);
+  velocityX = player.body.velocity.x;
+  if (!movingUpward) {
+    if (velocityX > 0.02) Matter.Body.setAngularVelocity(player.body, 0.02);
+  } else {
+    if (velocityX > 0.02) Matter.Body.setAngularVelocity(player.body, -0.04);
+  }
   player.draw();
+  canon.draw();
 
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
