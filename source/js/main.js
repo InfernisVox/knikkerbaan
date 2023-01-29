@@ -70,6 +70,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgCannonBase;
 /** @type {Image} */ let imgCannon;
 /** @type {Image} */ let imgBaseballGlove;
+/** @type {Image} */ let imgFloor;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
