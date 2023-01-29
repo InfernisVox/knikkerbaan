@@ -144,7 +144,7 @@ function drawCharacters() {
     });
   }
 
-  player.setAutoMove(true, movingUpward ? -0.02 : 0.02);
+  player.setAutoMove(true, movingUpward ? -0.02 : 0.04);
   player.draw();
 
   image(imgTowerFg, 1950, 285, 289, 428);

@@ -218,7 +218,7 @@ function screen01() {
         scale: 0.95,
         color: blockColor,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "Hotwheels" }
     )
   );
 
@@ -234,7 +234,7 @@ function screen01() {
         scale: 0.95,
         color: blockColor,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "Hotwheels-Mid" }
     )
   );
 
@@ -1046,6 +1046,26 @@ function screenEvents() {
       //   playerpositioncar = [];
       //   windingup = false;
       // }
+
+      // AutoMove ###################################
+      // blocks[9].body.label = "Hotwheels"
+      if (
+        (pair.bodyA.label === Player.LABEL &&
+          pair.bodyB.label === "Hotwheels") ||
+        (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "Hotwheels")
+      ) {
+        movingUpward = false;
+      }
+
+      // blocks[10].body.label = "Hotwheels-Mid"
+      if (
+        (pair.bodyA.label === Player.LABEL &&
+          pair.bodyB.label === "Hotwheels-Mid") ||
+        (pair.bodyB.label === Player.LABEL &&
+          pair.bodyA.label === "Hotwheels-Mid")
+      ) {
+        movingUpward = true;
+      }
     }
   });
 }
