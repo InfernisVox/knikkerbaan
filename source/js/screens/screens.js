@@ -1115,6 +1115,8 @@ function spacePressed() {
       if (!player.isReversing && marbleRun.hasBeenStarted) {
         player.isReversing = true;
         soundRewind.play();
+      } else {
+        soundWoolball.play();
       }
     }
   }
