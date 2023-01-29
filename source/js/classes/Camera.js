@@ -29,10 +29,16 @@ class Camera {
       if (ifTrue()) {
         marbleRun.hasBeenStarted = true;
         if (this.i !== 1) this.i += 0.01;
+
         translate(this.i < 1 ? this.shiftX * this.i : this.shiftX, 0);
+        mouse.setOffset({
+          x: this.i < 1 ? this.shiftX * this.i : this.shiftX,
+          y: 0,
+        });
       }
     } else {
       translate(this.shiftX, 0);
+      mouse.setOffset({ x: -this.shiftX, y: 0 });
     }
   }
 }

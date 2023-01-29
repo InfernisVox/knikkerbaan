@@ -110,6 +110,9 @@ let isCarWindingUp = false;
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
 
+let hasBeenSet = false;
+let movingUpward = false;
+
 // ##################################################
 
 function preload() {
@@ -139,10 +142,9 @@ function draw() {
   Player.recordDataOf(player, !spaceIsPressed);
 
   once(drawCanvas);
+  spacePressed();
 
   marbleRun.stats();
-
-  spacePressed();
 }
 
 // ##################################################

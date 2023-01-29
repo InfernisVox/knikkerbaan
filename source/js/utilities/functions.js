@@ -98,7 +98,13 @@ function drawCanvas() {
         x: canon.body.position.x,
         y: canon.body.position.y,
       });
-      soundCanonshoot.play();
+      if (!hasBeenSet) {
+        hasBeenSet = true;
+        player.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
+          player,
+          FactoryFlag.CANON_SHOOT
+        );
+      }
     }
   }
 
@@ -110,21 +116,10 @@ function drawCanvas() {
 
   drawCharacters();
 
-  // setTimeout(function () {
-  //   soundWoolball.play();
-  // }, 1890);
-
-  mouse.setOffset({ x: -cam.shiftX, y: 0 });
   mouse.draw();
 }
 
 function drawCharacters() {
-  // Body.setAngle(sensors[1].body, 0);
-  // Body.setPosition(sensors[1].body, { x: sensors[1].body.position.x, y: 605 });
-
-  if (!marbleRun.hasBeenStarted) player.setAutoMove(true, 0.0075);
-  else player.setAutoMove(true);
-
   sensors.forEach((sensor) => sensor.draw());
   image(imgTowerBg, 1950, 285, 289, 428);
   blocks.forEach((block) => block.draw());
@@ -149,6 +144,7 @@ function drawCharacters() {
     });
   }
 
+  player.setAutoMove(true, movingUpward ? -0.02 : 0.02);
   player.draw();
 
   image(imgTowerFg, 1950, 285, 289, 428);

@@ -36,7 +36,6 @@ function screen01() {
     },
     { isStatic: true }
   );
-
   blocks.push(elevator);
 
   floorblock = new Block(
@@ -50,7 +49,6 @@ function screen01() {
     },
     { isStatic: true }
   );
-
   blocks.push(floorblock);
 
   wall = new Block(
@@ -65,7 +63,6 @@ function screen01() {
     },
     { isStatic: true }
   );
-
   blocks.push(wall);
 
   bed = new PolygonFromSVG(
@@ -82,7 +79,6 @@ function screen01() {
     },
     { isStatic: true, angle: 0 }
   );
-
   blocks.push(bed);
 
   sensors.push(
@@ -110,7 +106,6 @@ function screen01() {
     },
     { isStatic: true, angle: 0.07 }
   );
-
   blocks.push(xylophone);
 
   for (let i = 0; i < 10; i++) {
@@ -154,7 +149,6 @@ function screen01() {
     },
     { isStatic: true }
   );
-
   blocks.push(towerLeft);
 
   towerRight = new Block(
@@ -168,7 +162,6 @@ function screen01() {
     },
     { isStatic: true }
   );
-
   blocks.push(towerRight);
 
   canon = new Block(
@@ -182,7 +175,6 @@ function screen01() {
     },
     { isStatic: true, angle: canonAngle, isSensor: true }
   );
-
   blocks.push(canon);
 
   sensors.push(
@@ -211,7 +203,6 @@ function screen01() {
     },
     { isStatic: true }
   );
-
   blocks.push(canonDoor);
 
   blocks.push(
@@ -305,7 +296,6 @@ function screen01() {
     },
     { isStatic: true, angle: 0 }
   );
-
   blocks.push(loopLeft);
 
   sensors.push(
@@ -374,7 +364,6 @@ function screen01() {
       },
     }
   );
-
   blocks.push(carBody);
 
   carWheel1 = new Ball(
@@ -453,7 +442,6 @@ function screen01() {
     },
     { isStatic: false, angle: 0 }
   );
-
   blocks.push(baseballGlove);
 
   sensors.push(
@@ -523,7 +511,6 @@ function screen01() {
     },
     { isStatic: true, angle: 0 }
   );
-
   blocks.push(loopRight2);
 
   loopLeft2 = new PolygonFromSVG(
@@ -813,18 +800,6 @@ function screenEvents() {
   Matter.Events.on(engine, "collisionStart", (event) => {
     let pairs = event.pairs;
     for (const pair of pairs) {
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[0].body) {
-        console.log("Collided with sensor 0");
-
-        // Not working
-        player.setAutoMove(false, 0);
-
-        setTimeout(function () {
-          Body.setAngularVelocity(player.body, 10);
-          console.log("inside");
-        }, 1);
-      }
-
       if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[1].body) {
         console.log("Collided with sensor 1");
         console.log(sensors[1].body);
@@ -1082,8 +1057,8 @@ function spacePressed() {
       if (marbleRun.hasBeenStarted) {
         player
           .rewind()
-          .showBar(player.isReversing)
-          .showGlitch(!!player.recordedData.length);
+          .showGlitch(!!player.recordedData.length)
+          .showBar(player.isReversing);
       }
 
       if (!player.isReversing && marbleRun.hasBeenStarted) {

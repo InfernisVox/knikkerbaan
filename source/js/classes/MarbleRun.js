@@ -21,6 +21,24 @@ class MarbleRun {
           }
         };
       }
+
+      case FactoryFlag.CANON_SHOOT: {
+        return () => {
+          console.log("Hello World");
+          if (!player.spaceHasBeenPressed) {
+            soundCanonshoot.play();
+
+            Matter.Body.applyForce(
+              player.body,
+              { x: player.body.position.x, y: player.body.position.y },
+              {
+                x: 0.065,
+                y: canonAngle,
+              }
+            );
+          }
+        };
+      }
     }
   }
 
@@ -103,9 +121,9 @@ class MarbleRun {
 
     /**
      *
-     * This function can only work properly if it is executed outside the bounds of draw.
+     * This function can only work properly if it is executed within `draw`.
      * Outside this context it can be triggered but not run completely since the callbacks
-     * rely on the loop functionality of `draw`
+     * rely on the loop functionality of `draw`.
      *
      * @param {number} milliSeconds The total duration for which `forNext` will run
      * @param {boolean | (...args: any[]) => boolean} trigger The trigger for calling `forNext`
@@ -130,7 +148,7 @@ class MarbleRun {
           Cycle.#milliSecondsEnd = Cycle.#milliSecondsStart + milliSeconds;
         }
 
-        if (now >= Cycle.#milliSecondsStart && now <= Cycle.#milliSecondsEnd) {
+        if (now <= Cycle.#milliSecondsEnd) {
           callback();
         } else {
           Cycle.#milliSecondsStart = null;

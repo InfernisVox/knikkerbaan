@@ -176,21 +176,21 @@ class Player extends Ball {
         line(0, 0, this.r, 0);
       });
     }
-
     return this;
   }
 
   /**
    *
-   * @param {boolean} bool
+   * @param {boolean} [bool]
    * @param {number} [velocity]
    */
-  setAutoMove(bool, velocity = 0.01) {
+  setAutoMove(bool = true, velocity = 0.02) {
     if (bool) {
       if (!mouseIsDragged && this.body.velocity.x < 0.02) {
         Matter.Body.setAngularVelocity(player.body, velocity);
       }
     }
+    return this;
   }
 
   resetBooleans() {
