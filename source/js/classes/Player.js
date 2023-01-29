@@ -86,6 +86,27 @@ class Player extends Ball {
   }
 
   // ##################################################
+  initCollisions() {
+    Matter.Events.on(engine, "collisionStart", function (event) {
+      const pairs = event.pairs[0];
+      const bodyA = pairs.bodyA;
+      const bodyB = pairs.bodyB;
+      if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
+        player.isOnGround = true;
+        player.spaceHasBeenPressed = !player.isOnGround;
+      }
+    });
+
+    Matter.Events.on(engine, "collisionEnd", function (event) {
+      const pairs = event.pairs[0];
+      const bodyA = pairs.bodyA;
+      const bodyB = pairs.bodyB;
+      if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
+        player.isOnGround = false;
+        player.spaceHasBeenPressed = !player.isOnGround;
+      }
+    });
+  }
 
   /**
    * @returns {Player}

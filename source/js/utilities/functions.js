@@ -20,6 +20,7 @@ function initCanvas() {
   rectMode(CENTER);
   ellipseMode(CENTER);
   angleMode(RADIANS);
+  textAlign(LEFT, CENTER);
 
   engine = Engine.create();
   world = engine.world;
@@ -101,7 +102,7 @@ function drawCanvas() {
     }
   }
 
-  if (windingup) {
+  if (isCarWindingUp) {
     playerpositioncar.push(player.body.position.x);
     console.log(playerpositioncar);
     Body.setVelocity(carBody.body, { x: playerpositioncar.length / 3, y: 0 });
