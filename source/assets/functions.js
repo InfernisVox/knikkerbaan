@@ -168,6 +168,10 @@ function loadAssets() {
   soundCanonshoot = loadSound(soundCanonshoot_Src);
   loadingMessage(35, soundCanonshoot_Src);
 
+  let imgFloor_src = "./assets/images/floor.png";
+  imgFloor = loadImage(imgFloor_src);
+  loadingMessage(36, imgFloor_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(

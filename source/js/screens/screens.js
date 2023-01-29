@@ -45,8 +45,9 @@ function screen01() {
       x: windowWidth / 2,
       y: 700,
       w: windowWidth * 50,
-      h: 40,
+      h: 25,
       color: "gray",
+      image: imgFloor,
     },
     { isStatic: true }
   );
