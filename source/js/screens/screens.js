@@ -896,11 +896,7 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 11");
         soundButton.play();
-        if (isCanonDoorOpen == true) {
-          isCanonDoorOpen = false;
-        } else {
-          isCanonDoorOpen = true;
-        }
+        isCanonDoorOpen = !isCanonDoorOpen;
       }
 
       if (
@@ -1001,7 +997,7 @@ function screenEvents() {
         pair.bodyB === sensors[19].body
       ) {
         console.log("Collided with sensor 19");
-        windingup = true;
+        isCarWindingUp = true;
       }
 
       if (
@@ -1070,28 +1066,6 @@ function screenEvents() {
       //   playerpositioncar = [];
       //   windingup = false;
       // }
-    }
-  });
-}
-
-function setCollisionEvents() {
-  Matter.Events.on(engine, "collisionStart", function (event) {
-    const pairs = event.pairs[0];
-    const bodyA = pairs.bodyA;
-    const bodyB = pairs.bodyB;
-    if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
-      player.isOnGround = true;
-      player.spaceHasBeenPressed = !player.isOnGround;
-    }
-  });
-
-  Matter.Events.on(engine, "collisionEnd", function (event) {
-    const pairs = event.pairs[0];
-    const bodyA = pairs.bodyA;
-    const bodyB = pairs.bodyB;
-    if (bodyA.label === Player.LABEL || bodyB.label === Player.LABEL) {
-      player.isOnGround = false;
-      player.spaceHasBeenPressed = !player.isOnGround;
     }
   });
 }
