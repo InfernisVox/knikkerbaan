@@ -677,15 +677,14 @@ function screen01() {
     world,
     {
       x: 10000,
-      y: 450,
+      y: 465,
       w: 295,
       h: 504,
       fromFile: "assets/images/rocket.svg",
       scale: 1,
       color: blockColor,
-      image: imgRocket,
     },
-    { isStatic: false, angle: 0, mass: 1, friction: 1, airfriction: 0.01 }
+    { isStatic: true, angle: 0, mass: 1, friction: 1, airfriction: 0.01 }
   );
   blocks.push(rocket);
 
@@ -930,6 +929,7 @@ function screenEvents() {
         pair.bodyB === sensors[14].body
       ) {
         console.log("Collided with sensor 14");
+        soundAcceleration.play();
         Body.setVelocity(player.body, { x: 26, y: 0 });
       }
 
@@ -964,6 +964,7 @@ function screenEvents() {
         pair.bodyB === sensors[16].body
       ) {
         console.log("Collided with sensor 16");
+        soundAcceleration.play();
         Body.setVelocity(player.body, { x: 15, y: 0 });
       }
 
@@ -972,6 +973,7 @@ function screenEvents() {
         pair.bodyB === sensors[17].body
       ) {
         console.log("Collided with sensor 17");
+        soundAcceleration.play();
         Body.setVelocity(player.body, { x: 20, y: 0 });
       }
 
@@ -992,6 +994,7 @@ function screenEvents() {
           x: carconstraintsensor.body.position.x,
           y: 1600,
         });
+        soundAcceleration.play();
         Body.setVelocity(carBody.body, { x: 20, y: 0 });
       }
 
@@ -1045,6 +1048,7 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 22");
         player.recordedData = [];
+        soundRocket.play();
         console.log("The End");
       }
 
@@ -1053,6 +1057,7 @@ function screenEvents() {
         pair.bodyB === sensors[23].body
       ) {
         console.log("Collided with sensor 23");
+        soundAcceleration.play();
         Body.setVelocity(carBody.body, { x: 100, y: 0 });
       }
 

@@ -22,6 +22,9 @@ let assetTotal = null;
 /** @type {SoundFile} */ let soundBaseballglove;
 /** @type {SoundFile} */ let soundWoolball;
 /** @type {SoundFile} */ let soundCanonshoot;
+/** @type {SoundFile} */ let soundKapow;
+/** @type {SoundFile} */ let soundAcceleration;
+/** @type {SoundFile} */ let soundRocket;
 
 function loadAssets() {
   //Only for loading assets, no adding empty lines or comments
@@ -167,6 +170,18 @@ function loadAssets() {
   let soundCanonshoot_Src = "./assets/audio/canonshoot.wav";
   soundCanonshoot = loadSound(soundCanonshoot_Src);
   loadingMessage(35, soundCanonshoot_Src);
+
+  let soundKapow_Src = "./assets/audio/kapow.wav";
+  soundKapow = loadSound(soundKapow_Src);
+  loadingMessage(36, soundKapow_Src);
+
+  let soundAcceleration_Src = "./assets/audio/acceleration.wav";
+  soundAcceleration = loadSound(soundAcceleration_Src);
+  loadingMessage(37, soundAcceleration_Src);
+
+  let soundRocket_Src = "./assets/audio/rocket.wav";
+  soundRocket = loadSound(soundRocket_Src);
+  loadingMessage(38, soundRocket_Src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;

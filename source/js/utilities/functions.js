@@ -152,6 +152,7 @@ function drawCharacters() {
 
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
+  image(imgRocket, 9830, 165, 339, 531);
 
   player.showAngle(false);
 }
