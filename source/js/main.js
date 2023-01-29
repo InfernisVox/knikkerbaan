@@ -98,17 +98,17 @@ let isElevatorMoving = false;
 /** @type {PolygonFromSVG} */ let baseballGlove;
 let baseballGloveBack1;
 let baseballGloveBack2;
-let carconstraintsensor;
-let carpushsensor;
-let loopRight2;
-let loopLeft2;
-let rocket;
+/** @type {BlockCore} */ let carconstraintsensor;
+/** @type {BlockCore} */ let carpushsensor;
+/** @type {PolygonFromSVG} */ let loopRight2;
+/** @type {PolygonFromSVG} */ let loopLeft2;
+/** @type {PolygonFromSVG} */ let rocket;
 let balls;
-let playerpositioncar = [];
-let windingup = false;
-let gifRewind;
-let imgElevator;
-let imgRocket;
+/** @type {number[]} */ let playerpositioncar = [];
+let isCarWindingUp = false;
+/** @type {Image} */ let gifRewind;
+/** @type {Image} */ let imgElevator;
+/** @type {Image} */ let imgRocket;
 
 // ##################################################
 
@@ -122,7 +122,7 @@ function setup() {
   marbleRun = new MarbleRun();
   cam = new Camera(player.body);
 
-  setCollisionEvents();
+  player.initCollisions();
 
   screens = [screen01 /*, screen02 */];
 
@@ -139,6 +139,8 @@ function draw() {
   Player.recordDataOf(player, !spaceIsPressed);
 
   once(drawCanvas);
+
+  marbleRun.stats();
 
   spacePressed();
 }
