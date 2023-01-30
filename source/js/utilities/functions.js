@@ -68,9 +68,9 @@ function drawCanvas() {
   cam.swivelBehind(() => player.body.position.x <= CANVAS_BREAKPOINT);
 
   if (canCanonRotate) {
-    if (canonAngle >= 0.35) {
+    if (canonAngle >= 0.33) {
       isCanonReversing = true;
-    } else if (canonAngle <= -0.55) {
+    } else if (canonAngle <= -0.65) {
       isCanonReversing = false;
     }
 
@@ -92,6 +92,7 @@ function drawCanvas() {
     } else {
       if (!hasBeenSet) {
         hasBeenSet = true;
+        player.recordedData = [];
 
         Body.setPosition(player.body, {
           x: canon.body.position.x,
