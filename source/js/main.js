@@ -116,6 +116,7 @@ let balls;
 /** @type {number[]} */ let playerpositioncar = [];
 let isCarWindingUp = false;
 /** @type {Image} */ let gifRewind;
+/** @type {Image} */ let gifRewindOverlay;
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
 
