@@ -73,6 +73,20 @@ function screen01() {
 
   // TODO: Please correct the heights for the blocks as they are off by about 70 [px].
 
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 100,
+        y: 300,
+        w: 220,
+        h: 100,
+        color: blockColor,
+      },
+      { isStatic: true }
+    )
+  );
+
   elevator = new Block(
     world,
     {
