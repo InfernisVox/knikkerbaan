@@ -117,6 +117,7 @@ let baseballGloveBack2;
 /** @type {PolygonFromSVG} */ let loopLeft2;
 /** @type {PolygonFromSVG} */ let rocket;
 /** @type {Block} */ let safetyblock;
+/** @type {Block} */ let pushblock;
 let balls;
 /** @type {number[]} */ let playerpositioncar = [];
 let isCarWindingUp = false;

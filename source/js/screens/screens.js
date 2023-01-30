@@ -87,6 +87,20 @@ function screen01() {
     )
   );
 
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 2750,
+        y: 229,
+        w: 120,
+        h: 40,
+        color: blockColor,
+      },
+      { isStatic: true }
+    )
+  );
+
   elevator = new Block(
     world,
     {
@@ -122,7 +136,6 @@ function screen01() {
       w: 1000,
       h: windowHeight * 2,
       color: "black",
-      image: imgWall,
     },
     { isStatic: true }
   );
@@ -718,27 +731,26 @@ function screen01() {
   );
   blocks.push(rocket);
 
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 9000,
-        y: 430,
-        w: 100,
-        h: 100,
-        scale: 0.74,
-        color: blockColor,
-        image: imgPushbox,
-      },
-      {
-        isStatic: false,
-        angle: 0,
-        friction: 0.01,
-        airfriction: 0.1,
-        mass: 1,
-      }
-    )
+  pushblock = new Block(
+    world,
+    {
+      x: 9000,
+      y: 430,
+      w: 100,
+      h: 100,
+      scale: 0.74,
+      color: blockColor,
+      image: imgPushbox,
+    },
+    {
+      isStatic: false,
+      angle: 0,
+      friction: 0.01,
+      airfriction: 0.1,
+      mass: 1,
+    }
   );
+  blocks.push(pushblock);
 
   sensors.push(
     new BlockCore(
@@ -839,6 +851,24 @@ function screen01() {
         isStatic: true,
         isSensor: true,
         label: "safetyblocksensor",
+      }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 9975,
+        y: 100,
+        w: 160,
+        h: 2000,
+        color: sensorColor,
+      },
+      {
+        isStatic: true,
+        isSensor: true,
+        label: "pushblocksensor",
       }
     )
   );
@@ -1148,7 +1178,7 @@ function screenEvents() {
 
         // ...
         if (!slowMo) slowMo = true;
-        Body.setVelocity(carBody.body, { x: 80, y: 0 });
+        Body.setVelocity(carBody.body, { x: 70, y: 0 });
       }
 
       if (
@@ -1241,6 +1271,20 @@ function screenEvents() {
           x: safetyblock.body.position.x,
           y: 4600,
         });
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB.label === "pushblocksensor"
+      ) {
+        console.log("Collided with sensor 27");
+        if (
+          pushblock.body.position.x >= 9975 &&
+          pushblock.body.position.y <= 10100 &&
+          pushblock.body.position.y >= 600
+        ) {
+          Body.setStatic(pushblock.body, true);
+        }
       }
     }
   });

@@ -99,10 +99,6 @@ function loadAssets() {
   imgXylophone = loadImage(imgXylophone_Src);
   loadingMessage(imgXylophone_Src);
 
-  let imgWall_Src = "./assets/images/monawall.png";
-  imgWall = loadImage(imgWall_Src);
-  loadingMessage(imgWall_Src);
-
   let imgTowerDoor_Src = "./assets/images/tower_door.png";
   imgTowerDoor = loadImage(imgTowerDoor_Src);
   loadingMessage(imgTowerDoor_Src);
