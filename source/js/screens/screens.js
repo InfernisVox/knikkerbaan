@@ -82,7 +82,7 @@ function screen01() {
     world,
     {
       x: 2095,
-      y: windowHeight + 50,
+      y: windowHeight + 140,
       w: 190,
       h: 380,
       image: imgElevator,
@@ -979,7 +979,7 @@ function screenEvents() {
         setTimeout(function () {
           isCanonDoorOpen = false;
           soundElevator.play();
-        }, 2000);
+        }, 1200);
       }
 
       if (
@@ -1123,7 +1123,7 @@ function screenEvents() {
         });
 
         // ...
-        Body.setVelocity(carBody.body, { x: 120, y: 0 });
+        Body.setVelocity(carBody.body, { x: 100, y: 0 });
       }
 
       if (
