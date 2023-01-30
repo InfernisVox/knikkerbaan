@@ -102,6 +102,7 @@ let isElevatorMoving = false;
 /** @type {PolygonFromSVG} */ let loopRight;
 /** @type {PolygonFromSVG} */ let loopLeft;
 /** @type {Block} */ let carBody;
+/** @type {number} */ let carBodyPositionX = null;
 /** @type {Ball} */ let carWheel1;
 /** @type {Ball} */ let carWheel2;
 /** @type {PolygonFromSVG} */ let baseballGlove;
@@ -126,6 +127,8 @@ let movingUpward = false;
 
 let velocityX = 0;
 /** @type {number} */ let carProgressValue = null;
+
+let slowMo = false;
 
 // ##################################################
 
@@ -174,7 +177,24 @@ function draw() {
   once(drawCanvas);
   spacePressed();
 
-  marbleRun.stats();
+  console.log(carProgressValue);
+
+  MarbleRun.Cycle.forNext(
+    750,
+    slowMo,
+    () => {
+      if (slowMo) {
+        engine.timing.timeScale = 0.15;
+        slowMo = false;
+      }
+    },
+    () => {
+      engine.timing.timeScale = 1;
+      console.log("SlowMo ended");
+    }
+  );
+
+  if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 
 // ##################################################
@@ -200,7 +220,7 @@ function keyReleased() {
     console.log(carProgressValue);
     Matter.Body.setStatic(carBody.body, false);
 
-    let x = map(carProgressValue, 0, 100, 190, 1900);
+    let x = map(carProgressValue, 0, 100, 200, 2000);
 
     Body.setVelocity(carBody.body, { x: x, y: 0 });
 
