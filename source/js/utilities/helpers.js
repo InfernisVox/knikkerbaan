@@ -11,6 +11,9 @@
  * @param {number} offset
  * @param {number} animationCounter
  */
+
+let assertcounter = 1;
+
 function bar(player, color, offset = null, animationCounter = null) {
   fill(color);
   // w: 196
@@ -109,17 +112,17 @@ const getTime = (milliSeconds) => {
  * `loadingMessage` is an auxiliary function. It is going to be used for
  * printing synchronous logs in the console when `preload` loads new media files.
  *
- * @param {number} currentAsset The number which associates the loaded media asset with an integer
  * @param {string} [assetName] The name of the loaded media asset
  */
-function loadingMessage(currentAsset, assetName) {
+function loadingMessage(assetName) {
   assetName = assetName || "Unknown";
   assetName = assetName.split("/").pop();
 
   console.log(
-    `%cLoading asset ${currentAsset}: %c${assetName}`,
+    `%cLoading asset ${assertcounter}: %c${assetName}`,
     "color: #7289DA; font-weight: bold;"
   );
+  assertcounter++;
 }
 
 /**

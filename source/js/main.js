@@ -24,6 +24,7 @@ const Keys = {
 const Masks = {
   WORLD: 0x0001,
   CAR: 0x0002,
+  AREA: 0x0004,
 };
 /** @enum {number} */
 const FactoryFlag = {
@@ -79,6 +80,8 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgBaseballGlove;
 /** @type {Image} */ let imgFloor;
 /** @type {Image} */ let imgPushbox;
+/** @type {Image} */ let imgBallpitBg;
+/** @type {Image} */ let imgBallpitFg;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
@@ -113,10 +116,12 @@ let baseballGloveBack2;
 /** @type {PolygonFromSVG} */ let loopRight2;
 /** @type {PolygonFromSVG} */ let loopLeft2;
 /** @type {PolygonFromSVG} */ let rocket;
+/** @type {Block} */ let safetyblock;
 let balls;
 /** @type {number[]} */ let playerpositioncar = [];
 let isCarWindingUp = false;
 /** @type {Image} */ let gifRewind;
+/** @type {Image} */ let gifRewindOverlay;
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
 
@@ -128,6 +133,10 @@ let velocityX = 0;
 /** @type {number} */ let carProgressValue = null;
 
 let slowMo = false;
+
+let carHasBeenShot = false;
+/** @type {Matter.Vector} */ let carBodyPositionOriginal = null;
+/** @type {Matter.Vector} */ let playerPositionOriginal = null;
 
 // ##################################################
 
@@ -157,7 +166,7 @@ function draw() {
   background(255, 255, 255);
   Engine.update(engine);
 
-  Player.recordDataOf(player, !spaceIsPressed);
+  Player.recordDataOf(player, !spaceIsPressed && player.isRecording);
 
   MarbleRun.Cycle.over(7000, () => {
     if (!hasBeenAssigned) {
@@ -176,11 +185,9 @@ function draw() {
   once(drawCanvas);
   spacePressed();
 
-  console.log(carProgressValue);
-
   MarbleRun.Cycle.forNext(
-    750,
-    slowMo,
+    1500,
+    slowMo && carHasBeenShot,
     () => {
       if (slowMo) {
         engine.timing.timeScale = 0.15;
@@ -191,6 +198,12 @@ function draw() {
       engine.timing.timeScale = 1;
       console.log("SlowMo ended");
     }
+  );
+
+  console.log(
+    `length: ${player.recordedData.length}`,
+    `carHasBeenShot: ${carHasBeenShot}`,
+    `player.isOnGround: ${player.isOnGround}`
   );
 
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
@@ -214,27 +227,31 @@ function keyReleased() {
 
   if (
     currentState.hold === FactoryFlag.CAR_REWIND &&
-    !isNull(carProgressValue)
+    !isNull(carProgressValue) &&
+    !carHasBeenShot
   ) {
-    console.log(carProgressValue);
-    Matter.Body.setStatic(carBody.body, false);
+    carHasBeenShot = true;
+    player.isRecording = true;
 
     let x = map(carProgressValue, 0, 100, 200, 2000);
 
+    Matter.Body.setStatic(carBody.body, false);
     Body.setVelocity(carBody.body, { x: x, y: 0 });
 
     carProgressValue = null;
 
+    player.onSpacePress = MarbleRun.mapSpacePressOfTo(
+      player,
+      FactoryFlag.EMPTY
+    );
+    player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(player, FactoryFlag.EMPTY);
+
     setTimeout(() => {
-      player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-        player,
-        FactoryFlag.SINGLE_JUMP
-      );
       player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
         player,
         FactoryFlag.PLAYER_REWIND
       );
-    }, 2000);
+    }, 1000);
   }
 
   player.timer.reset();
