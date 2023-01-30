@@ -60,7 +60,6 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgXylophone;
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let imgBed;
-/** @type {Image} */ let imgCanon;
 /** @type {Image} */ let imgWall;
 /** @type {Image} */ let imgTowerDoor;
 /** @type {Image} */ let imgTowerFg;
@@ -71,6 +70,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgCannon;
 /** @type {Image} */ let imgBaseballGlove;
 /** @type {Image} */ let imgFloor;
+/** @type {Image} */ let imgPushbox;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
@@ -85,7 +85,7 @@ let spaceIsPressed = false;
 /** @type {Block} */ let canonDoor;
 /** @type {Block} */ let towerLeft;
 /** @type {Block} */ let towerRight;
-let canonAngle = 0.6;
+let canonAngle = 0.35;
 let isCanonReversing = false;
 let canCanonRotate = false;
 let isCanonDoorOpen = true;
@@ -114,6 +114,8 @@ let isCarWindingUp = false;
 let hasBeenSet = false;
 let movingUpward = false;
 
+let velocityX = 0;
+
 // ##################################################
 
 function preload() {
@@ -122,6 +124,8 @@ function preload() {
 
 function setup() {
   init();
+
+  mouse.mouse.pixelRatio = pixelDensity();
 
   marbleRun = new MarbleRun();
   cam = new Camera(player.body);

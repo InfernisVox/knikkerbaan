@@ -19,9 +19,62 @@ function initScreens(screens) {
 }
 
 // #######################################
+function invisiblewalls(blockColor) {
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 1000, // 2000
+        y: 150,
+        w: 40,
+        h: 550,
+        color: blockColor,
+      },
+      { isStatic: true }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 3445,
+        y: 150,
+        w: 40,
+        h: 550,
+        color: blockColor,
+      },
+      { isStatic: true }
+    )
+  );
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 9000,
+        y: 300,
+        w: 40,
+        h: 550,
+        color: blockColor,
+      },
+      {
+        isStatic: true,
+        collisionFilter: {
+          category: Masks.CAR,
+          mask: Masks.CAR,
+        },
+      }
+    )
+  );
+}
+
+// #######################################
 function screen01() {
   let sensorColor = color(0, 255, 50, 100);
   let blockColor = color(255, 0, 255);
+
+  invisiblewalls(blockColor);
 
   // TODO: Please correct the heights for the blocks as they are off by about 70 [px].
 
@@ -44,7 +97,7 @@ function screen01() {
       x: windowWidth / 2,
       y: 700,
       w: windowWidth * 50,
-      h: 25,
+      h: 40,
       color: "gray",
       image: imgFloor,
     },
@@ -176,7 +229,7 @@ function screen01() {
     },
     { isStatic: true, angle: canonAngle, isSensor: true }
   );
-  blocks.push(canon);
+  // blocks.push(canon);
 
   sensors.push(
     new BlockCore(
@@ -218,7 +271,7 @@ function screen01() {
         scale: 0.95,
         color: blockColor,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "Hotwheels" }
     )
   );
 
@@ -234,7 +287,7 @@ function screen01() {
         scale: 0.95,
         color: blockColor,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "Hotwheels-Mid" }
     )
   );
 
@@ -631,26 +684,6 @@ function screen01() {
     new Block(
       world,
       {
-        x: 9000,
-        y: 430,
-        w: 100,
-        h: 100,
-        color: blockColor,
-      },
-      {
-        isStatic: false,
-        angle: 0,
-        friction: 0.01,
-        airfriction: 0.001,
-        mass: 0.2,
-      }
-    )
-  );
-
-  blocks.push(
-    new Block(
-      world,
-      {
         x: 9340,
         y: 705,
         w: 600,
@@ -675,6 +708,28 @@ function screen01() {
     { isStatic: true, angle: 0, mass: 1, friction: 1, airfriction: 0.01 }
   );
   blocks.push(rocket);
+
+  blocks.push(
+    new Block(
+      world,
+      {
+        x: 9000,
+        y: 430,
+        w: 100,
+        h: 100,
+        scale: 0.74,
+        color: blockColor,
+        image: imgPushbox,
+      },
+      {
+        isStatic: false,
+        angle: 0,
+        friction: 0.01,
+        airfriction: 0.01,
+        mass: 0.5,
+      }
+    )
+  );
 
   sensors.push(
     new BlockCore(
@@ -716,10 +771,22 @@ function screen01() {
         colGap: 5,
         rowGap: 5,
         color: color(random(0, 256), random(0, 256), random(0, 256)),
+        /**
+         *
+         * @param {number} bx
+         * @param {number} by
+         * @returns {Matter.Body}
+         */
         create: (bx, by) =>
           Matter.Bodies.circle(bx, by, 10, { restitution: 0.9, mass: 0.1 }),
       },
-      { isStatic: false }
+      {
+        isStatic: false,
+        collisionFilter: {
+          category: Masks.CAR,
+          mask: Masks.WORLD,
+        },
+      }
     )
   );
   console.log(blocks);
@@ -893,6 +960,10 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 13");
         soundBaseballglove.play();
+        player.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
+          player,
+          FactoryFlag.SINGLE_JUMP
+        );
         player.setAutoMove(false);
       }
 
@@ -1030,7 +1101,7 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 23");
         soundAcceleration.play();
-        Body.setVelocity(carBody.body, { x: 100, y: 0 });
+        Body.setVelocity(carBody.body, { x: 90, y: 0 });
       }
 
       // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (2/2)
@@ -1046,6 +1117,26 @@ function screenEvents() {
       //   playerpositioncar = [];
       //   windingup = false;
       // }
+
+      // AutoMove ###################################
+      // blocks[9].body.label = "Hotwheels"
+      if (
+        (pair.bodyA.label === Player.LABEL &&
+          pair.bodyB.label === "Hotwheels") ||
+        (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "Hotwheels")
+      ) {
+        movingUpward = false;
+      }
+
+      // blocks[10].body.label = "Hotwheels-Mid"
+      if (
+        (pair.bodyA.label === Player.LABEL &&
+          pair.bodyB.label === "Hotwheels-Mid") ||
+        (pair.bodyB.label === Player.LABEL &&
+          pair.bodyA.label === "Hotwheels-Mid")
+      ) {
+        movingUpward = true;
+      }
     }
   });
 }

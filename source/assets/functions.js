@@ -183,9 +183,9 @@ function loadAssets() {
   soundRocket = loadSound(soundRocket_Src);
   loadingMessage(38, soundRocket_Src);
 
-  let imgFloor_src = "./assets/images/floor.png";
-  imgFloor = loadImage(imgFloor_src);
-  loadingMessage(36, imgFloor_src);
+  let imgPushbox_src = "./assets/images/pushablebox.png";
+  imgPushbox = loadImage(imgPushbox_src);
+  loadingMessage(39, imgPushbox_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;

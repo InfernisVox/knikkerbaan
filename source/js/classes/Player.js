@@ -7,8 +7,9 @@
 
 class Player extends Ball {
   static THRESHOLD_TIMER_PERCENT = 5.044000000059605;
-  static RECORDING_LENGTH_MAX = 5_000;
+  static RECORDING_LENGTH_MAX = 3_800;
   static LABEL = "Wollknäuel";
+  static AUTO_MOVE = 0.02;
 
   /**
    * ...

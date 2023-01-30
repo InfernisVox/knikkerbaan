@@ -31,6 +31,14 @@ class Camera {
         if (this.i !== 1) this.i += 0.01;
 
         translate(this.i < 1 ? this.shiftX * this.i : this.shiftX, 0);
+
+        once(() => {
+          translate(-this.shiftX * 0.3, 0);
+          for (let i = 0; i <= 15; i++) {
+            image(imgRoom, i * 1280, 0, 1280, 720);
+          }
+        });
+
         mouse.setOffset({
           x: this.i < 1 ? this.shiftX * this.i : this.shiftX,
           y: 0,
@@ -38,6 +46,14 @@ class Camera {
       }
     } else {
       translate(this.shiftX, 0);
+
+      once(() => {
+        translate(-this.shiftX * 0.3, 0);
+        for (let i = 0; i <= 15; i++) {
+          image(imgRoom, i * 1280, 0, 1280, 720);
+        }
+      });
+
       mouse.setOffset({ x: -this.shiftX, y: 0 });
     }
   }
