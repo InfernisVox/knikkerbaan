@@ -42,10 +42,66 @@ function bar(player, color, offset = null, animationCounter = null) {
 
 /**
  *
+ * @returns {number}
+ */
+function showProgress() {
+  let wPercentage = map(frameCount % 60, 0, 59, 0, 1);
+  let hue = map(frameCount % 60, 0, 59, 60, 0);
+
+  let c = color(hue, 100, 100);
+
+  colorMode(HSB);
+  noStroke();
+  fill(c);
+  // w: 196
+  rectMode(CORNER);
+  rect(
+    width / 2 - 200 / 2 + 2,
+    height * 0.9 - 10 / 2 + 2,
+    196 * wPercentage,
+    6
+  );
+  noFill();
+  stroke(c);
+  rectMode(CENTER);
+  rect(width / 2, height * 0.9, 200, 10);
+  return wPercentage;
+}
+
+/**
+ *
  * @param {unknown} arg
  */
 const isNull = (arg) => {
   return typeof arg === "object" && !arg && arg === arg;
+};
+
+/**
+ *
+ * @param {number} milliSeconds
+ * @returns {number | string}
+ */
+const getTime = (milliSeconds) => {
+  let seconds = round(milliSeconds / 1000, 1);
+
+  if (seconds <= 60) {
+    return seconds;
+  }
+
+  seconds = round(milliSeconds / 1000, 0);
+  let _seconds = seconds % 60;
+  let minutes = (seconds - _seconds) / 60;
+  let hours = (minutes - (minutes % 60)) / 60;
+
+  if (seconds > 60 && seconds <= 3600) {
+    return `${minutes < 10 ? `0${minutes}` : minutes}:${
+      _seconds < 10 ? `0${_seconds}` : _seconds
+    }`;
+  } else {
+    return `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }:${_seconds < 10 ? `0${_seconds}` : _seconds}`;
+  }
 };
 
 /**

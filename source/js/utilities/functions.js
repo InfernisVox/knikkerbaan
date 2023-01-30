@@ -99,7 +99,7 @@ function drawCanvas() {
           y: canon.body.position.y,
         });
         Matter.Body.setStatic(player.body, true);
-        player.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
+        player.onSpacePress = MarbleRun.mapSpacePressOfTo(
           player,
           FactoryFlag.CANON_SHOOT
         );
@@ -147,7 +147,7 @@ function drawCharacters() {
   if (!movingUpward) {
     if (velocityX > 0.02) Matter.Body.setAngularVelocity(player.body, 0.02);
   } else {
-    if (velocityX > 0.02) Matter.Body.setAngularVelocity(player.body, -0.04);
+    if (velocityX > 0.02) Matter.Body.setAngularVelocity(player.body, -0.08);
   }
   player.draw();
   canon.draw();
