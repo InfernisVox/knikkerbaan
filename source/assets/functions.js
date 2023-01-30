@@ -131,7 +131,7 @@ function loadAssets() {
   imgBaseballGlove = loadImage(imgBaseballGlove_Src);
   loadingMessage(imgBaseballGlove_Src);
 
-  let gifRewind_Src = "./assets/images/rewind.gif";
+  let gifRewind_Src = "./assets/images/rewind-min.gif";
   gifRewind = loadImage(gifRewind_Src);
   loadingMessage(gifRewind_Src);
 
@@ -190,6 +190,10 @@ function loadAssets() {
   let imgBallpitFg_src = "./assets/images/ballpit_fg.png";
   imgBallpitFg = loadImage(imgBallpitFg_src);
   loadingMessage(imgBallpitFg_src);
+
+  let gifRewindOverlay_src = "./assets/images/rewind_overlay.gif";
+  gifRewindOverlay = loadImage(gifRewindOverlay_src);
+  loadingMessage(gifRewindOverlay_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
