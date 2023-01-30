@@ -83,6 +83,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgBallpitBg;
 /** @type {Image} */ let imgBallpitFg;
 
+
 // p5.js - Custom event variables
 let mouseIsDragged = false;
 let spaceIsPressed = false;
@@ -121,6 +122,7 @@ let balls;
 /** @type {number[]} */ let playerpositioncar = [];
 let isCarWindingUp = false;
 /** @type {Image} */ let gifRewind;
+/** @type {Image} */ let gifRewindOverlay;
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
 
