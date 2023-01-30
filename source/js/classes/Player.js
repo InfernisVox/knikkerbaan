@@ -141,7 +141,14 @@ class Player extends Ball {
    * @returns {Player}
    */
   showGlitch(bool) {
+    push();
+    tint(255,127);
     if (bool) image(gifRewind, 0, 0, width, height);
+    pop();
+    push();
+    tint(255,200);
+    if (bool) image(gifRewindOverlay, 0, 0, width, height);
+    pop();
     return this;
   }
 

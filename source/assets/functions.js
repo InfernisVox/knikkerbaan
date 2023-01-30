@@ -187,6 +187,10 @@ function loadAssets() {
   imgPushbox = loadImage(imgPushbox_src);
   loadingMessage(39, imgPushbox_src);
 
+  let gifRewindOverlay_Src = "./assets/images/rewind_overlay.gif";
+  gifRewindOverlay = loadImage(gifRewindOverlay_Src);
+  loadingMessage(26, gifRewindOverlay_Src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
