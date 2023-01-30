@@ -93,7 +93,7 @@ let spaceIsPressed = false;
 /** @type {Block} */ let canonDoor;
 /** @type {Block} */ let towerLeft;
 /** @type {Block} */ let towerRight;
-let canonAngle = 0.35;
+let canonAngle = 0.33;
 let isCanonReversing = false;
 let canCanonRotate = false;
 let isCanonDoorOpen = true;

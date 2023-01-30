@@ -33,7 +33,7 @@ class Camera {
         translate(this.i < 1 ? this.shiftX * this.i : this.shiftX, 0);
 
         once(() => {
-          translate(-this.shiftX * 0.3, 0);
+          translate(-this.shiftX * 0.4, 0);
           for (let i = 0; i <= 15; i++) {
             image(imgRoom, i * 1280, 0, 1280, 720);
           }
@@ -48,7 +48,7 @@ class Camera {
       translate(this.shiftX, 0);
 
       once(() => {
-        translate(-this.shiftX * 0.3, 0);
+        translate(-this.shiftX * 0.4, 0);
         for (let i = 0; i <= 15; i++) {
           image(imgRoom, i * 1280, 0, 1280, 720);
         }
