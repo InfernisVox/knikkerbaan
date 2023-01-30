@@ -70,6 +70,7 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgCannon;
 /** @type {Image} */ let imgBaseballGlove;
 /** @type {Image} */ let imgFloor;
+/** @type {Image} */ let imgPushbox;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
@@ -123,6 +124,8 @@ function preload() {
 
 function setup() {
   init();
+
+  mouse.mouse.pixelRatio = pixelDensity();
 
   marbleRun = new MarbleRun();
   cam = new Camera(player.body);
