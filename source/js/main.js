@@ -27,8 +27,16 @@ const Masks = {
 };
 /** @enum {number} */
 const FactoryFlag = {
+  EMPTY: -1,
   SINGLE_JUMP: 0,
   CANON_SHOOT: 1,
+  PLAYER_REWIND: 3,
+  CAR_REWIND: 4,
+};
+/** @enum {number} */
+const currentState = {
+  press: FactoryFlag.EMPTY,
+  hold: FactoryFlag.EMPTY,
 };
 
 // Setup ##########################################################
@@ -112,9 +120,11 @@ let isCarWindingUp = false;
 /** @type {Image} */ let imgRocket;
 
 let hasBeenSet = false;
+let hasBeenAssigned = false;
 let movingUpward = false;
 
 let velocityX = 0;
+/** @type {number} */ let carProgressValue = null;
 
 // ##################################################
 
@@ -146,6 +156,20 @@ function draw() {
 
   Player.recordDataOf(player, !spaceIsPressed);
 
+  MarbleRun.Cycle.over(7000, () => {
+    if (!hasBeenAssigned) {
+      hasBeenAssigned = true;
+      player.onSpacePress = MarbleRun.mapSpacePressOfTo(
+        player,
+        FactoryFlag.SINGLE_JUMP
+      );
+      player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
+        player,
+        FactoryFlag.PLAYER_REWIND
+      );
+    }
+  });
+
   once(drawCanvas);
   spacePressed();
 
@@ -164,6 +188,35 @@ function keyPressed() {
 }
 
 function keyReleased() {
+  if (player.timer.progress > Player.THRESHOLD_TIMER_PERCENT) {
+    Matter.Body.setVelocity(player.body, { x: 0, y: engine.gravity.y });
+  }
+
+  if (
+    currentState.hold === FactoryFlag.CAR_REWIND &&
+    !isNull(carProgressValue)
+  ) {
+    console.log(carProgressValue);
+    Matter.Body.setStatic(carBody.body, false);
+
+    let x = map(carProgressValue, 0, 100, 190, 1900);
+
+    Body.setVelocity(carBody.body, { x: x, y: 0 });
+
+    carProgressValue = null;
+
+    setTimeout(() => {
+      player.onSpacePress = MarbleRun.mapSpacePressOfTo(
+        player,
+        FactoryFlag.SINGLE_JUMP
+      );
+      player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
+        player,
+        FactoryFlag.PLAYER_REWIND
+      );
+    }, 2000);
+  }
+
   player.timer.reset();
   player.resetBooleans();
 

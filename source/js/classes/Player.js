@@ -47,6 +47,7 @@ class Player extends Ball {
   /** @type {ProgressTimer} */ timer;
 
   /** @type {() => void} */ onSpacePress;
+  /** @type {() => void} */ onSpaceHold;
 
   /** @type {Data[]} */ recordedData;
 
@@ -73,10 +74,8 @@ class Player extends Ball {
     this.recordedData = [];
     this.recordedDataLength = this.recordedData.length;
 
-    this.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
-      this,
-      FactoryFlag.SINGLE_JUMP
-    );
+    this.onSpacePress = MarbleRun.mapSpacePressOfTo(this, FactoryFlag.EMPTY);
+    this.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(this, FactoryFlag.EMPTY);
 
     this.timer = new ProgressTimer();
 
@@ -107,24 +106,6 @@ class Player extends Ball {
         player.spaceHasBeenPressed = !player.isOnGround;
       }
     });
-  }
-
-  /**
-   * @returns {Player}
-   */
-  rewind() {
-    // #################### Zeit anhalten: Matter.Runner.stop(runner);
-    // #################### Super Slow Mo: Matter.Sleeping.set(body, true);
-
-    const lastData = this.recordedData.shift();
-
-    if (lastData) {
-      Matter.Body.setPosition(this.body, lastData.p);
-      Matter.Body.setAngle(this.body, lastData.a);
-      Matter.Body.setVelocity(this.body, lastData.v);
-    }
-
-    return this;
   }
 
   /**

@@ -5,9 +5,15 @@ class MarbleRun {
    * @param {number} factoryFlag
    * @returns {() => any}
    */
-  static mapSpaceKeyOfTo(player, factoryFlag) {
+  static mapSpacePressOfTo(player, factoryFlag) {
     switch (factoryFlag) {
+      case FactoryFlag.EMPTY: {
+        currentState.press = FactoryFlag.EMPTY;
+        return () => null;
+      }
+
       case FactoryFlag.SINGLE_JUMP: {
+        currentState.press = FactoryFlag.SINGLE_JUMP;
         return () => {
           if (!player.spaceHasBeenPressed) {
             Matter.Body.applyForce(
@@ -23,19 +29,93 @@ class MarbleRun {
       }
 
       case FactoryFlag.CANON_SHOOT: {
+        currentState.press = FactoryFlag.CANON_SHOOT;
         return () => {
           if (player.body.isStatic) Matter.Body.setStatic(player.body, false);
 
           Matter.Body.applyForce(
             player.body,
             { x: player.body.position.x, y: player.body.position.y },
-            {
-              x: -canonAngle / 1.5,
-              y: -0.1,
-            }
+            canonAngle <= 0
+              ? {
+                  x: -canonAngle / 1.5,
+                  y: -0.1,
+                }
+              : {
+                  x: canonAngle / 1.5,
+                  y: 0.1,
+                }
           );
 
           soundCanonshoot.play();
+          setTimeout(() => {
+            soundCanonshoot.stop();
+          }, 1000);
+
+          player.onSpacePress = MarbleRun.mapSpacePressOfTo(
+            player,
+            FactoryFlag.SINGLE_JUMP
+          );
+        };
+      }
+
+      default: {
+        return () => {
+          console.log("Hello World");
+        };
+      }
+    }
+  }
+
+  static mapSpaceHoldOfTo(player, factoryFlag) {
+    switch (factoryFlag) {
+      case FactoryFlag.EMPTY: {
+        currentState.hold = FactoryFlag.EMPTY;
+        return () => null;
+      }
+
+      case FactoryFlag.PLAYER_REWIND: {
+        currentState.hold = FactoryFlag.PLAYER_REWIND;
+        /**
+         *
+         * @param  {(() => boolean)[]} exitConditions
+         * @returns {Player | undefined}
+         */
+        return (...exitConditions) => {
+          // #################### Zeit anhalten: Matter.Runner.stop(runner);
+          // #################### Super Slow Mo: Matter.Sleeping.set(body, true);
+
+          const lastData = player.recordedData.shift();
+
+          if (lastData) {
+            Matter.Body.setPosition(player.body, lastData.p);
+            Matter.Body.setAngle(player.body, lastData.a);
+            Matter.Body.setVelocity(player.body, lastData.v);
+          }
+
+          for (let exitCondition of exitConditions) {
+            if (exitCondition()) return player;
+          }
+
+          return player;
+        };
+      }
+
+      case FactoryFlag.CAR_REWIND: {
+        currentState.hold = FactoryFlag.CAR_REWIND;
+        return () => {
+          if (carBody.body.isStatic) {
+            console.log(
+              mouse.mouseConstraint.constraint.pointA,
+              mouse.mouseConstraint.constraint.pointB
+            );
+          }
+        };
+      }
+
+      default: {
+        return () => {
+          console.log("Hello World");
         };
       }
     }
@@ -51,14 +131,16 @@ class MarbleRun {
    * @param {number} y
    */
   stats(x = 10, y = 15) {
-    if (frameCount)
+    if (frameCount) {
+      stroke("black");
       text(
-        `t = ${round(millis() / 1000, 1)} | fr = ${frameCount} | fps = ${round(
+        `t = ${getTime(millis())} | fr = ${frameCount} | fps = ${round(
           frameRate()
         )}`,
         x,
         y
       );
+    }
   }
 
   // Cycle #################################

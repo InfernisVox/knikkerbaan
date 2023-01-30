@@ -749,7 +749,7 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 7100,
+        x: 6500,
         y: 620,
         w: 30,
         h: 150,
@@ -790,6 +790,34 @@ function screen01() {
     )
   );
   console.log(blocks);
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 2475,
+        y: 640,
+        w: 500,
+        h: 100,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true, label: "canonPit" }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 7000,
+        y: 620,
+        w: 30,
+        h: 150,
+        color: sensorColor,
+      },
+      { isStatic: true, isSensor: true, label: "rampboostsensor2" }
+    )
+  );
 
   // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (1/2)
   // for (let i = 0; i < 10; i++) {
@@ -960,11 +988,8 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 13");
         soundBaseballglove.play();
-        player.onSpacePress = MarbleRun.mapSpaceKeyOfTo(
-          player,
-          FactoryFlag.SINGLE_JUMP
-        );
-        player.setAutoMove(false);
+
+        // ...
       }
 
       if (
@@ -1025,14 +1050,27 @@ function screenEvents() {
         pair.bodyB === sensors[18].body
       ) {
         console.log("Collided with sensor 18");
+        /* player.onSpacePress = MarbleRun.mapSpacePressOfTo(
+          player,
+          FactoryFlag.EMPTY
+        ); */
+        player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
+          player,
+          FactoryFlag.CAR_REWIND
+        );
+
+        Matter.Body.setStatic(carBody.body, true);
+
         player.constrainTo(carBody, {
           pointA: { x: 0, y: 0 },
-          pointB: { x: 0, y: 0 - 60 },
+          pointB: { x: 0, y: -60 },
           length: 0,
           stiffness: 1,
           draw: false,
         });
+
         player.recordedData = [];
+
         Body.setPosition(carconstraintsensor.body, {
           x: carconstraintsensor.body.position.x,
           y: 1600,
@@ -1083,6 +1121,9 @@ function screenEvents() {
         player.constraints.forEach((constraint) => {
           Matter.World.remove(world, constraint);
         });
+
+        // ...
+        Body.setVelocity(carBody.body, { x: 120, y: 0 });
       }
 
       if (
@@ -1102,6 +1143,8 @@ function screenEvents() {
         console.log("Collided with sensor 23");
         soundAcceleration.play();
         Body.setVelocity(carBody.body, { x: 90, y: 0 });
+
+        movingUpward = false;
       }
 
       // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (2/2)
@@ -1137,6 +1180,31 @@ function screenEvents() {
       ) {
         movingUpward = true;
       }
+
+      // sensors[24].body.label = "canonPit"
+      if (
+        (pair.bodyA.label === Player.LABEL &&
+          pair.bodyB.label === "canonPit") ||
+        (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "canonPit")
+      ) {
+        // ...
+        // Due to drawCanvas, the player will be reset to the static destination
+        hasBeenSet = false;
+      }
+
+      // sensors[25].body.label = "rampboostsensor2"
+      if (
+        (pair.bodyA.label === Player.LABEL &&
+          pair.bodyB.label === "rampboostsensor2") ||
+        (pair.bodyB.label === Player.LABEL &&
+          pair.bodyA.label === "rampboostsensor2")
+      ) {
+        console.log("Collided with sensor 25");
+        soundAcceleration.play();
+        Body.setVelocity(carBody.body, { x: 30, y: 0 });
+
+        movingUpward = false;
+      }
     }
   });
 }
@@ -1152,10 +1220,16 @@ function spacePressed() {
       }
 
       if (marbleRun.hasBeenStarted) {
-        player
-          .rewind()
-          .showGlitch(!!player.recordedData.length)
-          .showBar(player.isReversing);
+        player.onSpaceHold();
+
+        if (currentState.hold === FactoryFlag.PLAYER_REWIND) {
+          player
+            .showGlitch(!!player.recordedData.length)
+            .showBar(player.isReversing);
+        } else if (currentState.hold === FactoryFlag.CAR_REWIND) {
+          // ...
+          carProgressValue = showProgress();
+        }
       }
 
       if (!player.isReversing && marbleRun.hasBeenStarted) {
