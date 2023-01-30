@@ -104,11 +104,21 @@ class MarbleRun {
       case FactoryFlag.CAR_REWIND: {
         currentState.hold = FactoryFlag.CAR_REWIND;
         return () => {
-          if (carBody.body.isStatic) {
-            console.log(
-              mouse.mouseConstraint.constraint.pointA,
-              mouse.mouseConstraint.constraint.pointB
-            );
+          const offset = map(carProgressValue, 0, 1, 0, 100);
+
+          if (isNull(carBodyPositionX))
+            carBodyPositionX = carBody.body.position.x;
+
+          if (carProgressValue >= 0.99999) {
+            Matter.Body.setPosition(carBody.body, {
+              x: carBodyPositionX,
+              y: 630.77351582555,
+            });
+          } else {
+            Matter.Body.setPosition(carBody.body, {
+              x: carBodyPositionX - offset,
+              y: 630.77351582555,
+            });
           }
         };
       }

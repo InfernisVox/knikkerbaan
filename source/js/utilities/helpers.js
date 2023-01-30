@@ -48,9 +48,9 @@ function showProgress() {
   let wPercentage = map(frameCount % 60, 0, 59, 0, 1);
   let hue = map(frameCount % 60, 0, 59, 60, 0);
 
+  colorMode(HSB);
   let c = color(hue, 100, 100);
 
-  colorMode(HSB);
   noStroke();
   fill(c);
   // w: 196
@@ -65,6 +65,7 @@ function showProgress() {
   stroke(c);
   rectMode(CENTER);
   rect(width / 2, height * 0.9, 200, 10);
+  colorMode(RGB);
   return wPercentage;
 }
 
