@@ -141,6 +141,7 @@ function preload() {
 
 function setup() {
   init();
+  console.log("e");
 
   mouse.mouse.pixelRatio = pixelDensity();
 
