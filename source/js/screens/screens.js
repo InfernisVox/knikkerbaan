@@ -1123,6 +1123,7 @@ function screenEvents() {
         });
 
         // ...
+        if (!slowMo) slowMo = true;
         Body.setVelocity(carBody.body, { x: 100, y: 0 });
       }
 
