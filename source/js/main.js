@@ -24,6 +24,7 @@ const Keys = {
 const Masks = {
   WORLD: 0x0001,
   CAR: 0x0002,
+  AREA: 0x0004,
 };
 /** @enum {number} */
 const FactoryFlag = {
@@ -79,6 +80,8 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgBaseballGlove;
 /** @type {Image} */ let imgFloor;
 /** @type {Image} */ let imgPushbox;
+/** @type {Image} */ let imgBallpitBg;
+/** @type {Image} */ let imgBallpitFg;
 
 // p5.js - Custom event variables
 let mouseIsDragged = false;
@@ -113,6 +116,7 @@ let baseballGloveBack2;
 /** @type {PolygonFromSVG} */ let loopRight2;
 /** @type {PolygonFromSVG} */ let loopLeft2;
 /** @type {PolygonFromSVG} */ let rocket;
+/** @type {Block} */ let safetyblock;
 let balls;
 /** @type {number[]} */ let playerpositioncar = [];
 let isCarWindingUp = false;
@@ -176,10 +180,8 @@ function draw() {
   once(drawCanvas);
   spacePressed();
 
-  console.log(carProgressValue);
-
   MarbleRun.Cycle.forNext(
-    750,
+    1500,
     slowMo,
     () => {
       if (slowMo) {

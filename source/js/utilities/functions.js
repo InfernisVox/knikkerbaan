@@ -121,6 +121,7 @@ function drawCanvas() {
 function drawCharacters() {
   sensors.forEach((sensor) => sensor.draw());
   image(imgTowerBg, 1950, 285, 289, 428);
+  image(imgBallpitBg, 7893, 575, 415, 127);
   blocks.forEach((block) => block.draw());
 
   image(gifElGato, -55, 45, 470, 264);
@@ -154,7 +155,8 @@ function drawCharacters() {
 
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
-  image(imgRocket, 9830, 165, 339, 531);
+  image(imgBallpitFg, 7893, 588, 415, 114);
+  image(imgRocket, 10030, 165, 339, 531);
 
   player.showAngle(false);
 }

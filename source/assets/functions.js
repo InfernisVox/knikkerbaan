@@ -33,159 +33,167 @@ function loadAssets() {
 
   let playerImageSrc = "./assets/images/Wollball.png";
   playerImage = loadImage(playerImageSrc);
-  loadingMessage(1, playerImageSrc);
+  loadingMessage(playerImageSrc);
 
   let gifelgato_Src = "./assets/images/el_gato.gif";
   gifElGato = loadImage(gifelgato_Src);
-  loadingMessage(2, gifelgato_Src);
+  loadingMessage(gifelgato_Src);
 
   let soundCat_Src = "./assets/audio/instruments/cat_sound.mp3";
   soundCat = loadSound(soundCat_Src);
-  loadingMessage(3, soundCat_Src);
+  loadingMessage(soundCat_Src);
 
   let soundGuitarAMajor_Src = "./assets/audio/instruments/amajor.wav";
   soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);
-  loadingMessage(3, soundGuitarAMajor_Src);
+  loadingMessage(soundGuitarAMajor_Src);
 
   let soundXylophoneA1_Src = "./assets/audio/instruments/A1.mp3";
   soundXylophoneA1 = loadSound(soundXylophoneA1_Src);
-  loadingMessage(4, soundXylophoneA1_Src);
+  loadingMessage(soundXylophoneA1_Src);
 
   let soundXylophoneB1_Src = "./assets/audio/instruments/B1.mp3";
   soundXylophoneB1 = loadSound(soundXylophoneB1_Src);
-  loadingMessage(5, soundXylophoneB1_Src);
+  loadingMessage(soundXylophoneB1_Src);
 
   let soundXylophoneC1_Src = "./assets/audio/instruments/C1.mp3";
   soundXylophoneC1 = loadSound(soundXylophoneC1_Src);
-  loadingMessage(6, soundXylophoneC1_Src);
+  loadingMessage(soundXylophoneC1_Src);
 
   let soundXylophoneD1_Src = "./assets/audio/instruments/D1.mp3";
   soundXylophoneD1 = loadSound(soundXylophoneD1_Src);
-  loadingMessage(7, soundXylophoneD1_Src);
+  loadingMessage(soundXylophoneD1_Src);
 
   let soundXylophoneE1_Src = "./assets/audio/instruments/E1.mp3";
   soundXylophoneE1 = loadSound(soundXylophoneE1_Src);
-  loadingMessage(8, soundXylophoneE1_Src);
+  loadingMessage(soundXylophoneE1_Src);
 
   let soundXylophoneF1_Src = "./assets/audio/instruments/F1.mp3";
   soundXylophoneF1 = loadSound(soundXylophoneF1_Src);
-  loadingMessage(9, soundXylophoneF1_Src);
+  loadingMessage(soundXylophoneF1_Src);
 
   let soundXylophoneG1_Src = "./assets/audio/instruments/G1.mp3";
   soundXylophoneG1 = loadSound(soundXylophoneG1_Src);
-  loadingMessage(10, soundXylophoneG1_Src);
+  loadingMessage(soundXylophoneG1_Src);
 
   let soundXylophoneA2_Src = "./assets/audio/instruments/A2.mp3";
   soundXylophoneA2 = loadSound(soundXylophoneA2_Src);
-  loadingMessage(11, soundXylophoneA2_Src);
+  loadingMessage(soundXylophoneA2_Src);
 
   let soundXylophoneB2_Src = "./assets/audio/instruments/B2.mp3";
   soundXylophoneB2 = loadSound(soundXylophoneB2_Src);
-  loadingMessage(12, soundXylophoneB2_Src);
+  loadingMessage(soundXylophoneB2_Src);
 
   let soundXylophoneC2_Src = "./assets/audio/instruments/C2.mp3";
   soundXylophoneC2 = loadSound(soundXylophoneC2_Src);
-  loadingMessage(13, soundXylophoneC2_Src);
+  loadingMessage(soundXylophoneC2_Src);
 
   let imgRoom_Src = "./assets/images/wallpaper.png";
   imgRoom = loadImage(imgRoom_Src);
-  loadingMessage(14, imgRoom_Src);
+  loadingMessage(imgRoom_Src);
 
   let imgBed_Src = "./assets/images/bed.png";
   imgBed = loadImage(imgBed_Src);
-  loadingMessage(15, imgBed_Src);
+  loadingMessage(imgBed_Src);
 
   let imgXylophone_Src = "./assets/images/xylophone.png";
   imgXylophone = loadImage(imgXylophone_Src);
-  loadingMessage(16, imgXylophone_Src);
+  loadingMessage(imgXylophone_Src);
 
   let imgWall_Src = "./assets/images/monawall.png";
   imgWall = loadImage(imgWall_Src);
-  loadingMessage(17, imgWall_Src);
+  loadingMessage(imgWall_Src);
 
   let imgTowerDoor_Src = "./assets/images/tower_door.png";
   imgTowerDoor = loadImage(imgTowerDoor_Src);
-  loadingMessage(18, imgTowerDoor_Src);
+  loadingMessage(imgTowerDoor_Src);
 
   let imgTowerFg_Src = "./assets/images/tower_fg.png";
   imgTowerFg = loadImage(imgTowerFg_Src);
-  loadingMessage(19, imgTowerFg_Src);
+  loadingMessage(imgTowerFg_Src);
 
   let imgTowerBg_Src = "./assets/images/tower_bg.png";
   imgTowerBg = loadImage(imgTowerBg_Src);
-  loadingMessage(20, imgTowerBg_Src);
+  loadingMessage(imgTowerBg_Src);
 
   let imgButtonPressed_Src = "./assets/images/button_pressed.png";
   imgButtonPressed = loadImage(imgButtonPressed_Src);
-  loadingMessage(21, imgButtonPressed_Src);
+  loadingMessage(imgButtonPressed_Src);
 
   let imgButtonReleased_Src = "./assets/images/button_unpressed.png";
   imgButtonReleased = loadImage(imgButtonReleased_Src);
-  loadingMessage(22, imgButtonReleased_Src);
+  loadingMessage(imgButtonReleased_Src);
 
   let imgCannonBase_Src = "./assets/images/cannon_base.png";
   imgCannonBase = loadImage(imgCannonBase_Src);
-  loadingMessage(23, imgCannonBase_Src);
+  loadingMessage(imgCannonBase_Src);
 
   let imgCannon_Src = "./assets/images/cannon.png";
   imgCannon = loadImage(imgCannon_Src);
-  loadingMessage(24, imgCannon_Src);
+  loadingMessage(imgCannon_Src);
 
   let imgBaseballGlove_Src = "./assets/images/baseballglove.png";
   imgBaseballGlove = loadImage(imgBaseballGlove_Src);
-  loadingMessage(25, imgBaseballGlove_Src);
+  loadingMessage(imgBaseballGlove_Src);
 
   let gifRewind_Src = "./assets/images/rewind.gif";
   gifRewind = loadImage(gifRewind_Src);
-  loadingMessage(26, gifRewind_Src);
+  loadingMessage(gifRewind_Src);
 
   let soundRewind_Src = "./assets/audio/rewind.wav";
   soundRewind = loadSound(soundRewind_Src);
-  loadingMessage(27, soundRewind_Src);
+  loadingMessage(soundRewind_Src);
 
   let imgElevator_Src = "./assets/images/elevator.png";
   imgElevator = loadImage(imgElevator_Src);
-  loadingMessage(28, imgElevator_Src);
+  loadingMessage(imgElevator_Src);
 
   let imgRocket_Src = "./assets/images/rocket.png";
   imgRocket = loadImage(imgRocket_Src);
-  loadingMessage(29, imgRocket_Src);
+  loadingMessage(imgRocket_Src);
 
   let soundButton_Src = "./assets/audio/buttonactivate.wav";
   soundButton = loadSound(soundButton_Src);
-  loadingMessage(31, soundButton_Src);
+  loadingMessage(soundButton_Src);
 
   let soundElevator_Src = "./assets/audio/elevatorsound.wav";
   soundElevator = loadSound(soundElevator_Src);
-  loadingMessage(32, soundElevator_Src);
+  loadingMessage(soundElevator_Src);
 
   let soundBaseballglove_Src = "./assets/audio/baseballglove.wav";
   soundBaseballglove = loadSound(soundBaseballglove_Src);
-  loadingMessage(33, soundBaseballglove_Src);
+  loadingMessage(soundBaseballglove_Src);
 
   let soundWoolball_Src = "./assets/audio/woolball.wav";
   soundWoolball = loadSound(soundWoolball_Src);
-  loadingMessage(34, soundWoolball_Src);
+  loadingMessage(soundWoolball_Src);
 
   let soundCanonshoot_Src = "./assets/audio/canonshoot.wav";
   soundCanonshoot = loadSound(soundCanonshoot_Src);
-  loadingMessage(35, soundCanonshoot_Src);
+  loadingMessage(soundCanonshoot_Src);
 
   let soundKapow_Src = "./assets/audio/kapow.wav";
   soundKapow = loadSound(soundKapow_Src);
-  loadingMessage(36, soundKapow_Src);
+  loadingMessage(soundKapow_Src);
 
   let soundAcceleration_Src = "./assets/audio/acceleration.wav";
   soundAcceleration = loadSound(soundAcceleration_Src);
-  loadingMessage(37, soundAcceleration_Src);
+  loadingMessage(soundAcceleration_Src);
 
   let soundRocket_Src = "./assets/audio/rocket.wav";
   soundRocket = loadSound(soundRocket_Src);
-  loadingMessage(38, soundRocket_Src);
+  loadingMessage(soundRocket_Src);
 
   let imgPushbox_src = "./assets/images/pushablebox.png";
   imgPushbox = loadImage(imgPushbox_src);
-  loadingMessage(39, imgPushbox_src);
+  loadingMessage(imgPushbox_src);
+
+  let imgBallpitBg_src = "./assets/images/ballpit_bg.png";
+  imgBallpitBg = loadImage(imgBallpitBg_src);
+  loadingMessage(imgBallpitBg_src);
+
+  let imgBallpitFg_src = "./assets/images/ballpit_fg.png";
+  imgBallpitFg = loadImage(imgBallpitFg_src);
+  loadingMessage(imgBallpitFg_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;

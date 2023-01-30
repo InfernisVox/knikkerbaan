@@ -48,25 +48,20 @@ function invisiblewalls(blockColor) {
     )
   );
 
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 9000,
-        y: 300,
-        w: 40,
-        h: 550,
-        color: blockColor,
-      },
-      {
-        isStatic: true,
-        collisionFilter: {
-          category: Masks.CAR,
-          mask: Masks.CAR,
-        },
-      }
-    )
+  safetyblock = new Block(
+    world,
+    {
+      x: 8900,
+      y: 400,
+      w: 40,
+      h: 900,
+      color: blockColor,
+    },
+    {
+      isStatic: true,
+    }
   );
+  blocks.push(safetyblock);
 }
 
 // #######################################
@@ -697,7 +692,7 @@ function screen01() {
   rocket = new PolygonFromSVG(
     world,
     {
-      x: 10000,
+      x: 10200,
       y: 465,
       w: 295,
       h: 504,
@@ -725,8 +720,8 @@ function screen01() {
         isStatic: false,
         angle: 0,
         friction: 0.01,
-        airfriction: 0.01,
-        mass: 0.5,
+        airfriction: 0.1,
+        mass: 1,
       }
     )
   );
@@ -735,7 +730,7 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 10000,
+        x: 10200,
         y: 420,
         w: 150,
         h: 150,
@@ -759,15 +754,14 @@ function screen01() {
     )
   );
 
-  console.log(blocks);
   blocks.push(
     new Stack(
       world,
       {
         x: 8050,
-        y: 400,
+        y: 80,
         cols: 8,
-        rows: 30,
+        rows: 20,
         colGap: 5,
         rowGap: 5,
         color: color(random(0, 256), random(0, 256), random(0, 256)),
@@ -781,15 +775,13 @@ function screen01() {
           Matter.Bodies.circle(bx, by, 10, { restitution: 0.9, mass: 0.1 }),
       },
       {
-        isStatic: false,
+        isStatic: true,
         collisionFilter: {
           category: Masks.CAR,
-          mask: Masks.WORLD,
         },
       }
     )
   );
-  console.log(blocks);
 
   sensors.push(
     new BlockCore(
@@ -816,6 +808,24 @@ function screen01() {
         color: sensorColor,
       },
       { isStatic: true, isSensor: true, label: "rampboostsensor2" }
+    )
+  );
+
+  sensors.push(
+    new BlockCore(
+      world,
+      {
+        x: 8800,
+        y: 100,
+        w: 120,
+        h: 2000,
+        color: sensorColor,
+      },
+      {
+        isStatic: true,
+        isSensor: true,
+        label: "safetyblocksensor",
+      }
     )
   );
 
@@ -1124,7 +1134,7 @@ function screenEvents() {
 
         // ...
         if (!slowMo) slowMo = true;
-        Body.setVelocity(carBody.body, { x: 100, y: 0 });
+        Body.setVelocity(carBody.body, { x: 80, y: 0 });
       }
 
       if (
@@ -1205,6 +1215,18 @@ function screenEvents() {
         Body.setVelocity(carBody.body, { x: 30, y: 0 });
 
         movingUpward = false;
+      }
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB.label === "safetyblocksensor"
+      ) {
+        console.log("Collided with sensor 26");
+
+        Body.setPosition(safetyblock.body, {
+          x: safetyblock.body.position.x,
+          y: 4600,
+        });
       }
     }
   });
