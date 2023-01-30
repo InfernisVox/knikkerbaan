@@ -52,6 +52,7 @@ class Player extends Ball {
   /** @type {Data[]} */ recordedData;
 
   isReversing;
+  isRecording;
   hasRewindStarted;
 
   /**
@@ -83,6 +84,8 @@ class Player extends Ball {
     this.jumpCount = 0;
 
     this.isOnGround = false;
+
+    this.isRecording = true;
   }
 
   // ##################################################
@@ -124,7 +127,7 @@ class Player extends Ball {
 
           bar(player, color(0, 0, 0, 150), offset, this.i);
         } else {
-          bar(player, color(0, 0, 0, 150));
+          bar(player, color(255, 255, 255, 150));
         }
       });
     }
@@ -138,7 +141,14 @@ class Player extends Ball {
    * @returns {Player}
    */
   showGlitch(bool) {
+    push();
+    tint(255, 127);
     if (bool) image(gifRewind, 0, 0, width, height);
+    pop();
+    push();
+    tint(255, 200);
+    if (bool) image(gifRewindOverlay, 0, 0, width, height);
+    pop();
     return this;
   }
 

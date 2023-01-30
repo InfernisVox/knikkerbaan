@@ -1060,6 +1060,13 @@ function screenEvents() {
         pair.bodyB === sensors[18].body
       ) {
         console.log("Collided with sensor 18");
+        player.recordedData = [];
+        player.isRecording = false;
+        carBodyPositionOriginal = { ...carBody.body.position };
+        playerPositionOriginal = { ...player.body.position };
+        console.log(carBodyPositionOriginal);
+        console.log(playerPositionOriginal);
+
         /* player.onSpacePress = MarbleRun.mapSpacePressOfTo(
           player,
           FactoryFlag.EMPTY
@@ -1078,8 +1085,6 @@ function screenEvents() {
           stiffness: 1,
           draw: false,
         });
-
-        player.recordedData = [];
 
         Body.setPosition(carconstraintsensor.body, {
           x: carconstraintsensor.body.position.x,
@@ -1134,7 +1139,29 @@ function screenEvents() {
 
         // ...
         if (!slowMo) slowMo = true;
+<<<<<<< HEAD
         Body.setVelocity(carBody.body, { x: 80, y: 0 });
+=======
+        Body.setVelocity(carBody.body, { x: 100, y: 0 });
+
+        // for resetting player rewind after crossing ########################################
+        player.recordedData.length = 0;
+
+        // make the player regain original space key mappings
+        player.onSpacePress = MarbleRun.mapSpacePressOfTo(
+          player,
+          FactoryFlag.SINGLE_JUMP
+        );
+        player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
+          player,
+          FactoryFlag.PLAYER_REWIND
+        );
+
+        // enable this to reset the slow-mo effect once the car has been shot
+        setTimeout(() => {
+          carHasBeenShot = false;
+        }, 1000);
+>>>>>>> 5a0c4096405fcbd41167f08f1a868691e458e459
       }
 
       if (
