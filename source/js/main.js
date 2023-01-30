@@ -121,7 +121,6 @@ let balls;
 /** @type {number[]} */ let playerpositioncar = [];
 let isCarWindingUp = false;
 /** @type {Image} */ let gifRewind;
-/** @type {Image} */ let gifRewindOverlay;
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
 
@@ -133,10 +132,6 @@ let velocityX = 0;
 /** @type {number} */ let carProgressValue = null;
 
 let slowMo = false;
-
-let carHasBeenShot = false;
-/** @type {Matter.Vector} */ let carBodyPositionOriginal = null;
-/** @type {Matter.Vector} */ let playerPositionOriginal = null;
 
 // ##################################################
 
@@ -166,7 +161,7 @@ function draw() {
   background(255, 255, 255);
   Engine.update(engine);
 
-  Player.recordDataOf(player, !spaceIsPressed && player.isRecording);
+  Player.recordDataOf(player, !spaceIsPressed);
 
   MarbleRun.Cycle.over(7000, () => {
     if (!hasBeenAssigned) {
@@ -187,7 +182,7 @@ function draw() {
 
   MarbleRun.Cycle.forNext(
     1500,
-    slowMo && carHasBeenShot,
+    slowMo,
     () => {
       if (slowMo) {
         engine.timing.timeScale = 0.15;
@@ -198,12 +193,6 @@ function draw() {
       engine.timing.timeScale = 1;
       console.log("SlowMo ended");
     }
-  );
-
-  console.log(
-    `length: ${player.recordedData.length}`,
-    `carHasBeenShot: ${carHasBeenShot}`,
-    `player.isOnGround: ${player.isOnGround}`
   );
 
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
@@ -227,31 +216,27 @@ function keyReleased() {
 
   if (
     currentState.hold === FactoryFlag.CAR_REWIND &&
-    !isNull(carProgressValue) &&
-    !carHasBeenShot
+    !isNull(carProgressValue)
   ) {
-    carHasBeenShot = true;
-    player.isRecording = true;
+    console.log(carProgressValue);
+    Matter.Body.setStatic(carBody.body, false);
 
     let x = map(carProgressValue, 0, 100, 200, 2000);
 
-    Matter.Body.setStatic(carBody.body, false);
     Body.setVelocity(carBody.body, { x: x, y: 0 });
 
     carProgressValue = null;
 
-    player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-      player,
-      FactoryFlag.EMPTY
-    );
-    player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(player, FactoryFlag.EMPTY);
-
     setTimeout(() => {
+      player.onSpacePress = MarbleRun.mapSpacePressOfTo(
+        player,
+        FactoryFlag.SINGLE_JUMP
+      );
       player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
         player,
         FactoryFlag.PLAYER_REWIND
       );
-    }, 1000);
+    }, 2000);
   }
 
   player.timer.reset();

@@ -87,44 +87,14 @@ class MarbleRun {
 
           const lastData = player.recordedData.shift();
 
+          if (lastData) {
+            Matter.Body.setPosition(player.body, lastData.p);
+            Matter.Body.setAngle(player.body, lastData.a);
+            Matter.Body.setVelocity(player.body, lastData.v);
+          }
+
           for (let exitCondition of exitConditions) {
             if (exitCondition()) return player;
-          }
-
-          if (!player.constraints.length) {
-            if (lastData) {
-              Matter.Body.setPosition(player.body, lastData.p);
-              Matter.Body.setAngle(player.body, lastData.a);
-              Matter.Body.setVelocity(player.body, lastData.v);
-            }
-          }
-
-          // for rewinding player and car ########################################
-          if (carHasBeenShot && !player.recordedData.length) {
-            // If the player lays on the ground with the car still attached
-            if (player.isOnGround) {
-              // TODO: Create a new instance of the car body and spawn the player at the end of the first ramp
-              Matter.Body.setPosition(player.body, playerPositionOriginal);
-
-              setTimeout(() => {
-                Matter.Body.setStatic(carBody.body, true);
-              }, 1000);
-              return;
-            }
-
-            Matter.Body.setPosition(carBody.body, carBodyPositionOriginal);
-
-            if (!carBody.body.isStatic) {
-              Matter.Body.setStatic(carBody.body, true);
-            }
-
-            setTimeout(() => {
-              player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
-                player,
-                FactoryFlag.CAR_REWIND
-              );
-              carHasBeenShot = false;
-            }, 1000);
           }
 
           return player;
