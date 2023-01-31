@@ -8,12 +8,12 @@ class MarbleRun {
   static mapSpacePressOfTo(player, factoryFlag) {
     switch (factoryFlag) {
       case FactoryFlag.EMPTY: {
-        currentState.press = FactoryFlag.EMPTY;
+        playerCurrentMapping.press = FactoryFlag.EMPTY;
         return () => null;
       }
 
       case FactoryFlag.SINGLE_JUMP: {
-        currentState.press = FactoryFlag.SINGLE_JUMP;
+        playerCurrentMapping.press = FactoryFlag.SINGLE_JUMP;
         return () => {
           if (!player.spaceHasBeenPressed) {
             Matter.Body.applyForce(
@@ -29,33 +29,32 @@ class MarbleRun {
       }
 
       case FactoryFlag.CANON_SHOOT: {
-        currentState.press = FactoryFlag.CANON_SHOOT;
+        playerCurrentMapping.press = FactoryFlag.CANON_SHOOT;
         return () => {
           if (player.body.isStatic) Matter.Body.setStatic(player.body, false);
 
-          Matter.Body.applyForce(
-            player.body,
-            { x: player.body.position.x, y: player.body.position.y },
-            canonAngle <= 0
-              ? {
-                  x: -canonAngle / 1.5,
-                  y: -0.1,
-                }
-              : {
-                  x: canonAngle / 1.5,
-                  y: 0.1,
-                }
-          );
+          if (cannonHasBeenLoaded) {
+            Matter.Body.applyForce(
+              player.body,
+              { x: player.body.position.x, y: player.body.position.y },
+              cannonAngle <= 0
+                ? {
+                    x: -cannonAngle / 1.5,
+                    y: -0.1,
+                  }
+                : {
+                    x: cannonAngle / 1.5,
+                    y: 0.1,
+                  }
+            );
+          }
+
+          cannonHasBeenFired = true;
 
           soundCanonshoot.play();
           setTimeout(() => {
             soundCanonshoot.stop();
           }, 1000);
-
-          player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-            player,
-            FactoryFlag.SINGLE_JUMP
-          );
         };
       }
 
@@ -70,12 +69,12 @@ class MarbleRun {
   static mapSpaceHoldOfTo(player, factoryFlag) {
     switch (factoryFlag) {
       case FactoryFlag.EMPTY: {
-        currentState.hold = FactoryFlag.EMPTY;
+        playerCurrentMapping.hold = FactoryFlag.EMPTY;
         return () => null;
       }
 
       case FactoryFlag.PLAYER_REWIND: {
-        currentState.hold = FactoryFlag.PLAYER_REWIND;
+        playerCurrentMapping.hold = FactoryFlag.PLAYER_REWIND;
         /**
          *
          * @param  {(() => boolean)[]} exitConditions
@@ -102,7 +101,7 @@ class MarbleRun {
       }
 
       case FactoryFlag.CAR_REWIND: {
-        currentState.hold = FactoryFlag.CAR_REWIND;
+        playerCurrentMapping.hold = FactoryFlag.CAR_REWIND;
         return () => {
           const offset = map(carProgressValue, 0, 1, 0, 100);
 
