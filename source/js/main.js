@@ -206,7 +206,10 @@ function draw() {
     }
   );
 
-  console.log(cannonHasBeenLoaded);
+  console.log(
+    `cannonHasBeenLoaded: ${cannonHasBeenLoaded}`,
+    `cannonHasBeenFired: ${cannonHasBeenFired}`
+  );
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 

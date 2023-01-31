@@ -92,6 +92,7 @@ function drawCanvas() {
     } else {
       if (!cannonHasBeenLoaded) {
         cannonHasBeenLoaded = true;
+
         player.recordedData = [];
 
         Body.setPosition(player.body, {
@@ -152,9 +153,11 @@ function drawCharacters() {
 
   playerVelocityX = player.body.velocity.x;
   if (!playerIsMovingUpward) {
-    if (playerVelocityX > 0.02) Matter.Body.setAngularVelocity(player.body, 0.02);
+    if (playerVelocityX > 0.02)
+      Matter.Body.setAngularVelocity(player.body, 0.02);
   } else {
-    if (playerVelocityX > 0.02) Matter.Body.setAngularVelocity(player.body, -0.08);
+    if (playerVelocityX > 0.02)
+      Matter.Body.setAngularVelocity(player.body, -0.08);
   }
   player.draw();
   cannon.draw();

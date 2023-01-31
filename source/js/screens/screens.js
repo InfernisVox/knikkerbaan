@@ -822,7 +822,7 @@ function screen01() {
         h: 100,
         color: sensorColor,
       },
-      { isStatic: true, isSensor: true, label: "canonPit" }
+      { isStatic: true, isSensor: true, label: "cannonPit" }
     )
   );
 
@@ -1044,6 +1044,7 @@ function screenEvents() {
         pair.bodyB === sensors[13].body
       ) {
         console.log("Collided with sensor 13");
+        resetCannon();
         soundBaseballglove.play();
       }
 
@@ -1237,16 +1238,17 @@ function screenEvents() {
         playerIsMovingUpward = true;
       }
 
-      // sensors[24].body.label = "canonPit"
+      // sensors[24].body.label = "cannonPit"
       if (
         (pair.bodyA.label === Player.LABEL &&
-          pair.bodyB.label === "canonPit") ||
-        (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "canonPit")
+          pair.bodyB.label === "cannonPit") ||
+        (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "cannonPit")
       ) {
         // ...
         console.log("Collided with sensor 24");
         // Due to drawCanvas, the player will be reset to the static destination
         cannonHasBeenLoaded = false;
+        if (cannonHasBeenFired) cannonHasBeenFired = false;
       }
 
       // sensors[25].body.label = "rampboostsensor2"
