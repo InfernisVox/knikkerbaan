@@ -86,6 +86,19 @@ function drawLevel() {
   loadCannon();
   setCannonButton();
 
+  if (rocketflying) {
+    playerIsMovingUpward = false;
+    if (rocket.body.position.y >= -10000) {
+      Body.setPosition(rocket.body, {
+        x: rocket.body.position.x,
+        y: rocket.body.position.y - 2.5,
+      });
+      rocketoffset = rocket.body.position.y;
+    } else {
+      rocketflying = false;
+    }
+  }
+
   autoMove(player);
   player.draw();
   cannon.draw();
