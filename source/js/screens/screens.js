@@ -415,6 +415,7 @@ function screen01() {
         fromFile: "assets/images/Jump_pad.svg",
         scale: 0.95,
         color: blockColor,
+        image: imgJumpPad,
       },
       { isStatic: true, angle: 0 }
     )

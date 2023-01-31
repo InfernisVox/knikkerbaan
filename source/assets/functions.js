@@ -207,6 +207,10 @@ function loadAssets() {
   imgLandingPad = loadImage(imgLandingPad_src);
   loadingMessage(imgLandingPad_src);
 
+  let imgJumpPad_src = "./assets/images/jumppad.png";
+  imgJumpPad = loadImage(imgJumpPad_src);
+  loadingMessage(imgJumpPad_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
