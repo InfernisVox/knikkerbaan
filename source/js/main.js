@@ -148,7 +148,7 @@ let cannonElevatorIsMoving = false;
 /** @type {Block} */ let rocketdoor;
 
 let rocketflying = false;
-let rocketoffset = 0;
+let rocketoffset = 165;
 
 // ##################################################
 
