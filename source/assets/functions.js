@@ -199,6 +199,14 @@ function loadAssets() {
   imgcoldWheels = loadImage(imgcoldWheels_src);
   loadingMessage(imgcoldWheels_src);
 
+  let imgCannonActivated_src = "./assets/images/cannon_activated.png";
+  imgCannonActivated = loadImage(imgCannonActivated_src);
+  loadingMessage(imgCannonActivated_src);
+
+  let imgLandingPad_src = "./assets/images/landingpad.png";
+  imgLandingPad = loadImage(imgLandingPad_src);
+  loadingMessage(imgLandingPad_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(

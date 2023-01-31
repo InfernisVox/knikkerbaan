@@ -82,6 +82,8 @@ const Engine = Matter.Engine,
 /** @type {Image} */ let imgPushbox;
 /** @type {Image} */ let imgBallpitBg;
 /** @type {Image} */ let imgBallpitFg;
+/** @type {Image} */ let imgCannonActivated;
+/** @type {Image} */ let imgLandingPad;
 
 
 // p5.js - Custom event variables

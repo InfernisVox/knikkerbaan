@@ -339,6 +339,7 @@ function screen01() {
         fromFile: "assets/images/Landing_pad.svg",
         scale: 0.95,
         color: blockColor,
+        image: imgLandingPad,
       },
       { isStatic: true, angle: 0 }
     )
