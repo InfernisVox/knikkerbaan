@@ -126,6 +126,7 @@ let isCarWindingUp = false;
 /** @type {Image} */ let gifRewindOverlay;
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
+/** @type {Image} */ let imgcoldWheels;
 
 let hasBeenSet = false;
 let hasBeenAssigned = false;

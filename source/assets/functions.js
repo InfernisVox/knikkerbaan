@@ -195,6 +195,10 @@ function loadAssets() {
   gifRewindOverlay = loadImage(gifRewindOverlay_src);
   loadingMessage(gifRewindOverlay_src);
 
+  let imgcoldWheels_src = "./assets/images/coldwheels.png";
+  imgcoldWheels = loadImage(imgcoldWheels_src);
+  loadingMessage(imgcoldWheels_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(

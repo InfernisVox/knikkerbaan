@@ -292,6 +292,7 @@ function screen01() {
         fromFile: "assets/images/Hotwheels.svg",
         scale: 0.95,
         color: blockColor,
+        image: imgcoldWheels,
       },
       { isStatic: true, angle: 0, label: "Hotwheels" }
     )
@@ -302,11 +303,11 @@ function screen01() {
       world,
       {
         x: 3250,
-        y: 490,
+        y: 440,
         w: 438,
         h: 112,
         fromFile: "assets/images/Hotwheels_mid.svg",
-        scale: 0.95,
+        //scale: 0.95,
         color: blockColor,
       },
       { isStatic: true, angle: 0, label: "Hotwheels-Mid" }
