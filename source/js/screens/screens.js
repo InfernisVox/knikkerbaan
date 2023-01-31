@@ -18,7 +18,49 @@ function initScreens(screens) {
   for (let i = 0; i < screens.length; i++) screens[i]();
 }
 
+/**
+ * `initMouse` creates a new instance of the custom `Mouse` class. The
+ * function specifies all the events that the mouse should listen to when
+ * interacting with the canvas.
+ */
+function initMouse() {
+  mouse = new Mouse(engine, canvas, {
+    stroke: color(random(0, 256), random(0, 256), random(0, 256)),
+    strokeWeight: 3,
+  });
+
+  mouse.on("startdrag", (/** @type {any} */ _) => {
+    mouseIsDragged = true;
+  });
+
+  mouse.on("mouseup", (/** @type {any} */ e) => {
+    if (!mouseIsDragged) {
+      console.log(e.mouse.position.x, e.mouse.position.y);
+      let ball = new Ball(
+        world,
+        {
+          x: e.mouse.position.x,
+          y: e.mouse.position.y,
+          r: 15,
+          color: "yellow",
+        },
+        { isStatic: false, restitution: 1, label: "Murmel" }
+      );
+      Body.applyForce(blocks[0].body, blocks[0].body.position, {
+        x: 0,
+        y: 2,
+      });
+      blocks.push(ball);
+    }
+    mouseIsDragged = false;
+  });
+}
+
 // #######################################
+/**
+ *
+ * @param {Colour} blockColor
+ */
 function invisiblewalls(blockColor) {
   blocks.push(
     new Block(
@@ -71,7 +113,8 @@ function screen01() {
 
   invisiblewalls(blockColor);
 
-  // TODO: Please correct the heights for the blocks as they are off by about 70 [px].
+  cat = Matter.Bodies.rectangle(30, 100, 150, 300, { isStatic: true });
+  Matter.Composite.add(world, [cat]);
 
   blocks.push(
     new Block(
@@ -911,112 +954,141 @@ function screen01() {
   // );
 }
 
-/**
- * `initMouse` creates a new instance of the custom `Mouse` class. The
- * function specifies all the events that the mouse should listen to when
- * interacting with the canvas.
- */
-function initMouse() {
-  mouse = new Mouse(engine, canvas, {
-    stroke: color(random(0, 256), random(0, 256), random(0, 256)),
-    strokeWeight: 3,
-  });
-
-  mouse.on("startdrag", (/** @type {any} */ _) => {
-    mouseIsDragged = true;
-  });
-
-  mouse.on("mouseup", (/** @type {any} */ e) => {
-    if (!mouseIsDragged) {
-      console.log(e.mouse.position.x, e.mouse.position.y);
-      let ball = new Ball(
-        world,
-        {
-          x: e.mouse.position.x,
-          y: e.mouse.position.y,
-          r: 15,
-          color: "yellow",
-        },
-        { isStatic: false, restitution: 1, label: "Murmel" }
-      );
-      Body.applyForce(blocks[0].body, blocks[0].body.position, {
-        x: 0,
-        y: 2,
-      });
-      blocks.push(ball);
-    }
-    mouseIsDragged = false;
-  });
-}
-
 function screenEvents() {
   // check if Wollknäuel collided with sensors[0]
   Matter.Events.on(engine, "collisionStart", (event) => {
     let pairs = event.pairs;
+
     for (const pair of pairs) {
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[1].body) {
-        console.log("Collided with sensor 1");
-        console.log(sensors[1].body);
-        soundXylophoneA1.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[1].body.label: xylophonesensor0
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[1].body.label,
+        () => {
+          console.log(`Collided with sensor 1: ${sensors[1].body.label}`);
+          soundXylophoneA1.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[2].body) {
-        console.log("Collided with sensor 2");
-        soundXylophoneB1.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[2].body.label: xylophonesensor1
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[2].body.label,
+        () => {
+          console.log(`Collided with sensor 2: ${sensors[2].body.label}`);
+          soundXylophoneB1.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[3].body) {
-        console.log("Collided with sensor 3");
-        soundXylophoneC1.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[3].body.label: xylophonesensor2
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[3].body.label,
+        () => {
+          console.log(`Collided with sensor 3: ${sensors[3].body.label}`);
+          soundXylophoneC1.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[4].body) {
-        console.log("Collided with sensor 4");
-        soundXylophoneD1.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[4].body.label: xylophonesensor3
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[4].body.label,
+        () => {
+          console.log(`Collided with sensor 4: ${sensors[4].body.label}`);
+          soundXylophoneD1.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[5].body) {
-        console.log("Collided with sensor 5");
-        soundXylophoneE1.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[5].body.label: xylophonesensor4
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[5].body.label,
+        () => {
+          console.log(`Collided with sensor 5: ${sensors[5].body.label}`);
+          soundXylophoneE1.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[6].body) {
-        console.log("Collided with sensor 6");
-        soundXylophoneF1.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[6].body.label: xylophonesensor5
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[6].body.label,
+        () => {
+          console.log(`Collided with sensor 6: ${sensors[6].body.label}`);
+          soundXylophoneF1.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[7].body) {
-        console.log("Collided with sensor 7");
-        soundXylophoneG1.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[7].body.label: xylophonesensor6
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[7].body.label,
+        () => {
+          console.log(`Collided with sensor 7: ${sensors[7].body.label}`);
+          soundXylophoneG1.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[8].body) {
-        console.log("Collided with sensor 8");
-        soundXylophoneA2.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[8].body.label: xylophonesensor7
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[8].body.label,
+        () => {
+          console.log(`Collided with sensor 8: ${sensors[8].body.label}`);
+          soundXylophoneA2.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (pair.bodyA.label === Player.LABEL && pair.bodyB === sensors[9].body) {
-        console.log("Collided with sensor 9");
-        soundXylophoneB2.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[9].body.label: xylophonesensor8
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[9].body.label,
+        () => {
+          console.log(`Collided with sensor 9: ${sensors[9].body.label}`);
+          soundXylophoneB2.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[10].body
-      ) {
-        console.log("Collided with sensor 10");
-        soundXylophoneC2.play();
-        Body.setVelocity(player.body, { x: 0.5, y: 4 });
-      }
+      // sensors[10].body.label: xylophonesensor9
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[10].body.label,
+        () => {
+          console.log(`Collided with sensor 10: ${sensors[10].body.label}`);
+          soundXylophoneC2.play();
+          Body.setVelocity(player.body, { x: 0.5, y: 4 });
+        }
+      );
 
       if (
         pair.bodyA.label === Player.LABEL &&
@@ -1032,7 +1104,7 @@ function screenEvents() {
         pair.bodyB === sensors[12].body
       ) {
         console.log("Collided with sensor 12");
-        player.setAutoMove(false, 0);
+
         cannonElevatorIsMoving = true;
         cannonCanRotate = true;
         setTimeout(function () {
@@ -1142,7 +1214,6 @@ function screenEvents() {
         pair.bodyB === sensors[19].body
       ) {
         console.log("Collided with sensor 19");
-        carIsWindingUp = true;
       }
 
       if (
@@ -1248,9 +1319,15 @@ function screenEvents() {
       ) {
         // ...
         console.log("Collided with sensor 24");
-        // Due to drawCanvas, the player will be reset to the static destination
-        cannonHasBeenLoaded = false;
-        if (cannonHasBeenFired) cannonHasBeenFired = false;
+        if (!cannonHasBeenLoaded && !cannonHasBeenFired) {
+          setTimeout(() => {
+            cannonHasBeenLoaded = false;
+          }, 1000);
+        } else {
+          // Due to drawCanvas, the player will be reset to the static destination
+          cannonHasBeenLoaded = false;
+          if (cannonHasBeenFired) cannonHasBeenFired = false;
+        }
       }
 
       // sensors[25].body.label = "rampboostsensor2"
