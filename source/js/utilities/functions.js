@@ -48,7 +48,7 @@ function initPlayer() {
       y: 135,
       r: 30,
       color: "red",
-      image: imgPlayer,
+      image: playerImage,
       scale: 0.4,
     },
     {
@@ -67,56 +67,50 @@ function initPlayer() {
 function drawCanvas() {
   cam.swivelBehind(() => player.body.position.x <= CANVAS_BREAKPOINT);
 
-  if (cannonCanRotate) {
-    if (cannonAngle >= 0.33) {
-      cannonIsReversing = true;
-    } else if (cannonAngle <= -0.65) {
-      cannonIsReversing = false;
+  if (canCanonRotate) {
+    if (canonAngle >= 0.33) {
+      isCanonReversing = true;
+    } else if (canonAngle <= -0.65) {
+      isCanonReversing = false;
     }
 
-    if (cannonIsReversing) {
-      cannonAngle -= 0.005;
+    if (isCanonReversing) {
+      canonAngle -= 0.005;
     } else {
-      cannonAngle += 0.005;
+      canonAngle += 0.005;
     }
 
-    Body.setAngle(cannon.body, cannonAngle);
+    Body.setAngle(canon.body, canonAngle);
   }
 
-  if (cannonElevatorIsMoving) {
-    if (cannonElevator.body.position.y >= 510) {
-      Body.setPosition(cannonElevator.body, {
-        x: cannonElevator.body.position.x,
-        y: cannonElevator.body.position.y - 0.95,
+  if (isElevatorMoving) {
+    if (elevator.body.position.y >= 510) {
+      Body.setPosition(elevator.body, {
+        x: elevator.body.position.x,
+        y: elevator.body.position.y - 0.95,
       });
     } else {
-      if (!cannonHasBeenLoaded) {
-        cannonHasBeenLoaded = true;
+      if (!hasBeenSet) {
+        hasBeenSet = true;
         player.recordedData = [];
 
         Body.setPosition(player.body, {
-          x: cannon.body.position.x,
-          y: cannon.body.position.y,
+          x: canon.body.position.x,
+          y: canon.body.position.y,
         });
-
         Matter.Body.setStatic(player.body, true);
-
         player.onSpacePress = MarbleRun.mapSpacePressOfTo(
           player,
           FactoryFlag.CANON_SHOOT
-        );
-        player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
-          player,
-          FactoryFlag.EMPTY
         );
       }
     }
   }
 
-  if (carIsWindingUp) {
-    playerPositionCar.push(player.body.position.x);
-    console.log(playerPositionCar);
-    Body.setVelocity(carBody.body, { x: playerPositionCar.length / 3, y: 0 });
+  if (isCarWindingUp) {
+    playerpositioncar.push(player.body.position.x);
+    console.log(playerpositioncar);
+    Body.setVelocity(carBody.body, { x: playerpositioncar.length / 3, y: 0 });
   }
 
   drawCharacters();
@@ -127,7 +121,7 @@ function drawCanvas() {
 function drawCharacters() {
   sensors.forEach((sensor) => sensor.draw());
   image(imgTowerBg, 1950, 285, 289, 428);
-  image(imgBallPitBg, 7893, 575, 415, 127);
+  image(imgBallpitBg, 7893, 575, 415, 127);
   blocks.forEach((block) => block.draw());
 
   image(gifElGato, -55, 45, 470, 264);
@@ -136,32 +130,32 @@ function drawCharacters() {
   image(imgXylophone, 785, 560, 540, 120);
   pop();
 
-  if (cannonDoorIsOpen) {
+  if (isCanonDoorOpen) {
     image(imgButtonReleased, 1650, 661, 96, 34);
-    Body.setPosition(cannonDoor.body, {
-      x: cannonDoor.body.position.x,
+    Body.setPosition(canonDoor.body, {
+      x: canonDoor.body.position.x,
       y: 1540,
     });
   } else {
     image(imgButtonPressed, 1650, 665, 97, 28);
-    Body.setPosition(cannonDoor.body, {
-      x: cannonDoor.body.position.x,
+    Body.setPosition(canonDoor.body, {
+      x: canonDoor.body.position.x,
       y: 650,
     });
   }
 
-  playerVelocityX = player.body.velocity.x;
-  if (!playerIsMovingUpward) {
-    if (playerVelocityX > 0.02) Matter.Body.setAngularVelocity(player.body, 0.02);
+  velocityX = player.body.velocity.x;
+  if (!movingUpward) {
+    if (velocityX > 0.02) Matter.Body.setAngularVelocity(player.body, 0.02);
   } else {
-    if (playerVelocityX > 0.02) Matter.Body.setAngularVelocity(player.body, -0.08);
+    if (velocityX > 0.02) Matter.Body.setAngularVelocity(player.body, -0.08);
   }
   player.draw();
-  cannon.draw();
+  canon.draw();
 
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
-  image(imgBallPitFg, 7893, 588, 415, 114);
+  image(imgBallpitFg, 7893, 588, 415, 114);
   image(imgRocket, 10030, 165, 339, 531);
 
   player.showAngle(false);

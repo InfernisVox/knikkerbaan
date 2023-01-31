@@ -48,7 +48,7 @@ function invisiblewalls(blockColor) {
     )
   );
 
-  safetyBlock = new Block(
+  safetyblock = new Block(
     world,
     {
       x: 8900,
@@ -61,7 +61,7 @@ function invisiblewalls(blockColor) {
       isStatic: true,
     }
   );
-  blocks.push(safetyBlock);
+  blocks.push(safetyblock);
 }
 
 // #######################################
@@ -101,7 +101,7 @@ function screen01() {
     )
   );
 
-  cannonElevator = new Block(
+  elevator = new Block(
     world,
     {
       x: 2095,
@@ -112,9 +112,9 @@ function screen01() {
     },
     { isStatic: true }
   );
-  blocks.push(cannonElevator);
+  blocks.push(elevator);
 
-  floorBlock = new Block(
+  floorblock = new Block(
     world,
     {
       x: windowWidth / 2,
@@ -126,7 +126,7 @@ function screen01() {
     },
     { isStatic: true }
   );
-  blocks.push(floorBlock);
+  blocks.push(floorblock);
 
   wall = new Block(
     world,
@@ -240,7 +240,7 @@ function screen01() {
   );
   blocks.push(towerRight);
 
-  cannon = new Block(
+  canon = new Block(
     world,
     {
       x: 2100,
@@ -249,7 +249,7 @@ function screen01() {
       h: 70,
       image: imgCannon,
     },
-    { isStatic: true, angle: cannonAngle, isSensor: true }
+    { isStatic: true, angle: canonAngle, isSensor: true }
   );
   // blocks.push(canon);
 
@@ -267,7 +267,7 @@ function screen01() {
     )
   );
 
-  cannonDoor = new Block(
+  canonDoor = new Block(
     world,
     {
       x: 2005,
@@ -279,7 +279,7 @@ function screen01() {
     },
     { isStatic: true }
   );
-  blocks.push(cannonDoor);
+  blocks.push(canonDoor);
 
   blocks.push(
     new PolygonFromSVG(
@@ -292,7 +292,7 @@ function screen01() {
         fromFile: "assets/images/Hotwheels.svg",
         scale: 0.95,
         color: blockColor,
-        image: imgColdWheels,
+        image: imgcoldWheels,
       },
       { isStatic: true, angle: 0, label: "Hotwheels" }
     )
@@ -553,7 +553,7 @@ function screen01() {
     )
   );
 
-  carConstraintSensor = new BlockCore(
+  carconstraintsensor = new BlockCore(
     world,
     {
       x: 5300,
@@ -564,9 +564,9 @@ function screen01() {
     },
     { isStatic: true, isSensor: true, label: "carconstraintsensor" }
   );
-  sensors.push(carConstraintSensor);
+  sensors.push(carconstraintsensor);
 
-  carPushSensor = new BlockCore(
+  carpushsensor = new BlockCore(
     world,
     {
       x: 5550,
@@ -577,7 +577,7 @@ function screen01() {
     },
     { isStatic: true, isSensor: true, label: "carpushsensor" }
   );
-  sensors.push(carPushSensor);
+  sensors.push(carpushsensor);
 
   loopRight2 = new PolygonFromSVG(
     world,
@@ -736,7 +736,7 @@ function screen01() {
   );
   blocks.push(rocket);
 
-  pushBlock = new Block(
+  pushblock = new Block(
     world,
     {
       x: 9000,
@@ -755,7 +755,7 @@ function screen01() {
       mass: 1,
     }
   );
-  blocks.push(pushBlock);
+  blocks.push(pushblock);
 
   sensors.push(
     new BlockCore(
@@ -1024,7 +1024,7 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 11");
         soundButton.play();
-        cannonDoorIsOpen = !cannonDoorIsOpen;
+        isCanonDoorOpen = !isCanonDoorOpen;
       }
 
       if (
@@ -1033,10 +1033,10 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 12");
         player.setAutoMove(false, 0);
-        cannonElevatorIsMoving = true;
-        cannonCanRotate = true;
+        isElevatorMoving = true;
+        canCanonRotate = true;
         setTimeout(function () {
-          cannonDoorIsOpen = false;
+          isCanonDoorOpen = false;
           soundElevator.play();
         }, 1200);
       }
@@ -1047,6 +1047,8 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 13");
         soundBaseballglove.play();
+
+        // ...
       }
 
       if (
@@ -1128,8 +1130,8 @@ function screenEvents() {
 
         player.recordedData = [];
 
-        Body.setPosition(carConstraintSensor.body, {
-          x: carConstraintSensor.body.position.x,
+        Body.setPosition(carconstraintsensor.body, {
+          x: carconstraintsensor.body.position.x,
           y: 1600,
         });
         soundAcceleration.play();
@@ -1141,7 +1143,7 @@ function screenEvents() {
         pair.bodyB === sensors[19].body
       ) {
         console.log("Collided with sensor 19");
-        carIsWindingUp = true;
+        isCarWindingUp = true;
       }
 
       if (
@@ -1180,7 +1182,7 @@ function screenEvents() {
         });
 
         // ...
-        if (!playerIsInSlowMotion) playerIsInSlowMotion = true;
+        if (!slowMo) slowMo = true;
         Body.setVelocity(carBody.body, { x: 70, y: 0 });
       }
 
@@ -1202,7 +1204,7 @@ function screenEvents() {
         soundAcceleration.play();
         Body.setVelocity(carBody.body, { x: 90, y: 0 });
 
-        playerIsMovingUpward = false;
+        movingUpward = false;
       }
 
       // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (2/2)
@@ -1226,7 +1228,7 @@ function screenEvents() {
           pair.bodyB.label === "Hotwheels") ||
         (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "Hotwheels")
       ) {
-        playerIsMovingUpward = false;
+        movingUpward = false;
       }
 
       // blocks[10].body.label = "Hotwheels-Mid"
@@ -1236,7 +1238,7 @@ function screenEvents() {
         (pair.bodyB.label === Player.LABEL &&
           pair.bodyA.label === "Hotwheels-Mid")
       ) {
-        playerIsMovingUpward = true;
+        movingUpward = true;
       }
 
       // sensors[24].body.label = "canonPit"
@@ -1246,9 +1248,8 @@ function screenEvents() {
         (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "canonPit")
       ) {
         // ...
-        console.log("Collided with sensor 24");
         // Due to drawCanvas, the player will be reset to the static destination
-        cannonHasBeenLoaded = false;
+        hasBeenSet = false;
       }
 
       // sensors[25].body.label = "rampboostsensor2"
@@ -1262,7 +1263,7 @@ function screenEvents() {
         soundAcceleration.play();
         Body.setVelocity(carBody.body, { x: 30, y: 0 });
 
-        playerIsMovingUpward = false;
+        movingUpward = false;
       }
 
       if (
@@ -1271,8 +1272,8 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 26");
 
-        Body.setPosition(safetyBlock.body, {
-          x: safetyBlock.body.position.x,
+        Body.setPosition(safetyblock.body, {
+          x: safetyblock.body.position.x,
           y: 4600,
         });
       }
@@ -1283,11 +1284,11 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 27");
         if (
-          pushBlock.body.position.x >= 9975 &&
-          pushBlock.body.position.y <= 10100 &&
-          pushBlock.body.position.y >= 600
+          pushblock.body.position.x >= 9975 &&
+          pushblock.body.position.y <= 10100 &&
+          pushblock.body.position.y >= 600
         ) {
-          Body.setStatic(pushBlock.body, true);
+          Body.setStatic(pushblock.body, true);
         }
       }
     }
@@ -1307,11 +1308,11 @@ function spacePressed() {
       if (marbleRun.hasBeenStarted) {
         player.onSpaceHold();
 
-        if (playerCurrentMapping.hold === FactoryFlag.PLAYER_REWIND) {
+        if (currentState.hold === FactoryFlag.PLAYER_REWIND) {
           player
             .showGlitch(!!player.recordedData.length)
             .showBar(player.isReversing);
-        } else if (playerCurrentMapping.hold === FactoryFlag.CAR_REWIND) {
+        } else if (currentState.hold === FactoryFlag.CAR_REWIND) {
           // ...
           carProgressValue = showProgress();
         }

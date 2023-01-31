@@ -34,6 +34,11 @@ const FactoryFlag = {
   PLAYER_REWIND: 3,
   CAR_REWIND: 4,
 };
+/** @enum {number} */
+const currentState = {
+  press: FactoryFlag.EMPTY,
+  hold: FactoryFlag.EMPTY,
+};
 
 // Setup ##########################################################
 console.clear();
@@ -43,39 +48,28 @@ const Engine = Matter.Engine,
   Runner = Matter.Runner,
   Body = Matter.Body;
 
-// Initializations ###########################
 /** @type {Renderer} */ let canvas;
 /** @type {Matter.Engine} */ let engine;
 /** @type {Matter.World} */ let world;
 /** @type {Matter.Runner} */ let runner;
 /** @type {Mouse} */ let mouse;
 
-/** @type {MarbleRun} */ let marbleRun;
-/** @type {Camera} */ let cam;
-
-// Levels ###########################
 /** @type {Item[]} */ let blocks = [];
 /** @type {Item[]} */ let sensors = [];
 /** @type {(() => void)[]} */ let screens;
 
-// Player ###########################
-/** @type {Player} */ let player;
-/** @type {number[]} */ let playerPositionCar = [];
-let playerHasBeenAssigned = false;
-let playerIsMovingUpward = false;
-let playerVelocityX = 0;
-let playerIsInSlowMotion = false;
-const playerCurrentMapping = {
-  press: FactoryFlag.EMPTY,
-  hold: FactoryFlag.EMPTY,
-};
+/** @type {MarbleRun} */ let marbleRun;
+/** @type {Camera} */ let cam;
 
-// Assets ###########################
-// png, jpg, ..
-/** @type {Image} */ let imgPlayer;
+/** @type {Player} */ let player;
+
+// Assets
+/** @type {Image} */ let playerImage;
 /** @type {Image} */ let imgRoom;
 /** @type {Image} */ let imgXylophone;
+/** @type {Image} */ let gifElGato;
 /** @type {Image} */ let imgBed;
+/** @type {Image} */ let imgWall;
 /** @type {Image} */ let imgTowerDoor;
 /** @type {Image} */ let imgTowerFg;
 /** @type {Image} */ let imgTowerBg;
@@ -86,65 +80,67 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgBaseballGlove;
 /** @type {Image} */ let imgFloor;
 /** @type {Image} */ let imgPushbox;
-/** @type {Image} */ let imgBallPitBg;
-/** @type {Image} */ let imgBallPitFg;
+/** @type {Image} */ let imgBallpitBg;
+/** @type {Image} */ let imgBallpitFg;
 /** @type {Image} */ let imgCannonActivated;
-/** @type {Image} */ let imgLandingPad;
+/** @type {Image} */ let imgLandingPad
 /** @type {Image} */ let imgJumpPad
 /** @type {Image} */ let imgLoopLeft;
 /** @type {Image} */ let imgLoopRight;
-/** @type {Image} */ let imgElevator;
-/** @type {Image} */ let imgRocket;
-/** @type {Image} */ let imgColdWheels;
-// gif
-/** @type {Image} */ let gifElGato;
-/** @type {Image} */ let gifRewind;
-/** @type {Image} */ let gifRewindOverlay;
 
-// Custom event variables ###########################
+
+// p5.js - Custom event variables
 let mouseIsDragged = false;
 let spaceIsPressed = false;
 
-// Items ###########################
-// Xylophone
-/** @type {Block} */ let xylophone;
-// Cannon
-/** @type {BlockCore} */ let cannon;
-/** @type {Block} */ let cannonDoor;
-let cannonAngle = 0.33;
-let cannonIsReversing = false;
-let cannonCanRotate = false;
-let cannonDoorIsOpen = true;
-let cannonHasBeenLoaded = false;
-let cannonHasBeenFired = false;
-/** @type {Block} */ let cannonElevator;
-let cannonElevatorIsMoving = false;
-// Glove
-/** @type {PolygonFromSVG} */ let baseballGlove;
-// Car
-/** @type {Block} */ let carBody;
-/** @type {number | null} */ let carBodyPositionX = null;
-/** @type {Ball} */ let carWheel1;
-/** @type {Ball} */ let carWheel2;
-/** @type {BlockCore} */ let carConstraintSensor;
-/** @type {BlockCore} */ let carPushSensor;
-/** @type {number | null} */ let carProgressValue = null;
-let carIsWindingUp = false;
-// Loops
-/** @type {PolygonFromSVG} */ let loopRight;
-/** @type {PolygonFromSVG} */ let loopLeft;
-/** @type {PolygonFromSVG} */ let loopRight2;
-/** @type {PolygonFromSVG} */ let loopLeft2;
-// Rocket
-/** @type {PolygonFromSVG} */ let rocket;
-// Surrounding
-/** @type {Block} */ let floorBlock;
+// Level items
+/** @type {Block} */ let floorblock;
 /** @type {Block} */ let wall;
 /** @type {Block} */ let bed;
+/** @type {Block} */ let xylophone;
+/** @type {BlockCore} */ let canon;
+/** @type {Block} */ let canonDoor;
 /** @type {Block} */ let towerLeft;
 /** @type {Block} */ let towerRight;
-/** @type {Block} */ let safetyBlock;
-/** @type {Block} */ let pushBlock;
+let canonAngle = 0.33;
+let isCanonReversing = false;
+let canCanonRotate = false;
+let isCanonDoorOpen = true;
+/** @type {Block} */ let elevator;
+let isElevatorMoving = false;
+/** @type {PolygonFromSVG} */ let loopRight;
+/** @type {PolygonFromSVG} */ let loopLeft;
+/** @type {Block} */ let carBody;
+/** @type {number} */ let carBodyPositionX = null;
+/** @type {Ball} */ let carWheel1;
+/** @type {Ball} */ let carWheel2;
+/** @type {PolygonFromSVG} */ let baseballGlove;
+let baseballGloveBack1;
+let baseballGloveBack2;
+/** @type {BlockCore} */ let carconstraintsensor;
+/** @type {BlockCore} */ let carpushsensor;
+/** @type {PolygonFromSVG} */ let loopRight2;
+/** @type {PolygonFromSVG} */ let loopLeft2;
+/** @type {PolygonFromSVG} */ let rocket;
+/** @type {Block} */ let safetyblock;
+/** @type {Block} */ let pushblock;
+let balls;
+/** @type {number[]} */ let playerpositioncar = [];
+let isCarWindingUp = false;
+/** @type {Image} */ let gifRewind;
+/** @type {Image} */ let gifRewindOverlay;
+/** @type {Image} */ let imgElevator;
+/** @type {Image} */ let imgRocket;
+/** @type {Image} */ let imgcoldWheels;
+
+let hasBeenSet = false;
+let hasBeenAssigned = false;
+let movingUpward = false;
+
+let velocityX = 0;
+/** @type {number} */ let carProgressValue = null;
+
+let slowMo = false;
 
 // ##################################################
 
@@ -154,6 +150,7 @@ function preload() {
 
 function setup() {
   init();
+  console.log("e");
 
   mouse.mouse.pixelRatio = pixelDensity();
 
@@ -177,8 +174,8 @@ function draw() {
   Player.recordDataOf(player, !spaceIsPressed);
 
   MarbleRun.Cycle.over(7000, () => {
-    if (!playerHasBeenAssigned) {
-      playerHasBeenAssigned = true;
+    if (!hasBeenAssigned) {
+      hasBeenAssigned = true;
       player.onSpacePress = MarbleRun.mapSpacePressOfTo(
         player,
         FactoryFlag.SINGLE_JUMP
@@ -195,11 +192,11 @@ function draw() {
 
   MarbleRun.Cycle.forNext(
     1500,
-    playerIsInSlowMotion,
+    slowMo,
     () => {
-      if (playerIsInSlowMotion) {
+      if (slowMo) {
         engine.timing.timeScale = 0.15;
-        playerIsInSlowMotion = false;
+        slowMo = false;
       }
     },
     () => {
@@ -208,7 +205,6 @@ function draw() {
     }
   );
 
-  console.log(cannonHasBeenLoaded);
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 
@@ -229,7 +225,7 @@ function keyReleased() {
   }
 
   if (
-    playerCurrentMapping.hold === FactoryFlag.CAR_REWIND &&
+    currentState.hold === FactoryFlag.CAR_REWIND &&
     !isNull(carProgressValue)
   ) {
     console.log(carProgressValue);
