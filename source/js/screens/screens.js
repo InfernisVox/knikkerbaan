@@ -878,6 +878,19 @@ function screen01() {
     )
   );
 
+  rocketdoor = new Block(
+    world,
+    {
+      x: 10100,
+      y: 1350,
+      w: 40,
+      h: 800,
+      color: blockColor,
+    },
+    { isStatic: true }
+  );
+  blocks.push(rocketdoor);
+
   // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (1/2)
   // for (let i = 0; i < 10; i++) {
   //   for (let j = 0; j < 20; j++) {
@@ -1191,8 +1204,16 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 22");
         player.recordedData = [];
+        Body.setPosition(rocketdoor.body, {
+          x: rocketdoor.body.position.x,
+          y: 350,
+        });
+
         soundRocket.play();
-        console.log("The End");
+
+        setTimeout(function () {
+          rocketflying = true;
+        }, 2000);
       }
 
       if (

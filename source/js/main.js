@@ -90,7 +90,7 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgBallPitFg;
 /** @type {Image} */ let imgCannonActivated;
 /** @type {Image} */ let imgLandingPad;
-/** @type {Image} */ let imgJumpPad
+/** @type {Image} */ let imgJumpPad;
 /** @type {Image} */ let imgLoopLeft;
 /** @type {Image} */ let imgLoopRight;
 /** @type {Image} */ let imgElevator;
@@ -145,6 +145,10 @@ let carIsWindingUp = false;
 /** @type {Block} */ let towerRight;
 /** @type {Block} */ let safetyBlock;
 /** @type {Block} */ let pushBlock;
+/** @type {Block} */ let rocketdoor;
+
+let rocketflying = false;
+let rocketoffset = 0;
 
 // ##################################################
 

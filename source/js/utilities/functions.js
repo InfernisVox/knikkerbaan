@@ -114,6 +114,19 @@ function drawCanvas() {
     }
   }
 
+  if (rocketflying) {
+    playerIsMovingUpward = false;
+    if (rocket.body.position.y >= -10000) {
+      Body.setPosition(rocket.body, {
+        x: rocket.body.position.x,
+        y: rocket.body.position.y - 2.5,
+      });
+      rocketoffset = rocket.body.position.y;
+    } else {
+      rocketflying = false;
+    }
+  }
+
   if (carIsWindingUp) {
     playerPositionCar.push(player.body.position.x);
     console.log(playerPositionCar);
@@ -165,7 +178,7 @@ function drawCharacters() {
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
   image(imgBallPitFg, 7893, 588, 415, 114);
-  image(imgRocket, 10030, 165, 339, 531);
+  image(imgRocket, 10030, rocketoffset - 300, 339, 531);
 
   player.showAngle(false);
 }
