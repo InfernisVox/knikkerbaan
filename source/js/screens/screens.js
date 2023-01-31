@@ -247,7 +247,7 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 1700,
+        x: 1600,
         y: 650,
         w: 80,
         h: 60,

@@ -149,6 +149,7 @@ let cannonElevatorIsMoving = false;
 
 let rocketflying = false;
 let rocketoffset = 165;
+let soundSoundtrack;
 
 // ##################################################
 
@@ -193,6 +194,11 @@ function draw() {
       );
     }
   });
+
+  if (frameCount % (25 * 30) == 0) {
+    soundSoundtrack.play();
+    console.log("music");
+  }
 
   once(drawCanvas);
   spacePressed();

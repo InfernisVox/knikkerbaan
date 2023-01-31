@@ -66,13 +66,13 @@ function loadCannon() {
 
 function setCannonButton() {
   if (cannonDoorIsOpen) {
-    image(imgButtonReleased, 1650, 661, 96, 34);
+    image(imgButtonReleased, 1550, 661, 96, 34);
     Body.setPosition(cannonDoor.body, {
       x: cannonDoor.body.position.x,
       y: 1540,
     });
   } else {
-    image(imgButtonPressed, 1650, 665, 97, 28);
+    image(imgButtonPressed, 1550, 665, 97, 28);
     Body.setPosition(cannonDoor.body, {
       x: cannonDoor.body.position.x,
       y: 650,

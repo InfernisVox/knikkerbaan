@@ -219,6 +219,10 @@ function loadAssets() {
   imgLoopRight = loadImage(imgLoopRight_src);
   loadingMessage(imgLoopRight_src);
 
+  let soundSoundtrack_src = "./assets/audio/soundtrack.wav";
+  soundSoundtrack = loadSound(soundSoundtrack_src);
+  loadingMessage(soundSoundtrack_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
