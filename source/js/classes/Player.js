@@ -139,11 +139,11 @@ class Player extends Ball {
    */
   showGlitch(bool) {
     push();
-    tint(255,127);
+    tint(255, 127);
     if (bool) image(gifRewind, 0, 0, width, height);
     pop();
     push();
-    tint(255,235);
+    tint(255, 235);
     image(gifRewindOverlay, 0, 0, width, height);
     pop();
     return this;
@@ -185,5 +185,20 @@ class Player extends Ball {
   resetBooleans() {
     this.isReversing = false;
     this.hasRewindStarted = false;
+  }
+}
+
+/**
+ *
+ * @param {Player} player
+ */
+function autoMove(player) {
+  playerVelocityX = player.body.velocity.x;
+  if (!playerIsMovingUpward) {
+    if (playerVelocityX > 0.02)
+      Matter.Body.setAngularVelocity(player.body, 0.02);
+  } else {
+    if (playerVelocityX > 0.02)
+      Matter.Body.setAngularVelocity(player.body, -0.08);
   }
 }

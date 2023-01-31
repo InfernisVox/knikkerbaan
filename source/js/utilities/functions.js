@@ -67,78 +67,10 @@ function initPlayer() {
 function drawCanvas() {
   cam.swivelBehind(() => player.body.position.x <= CANVAS_BREAKPOINT);
 
-  if (cannonCanRotate) {
-    if (cannonAngle >= 0.33) {
-      cannonIsReversing = true;
-    } else if (cannonAngle <= -0.65) {
-      cannonIsReversing = false;
-    }
-
-    if (cannonIsReversing) {
-      cannonAngle -= 0.005;
-    } else {
-      cannonAngle += 0.005;
-    }
-
-    Body.setAngle(cannon.body, cannonAngle);
-  }
-
-  if (cannonElevatorIsMoving) {
-    if (cannonElevator.body.position.y >= 510) {
-      Body.setPosition(cannonElevator.body, {
-        x: cannonElevator.body.position.x,
-        y: cannonElevator.body.position.y - 0.95,
-      });
-    } else {
-      if (!cannonHasBeenLoaded) {
-        cannonHasBeenLoaded = true;
-
-        player.recordedData = [];
-
-        Body.setPosition(player.body, {
-          x: cannon.body.position.x,
-          y: cannon.body.position.y,
-        });
-
-        Matter.Body.setStatic(player.body, true);
-
-        player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-          player,
-          FactoryFlag.CANON_SHOOT
-        );
-        player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
-          player,
-          FactoryFlag.EMPTY
-        );
-      }
-    }
-  }
-
-  if (rocketflying) {
-    playerIsMovingUpward = false;
-    if (rocket.body.position.y >= -10000) {
-      Body.setPosition(rocket.body, {
-        x: rocket.body.position.x,
-        y: rocket.body.position.y - 2.5,
-      });
-      rocketoffset = rocket.body.position.y;
-    } else {
-      rocketflying = false;
-    }
-  }
-
-  if (carIsWindingUp) {
-    playerPositionCar.push(player.body.position.x);
-    console.log(playerPositionCar);
-    Body.setVelocity(carBody.body, { x: playerPositionCar.length / 3, y: 0 });
-  }
-
-  drawCharacters();
-
-  mouse.draw();
+  drawLevel();
 }
 
-function drawCharacters() {
+function drawLevel() {
   sensors.forEach((sensor) => sensor.draw());
   image(imgTowerBg, 1950, 285, 289, 428);
   image(imgBallPitBg, 7893, 575, 415, 127);
@@ -150,28 +82,11 @@ function drawCharacters() {
   image(imgXylophone, 785, 560, 540, 120);
   pop();
 
-  if (cannonDoorIsOpen) {
-    image(imgButtonReleased, 1650, 661, 96, 34);
-    Body.setPosition(cannonDoor.body, {
-      x: cannonDoor.body.position.x,
-      y: 1540,
-    });
-  } else {
-    image(imgButtonPressed, 1650, 665, 97, 28);
-    Body.setPosition(cannonDoor.body, {
-      x: cannonDoor.body.position.x,
-      y: 650,
-    });
-  }
+  rotateCannon();
+  loadCannon();
+  setCannonButton();
 
-  playerVelocityX = player.body.velocity.x;
-  if (!playerIsMovingUpward) {
-    if (playerVelocityX > 0.02)
-      Matter.Body.setAngularVelocity(player.body, 0.02);
-  } else {
-    if (playerVelocityX > 0.02)
-      Matter.Body.setAngularVelocity(player.body, -0.08);
-  }
+  autoMove(player);
   player.draw();
   cannon.draw();
 
@@ -180,5 +95,5 @@ function drawCharacters() {
   image(imgBallPitFg, 7893, 588, 415, 114);
   image(imgRocket, 10030, rocketoffset - 300, 339, 531);
 
-  player.showAngle(false);
+  mouse.draw();
 }

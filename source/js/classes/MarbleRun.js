@@ -37,13 +37,18 @@ class MarbleRun {
             Matter.Body.applyForce(
               player.body,
               { x: player.body.position.x, y: player.body.position.y },
-              cannonAngle <= 0
+              cannonAngle < 0
                 ? {
-                    x: -cannonAngle / 1.5,
+                    x: 0.275,
                     y: -0.1,
                   }
+                : !cannonAngle
+                ? {
+                    x: 0.275,
+                    y: 0,
+                  }
                 : {
-                    x: cannonAngle / 1.5,
+                    x: 0.275,
                     y: 0.1,
                   }
             );

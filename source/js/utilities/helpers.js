@@ -4,6 +4,8 @@
 /** @typedef {import("../../../@types/p5/index").Color} Colour */
 /** @type {Color} */ let c;
 
+let assertcounter = 1;
+
 /**
  *
  * @param {Player} player
@@ -11,9 +13,6 @@
  * @param {number} offset
  * @param {number} animationCounter
  */
-
-let assertcounter = 1;
-
 function bar(player, color, offset = null, animationCounter = null) {
   fill(color);
   // w: 196
@@ -146,4 +145,21 @@ function once(callback) {
   push();
   callback();
   pop();
+}
+
+/**
+ *
+ * @param {Matter.Body} bodyA
+ * @param {Matter.Body} bodyB
+ * @param {string} labelA
+ * @param {string} labelB
+ * @param {() => void} callback
+ */
+function ifBodiesArePairs(bodyA, bodyB, labelA, labelB, callback) {
+  if (
+    (bodyA.label === labelA && bodyB.label === labelB) ||
+    (bodyA.label === labelB && bodyB.label === labelA)
+  ) {
+    callback();
+  }
 }

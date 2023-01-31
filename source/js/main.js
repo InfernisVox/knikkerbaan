@@ -60,7 +60,6 @@ const Engine = Matter.Engine,
 
 // Player ###########################
 /** @type {Player} */ let player;
-/** @type {number[]} */ let playerPositionCar = [];
 let playerHasBeenAssigned = false;
 let playerIsMovingUpward = false;
 let playerVelocityX = 0;
@@ -106,6 +105,8 @@ let mouseIsDragged = false;
 let spaceIsPressed = false;
 
 // Items ###########################
+// Cat
+/** @type {Matter.Body} */ let cat;
 // Xylophone
 /** @type {Block} */ let xylophone;
 // Cannon
@@ -129,7 +130,6 @@ let cannonElevatorIsMoving = false;
 /** @type {BlockCore} */ let carConstraintSensor;
 /** @type {BlockCore} */ let carPushSensor;
 /** @type {number | null} */ let carProgressValue = null;
-let carIsWindingUp = false;
 // Loops
 /** @type {PolygonFromSVG} */ let loopRight;
 /** @type {PolygonFromSVG} */ let loopLeft;
@@ -212,10 +212,6 @@ function draw() {
     }
   );
 
-  console.log(
-    `cannonHasBeenLoaded: ${cannonHasBeenLoaded}`,
-    `cannonHasBeenFired: ${cannonHasBeenFired}`
-  );
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 
