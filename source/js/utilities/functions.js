@@ -76,6 +76,18 @@ function drawLevel() {
   image(imgBallPitBg, 7893, 575, 415, 127);
   blocks.forEach((block) => block.draw());
 
+  if (rocketflying) {
+    if (rocket.body.position.y >= -10000) {
+      Body.setPosition(rocket.body, {
+        x: rocket.body.position.x,
+        y: rocket.body.position.y - 3,
+      });
+      rocketoffset = rocket.body.position.y - 300;
+    } else {
+      rocketflying = false;
+    }
+  }
+
   image(gifElGato, -55, 45, 470, 264);
   push();
   rotate(0.01);
@@ -93,7 +105,7 @@ function drawLevel() {
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
   image(imgBallPitFg, 7893, 588, 415, 114);
-  image(imgRocket, 10030, 165, 339, 531);
+  image(imgRocket, 10030, rocketoffset, 339, 531);
 
   mouse.draw();
 }

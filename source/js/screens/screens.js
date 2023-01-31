@@ -104,6 +104,21 @@ function invisiblewalls(blockColor) {
     }
   );
   blocks.push(safetyBlock);
+
+  rocketdoor = new Block(
+    world,
+    {
+      x: 10050,
+      y: 2400,
+      w: 40,
+      h: 900,
+      color: blockColor,
+    },
+    {
+      isStatic: true,
+    }
+  );
+  blocks.push(rocketdoor);
 }
 
 // #######################################
@@ -1266,6 +1281,11 @@ function screenEvents() {
       ) {
         console.log("Collided with sensor 22");
         player.recordedData = [];
+        Body.setPosition(rocketdoor.body, {
+          x: rocketdoor.body.position.x,
+          y: 400,
+        });
+        rocketflying = true;
         soundRocket.play();
         console.log("The End");
       }

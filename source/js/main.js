@@ -173,6 +173,7 @@ function setup() {
   screenEvents();
 
   soundCat.play();
+  soundSoundtrack.play();
 }
 
 function draw() {
