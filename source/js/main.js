@@ -27,12 +27,12 @@ const Masks = {
   AREA: 0x0004,
 };
 /** @enum {number} */
-const FactoryFlag = {
+const SpaceMapping = {
   EMPTY: -1,
   SINGLE_JUMP: 0,
-  CANON_SHOOT: 1,
-  PLAYER_REWIND: 3,
-  CAR_REWIND: 4,
+  CANNON_FIRE: 1,
+  PLAYER_REWIND: 2,
+  CAR_REWIND: 3,
 };
 
 // Setup ##########################################################
@@ -65,8 +65,8 @@ let playerIsMovingUpward = false;
 let playerVelocityX = 0;
 let playerIsInSlowMotion = false;
 const playerCurrentMapping = {
-  press: FactoryFlag.EMPTY,
-  hold: FactoryFlag.EMPTY,
+  press: SpaceMapping.EMPTY,
+  hold: SpaceMapping.EMPTY,
 };
 
 // Assets ###########################
@@ -146,7 +146,7 @@ let cannonElevatorIsMoving = false;
 /** @type {Block} */ let safetyBlock;
 /** @type {Block} */ let pushBlock;
 /** @type {Block} */ let rocketdoor;
-
+// Rocket
 let rocketflying = false;
 let rocketoffset = 165;
 let soundSoundtrack;
@@ -185,14 +185,8 @@ function draw() {
   MarbleRun.Cycle.over(5600, () => {
     if (!playerHasBeenAssigned) {
       playerHasBeenAssigned = true;
-      player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-        player,
-        FactoryFlag.SINGLE_JUMP
-      );
-      player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
-        player,
-        FactoryFlag.PLAYER_REWIND
-      );
+      player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.SINGLE_JUMP);
+      player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.PLAYER_REWIND);
     }
   });
 
@@ -239,7 +233,7 @@ function keyReleased() {
   }
 
   if (
-    playerCurrentMapping.hold === FactoryFlag.CAR_REWIND &&
+    playerCurrentMapping.hold === SpaceMapping.CAR_REWIND &&
     !isNull(carProgressValue)
   ) {
     console.log(carProgressValue);
@@ -252,14 +246,8 @@ function keyReleased() {
     carProgressValue = null;
 
     setTimeout(() => {
-      player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-        player,
-        FactoryFlag.SINGLE_JUMP
-      );
-      player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
-        player,
-        FactoryFlag.PLAYER_REWIND
-      );
+      player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.SINGLE_JUMP);
+      player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.PLAYER_REWIND);
     }, 2000);
   }
 
