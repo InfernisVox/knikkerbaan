@@ -107,5 +107,8 @@ function drawLevel() {
   image(imgBallPitFg, 7893, 588, 415, 114);
   image(imgRocket, 10030, rocketoffset, 339, 531);
 
+  image(imgFgBoxStar, 280, 520, 254, 255);
+  image(imgFgBoxHeart, 150, 600, 204, 205);
+
   mouse.draw();
 }

@@ -223,6 +223,14 @@ function loadAssets() {
   soundSoundtrack = loadSound(soundSoundtrack_src);
   loadingMessage(soundSoundtrack_src);
 
+  let imgFgBoxStar_src = "./assets/images/fg_boxstar.png";
+  imgFgBoxStar = loadImage(imgFgBoxStar_src);
+  loadingMessage(imgFgBoxStar_src);
+
+  let imgFgBoxHeart_src = "./assets/images/fg_boxheart.png";
+  imgFgBoxHeart = loadImage(imgFgBoxHeart_src);
+  loadingMessage(imgFgBoxHeart_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(

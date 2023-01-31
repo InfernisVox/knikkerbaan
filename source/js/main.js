@@ -95,6 +95,8 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
 /** @type {Image} */ let imgColdWheels;
+/** @type {Image} */ let imgFgBoxStar;
+/** @type {Image} */ let imgFgBoxHeart;
 // gif
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
