@@ -24,6 +24,7 @@ class MarbleRun {
                 y: -0.09,
               }
             );
+            player.spaceHasBeenPressed = true;
           }
         };
       }
