@@ -91,9 +91,25 @@ class Player extends Ball {
       for (const pair of event.pairs) {
         if (
           (pair.bodyA.label === Player.LABEL && pair.bodyB.label === "floor") ||
-          (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "floor") ||
+          (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "floor")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
           (pair.bodyA.label === Player.LABEL && pair.bodyB.label === "bed") ||
           (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "bed")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "Rectangle Body") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "Rectangle Body")
         ) {
           player.spaceHasBeenPressed = false;
           player.isOnGround = true;
