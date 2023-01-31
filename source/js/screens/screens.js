@@ -374,8 +374,8 @@ function screen01() {
   loopRight = new PolygonFromSVG(
     world,
     {
-      x: 4490,
-      y: 348,
+      x: 4500,
+      y: 355,
       w: 494,
       h: 449,
       fromFile: "assets/images/Loop_right.svg",
@@ -391,8 +391,8 @@ function screen01() {
   loopLeft = new PolygonFromSVG(
     world,
     {
-      x: 4240,
-      y: 1338,
+      x: 4250,
+      y: 1345,
       w: 494,
       h: 449,
       fromFile: "assets/images/Loop_left.svg",
@@ -632,6 +632,7 @@ function screen01() {
       fromFile: "assets/images/Loop_right.svg",
       scale: 1.4,
       color: blockColor,
+      image: imgLoopRight,
     },
     { isStatic: true, angle: 0 }
   );
@@ -647,6 +648,7 @@ function screen01() {
       fromFile: "assets/images/Loop_left.svg",
       scale: 1.4,
       color: blockColor,
+      image: imgLoopLeft,
     },
     { isStatic: true, angle: 0 }
   );
