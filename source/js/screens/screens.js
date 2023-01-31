@@ -328,6 +328,39 @@ function screen01() {
     )
   );
 
+  loopRight = new PolygonFromSVG(
+    world,
+    {
+      x: 4490,
+      y: 348,
+      w: 494,
+      h: 449,
+      fromFile: "assets/images/Loop_right.svg",
+      scale: 0.95,
+      color: blockColor,
+      image: imgLoopRight,
+    },
+    { isStatic: true, angle: 0 }
+  );
+
+  blocks.push(loopRight);
+
+  loopLeft = new PolygonFromSVG(
+    world,
+    {
+      x: 4240,
+      y: 1338,
+      w: 494,
+      h: 449,
+      fromFile: "assets/images/Loop_left.svg",
+      scale: 0.95,
+      color: blockColor,
+      image: imgLoopLeft,
+    },
+    { isStatic: true, angle: 0 }
+  );
+  blocks.push(loopLeft);
+
   blocks.push(
     new PolygonFromSVG(
       world,
@@ -344,37 +377,6 @@ function screen01() {
       { isStatic: true, angle: 0 }
     )
   );
-
-  loopRight = new PolygonFromSVG(
-    world,
-    {
-      x: 4500,
-      y: 348,
-      w: 494,
-      h: 449,
-      fromFile: "assets/images/Loop_right.svg",
-      scale: 0.95,
-      color: blockColor,
-    },
-    { isStatic: true, angle: 0 }
-  );
-
-  blocks.push(loopRight);
-
-  loopLeft = new PolygonFromSVG(
-    world,
-    {
-      x: 4230,
-      y: 1338,
-      w: 494,
-      h: 449,
-      fromFile: "assets/images/Loop_left.svg",
-      scale: 0.95,
-      color: blockColor,
-    },
-    { isStatic: true, angle: 0 }
-  );
-  blocks.push(loopLeft);
 
   sensors.push(
     new BlockCore(

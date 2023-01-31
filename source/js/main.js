@@ -90,7 +90,9 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgBallPitFg;
 /** @type {Image} */ let imgCannonActivated;
 /** @type {Image} */ let imgLandingPad;
-/** @type {Image} */ let imgJumpPad;
+/** @type {Image} */ let imgJumpPad
+/** @type {Image} */ let imgLoopLeft;
+/** @type {Image} */ let imgLoopRight;
 /** @type {Image} */ let imgElevator;
 /** @type {Image} */ let imgRocket;
 /** @type {Image} */ let imgColdWheels;
