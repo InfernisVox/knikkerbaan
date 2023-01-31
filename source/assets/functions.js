@@ -32,7 +32,7 @@ function loadAssets() {
   assetCalc = -new Error().lineNumber;
 
   let playerImageSrc = "./assets/images/Wollball.png";
-  playerImage = loadImage(playerImageSrc);
+  imgPlayer = loadImage(playerImageSrc);
   loadingMessage(playerImageSrc);
 
   let gifelgato_Src = "./assets/images/el_gato.gif";
@@ -184,11 +184,11 @@ function loadAssets() {
   loadingMessage(imgPushbox_src);
 
   let imgBallpitBg_src = "./assets/images/ballpit_bg.png";
-  imgBallpitBg = loadImage(imgBallpitBg_src);
+  imgBallPitBg = loadImage(imgBallpitBg_src);
   loadingMessage(imgBallpitBg_src);
 
   let imgBallpitFg_src = "./assets/images/ballpit_fg.png";
-  imgBallpitFg = loadImage(imgBallpitFg_src);
+  imgBallPitFg = loadImage(imgBallpitFg_src);
   loadingMessage(imgBallpitFg_src);
 
   let gifRewindOverlay_src = "./assets/images/rewind_overlay.gif";
@@ -196,7 +196,7 @@ function loadAssets() {
   loadingMessage(gifRewindOverlay_src);
 
   let imgcoldWheels_src = "./assets/images/coldwheels.png";
-  imgcoldWheels = loadImage(imgcoldWheels_src);
+  imgColdWheels = loadImage(imgcoldWheels_src);
   loadingMessage(imgcoldWheels_src);
 
   let imgCannonActivated_src = "./assets/images/cannon_activated.png";
