@@ -1253,9 +1253,11 @@ function screenEvents() {
           Matter.World.remove(world, constraint);
         });
 
+        soundKapow.play();
+
         // ...
         if (!playerIsInSlowMotion) playerIsInSlowMotion = true;
-        Body.setVelocity(carBody.body, { x: 70, y: 0 });
+        Body.setVelocity(carBody.body, { x: 20, y: 0 });
       }
 
       if (
