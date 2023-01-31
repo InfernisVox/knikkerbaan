@@ -181,7 +181,7 @@ function draw() {
 
   Player.recordDataOf(player, !spaceIsPressed);
 
-  MarbleRun.Cycle.over(7000, () => {
+  MarbleRun.Cycle.over(5600, () => {
     if (!playerHasBeenAssigned) {
       playerHasBeenAssigned = true;
       player.onSpacePress = MarbleRun.mapSpacePressOfTo(
