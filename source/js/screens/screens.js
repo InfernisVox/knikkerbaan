@@ -35,7 +35,7 @@ function initMouse() {
 
   mouse.on("mouseup", (/** @type {any} */ e) => {
     if (!mouseIsDragged) {
-      console.log(e.mouse.position.x, e.mouse.position.y);
+      //console.log(e.mouse.position.x, e.mouse.position.y);
       let ball = new Ball(
         world,
         {
@@ -66,7 +66,7 @@ function invisiblewalls(blockColor) {
     new Block(
       world,
       {
-        x: 1000, // 2000
+        x: 2000,
         y: 150,
         w: 40,
         h: 550,
@@ -125,9 +125,9 @@ function invisiblewalls(blockColor) {
 
 // #######################################
 function screen01() {
-  let sensorColor = color(0, 255, 50, 100);
-  let blockColor = color(255, 0, 255);
-  constraintColor = color(0, 0, 255);
+  let sensorColor = color(0, 255, 50, 0);
+  let blockColor = color(255, 0, 255, 0);
+  constraintColor = color(0, 0, 255, 0);
 
   invisiblewalls(blockColor);
 
@@ -757,31 +757,41 @@ function screen01() {
     )
   );
 
-  blocks.push(
-    new Block(
-      world,
-      {
-        x: 8980,
-        y: 630,
-        w: 200,
-        h: 200,
-        color: blockColor,
-      },
-      { isStatic: true, angle: 0.05, label: "ramp" }
-    )
+  pushBlock = new Block(
+    world,
+    {
+      x: 9700,
+      y: 30,
+      w: 100,
+      h: 100,
+      scale: 0.74,
+      color: blockColor,
+      image: imgPushbox,
+    },
+    {
+      isStatic: false,
+      angle: 0,
+      friction: 0.01,
+      airfriction: 0.1,
+      mass: 1,
+      label: "pushblock_starblock",
+    }
   );
+  blocks.push(pushBlock);
 
   blocks.push(
-    new Block(
+    new PolygonFromSVG(
       world,
       {
-        x: 9340,
-        y: 705,
-        w: 600,
-        h: 200,
+        x: 9290,
+        y: 590,
+        w: 180,
+        h: 100,
+        fromFile: "assets/images/Skateboard.svg",
         color: blockColor,
+        image: imgSkateboard,
       },
-      { isStatic: true, angle: 0.25, label: "ramp2" }
+      { isStatic: true, angle: 0, label: "ramp" }
     )
   );
 
@@ -799,28 +809,6 @@ function screen01() {
     { isStatic: true, label: "rocket" }
   );
   blocks.push(rocket);
-
-  pushBlock = new Block(
-    world,
-    {
-      x: 9000,
-      y: 430,
-      w: 100,
-      h: 100,
-      scale: 0.74,
-      color: blockColor,
-      image: imgPushbox,
-    },
-    {
-      isStatic: false,
-      angle: 0,
-      friction: 0.01,
-      airfriction: 0.1,
-      mass: 1,
-      label: "pushblock_starblock",
-    }
-  );
-  blocks.push(pushBlock);
 
   sensors.push(
     new BlockCore(
@@ -958,7 +946,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[1].body.label,
         () => {
-          console.log(`Collided with sensor 1: ${sensors[1].body.label}`);
+          //console.log(`Collided with sensor 1: ${sensors[1].body.label}`);
 
           soundXylophoneA1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -972,7 +960,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[2].body.label,
         () => {
-          console.log(`Collided with sensor 2: ${sensors[2].body.label}`);
+          //console.log(`Collided with sensor 2: ${sensors[2].body.label}`);
 
           soundXylophoneB1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -986,7 +974,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[3].body.label,
         () => {
-          console.log(`Collided with sensor 3: ${sensors[3].body.label}`);
+          //console.log(`Collided with sensor 3: ${sensors[3].body.label}`);
 
           soundXylophoneC1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1000,7 +988,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[4].body.label,
         () => {
-          console.log(`Collided with sensor 4: ${sensors[4].body.label}`);
+          //console.log(`Collided with sensor 4: ${sensors[4].body.label}`);
 
           soundXylophoneD1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1014,7 +1002,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[5].body.label,
         () => {
-          console.log(`Collided with sensor 5: ${sensors[5].body.label}`);
+          //console.log(`Collided with sensor 5: ${sensors[5].body.label}`);
 
           soundXylophoneE1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1028,7 +1016,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[6].body.label,
         () => {
-          console.log(`Collided with sensor 6: ${sensors[6].body.label}`);
+          //console.log(`Collided with sensor 6: ${sensors[6].body.label}`);
 
           soundXylophoneF1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1042,7 +1030,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[7].body.label,
         () => {
-          console.log(`Collided with sensor 7: ${sensors[7].body.label}`);
+          //console.log(`Collided with sensor 7: ${sensors[7].body.label}`);
 
           soundXylophoneG1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1056,7 +1044,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[8].body.label,
         () => {
-          console.log(`Collided with sensor 8: ${sensors[8].body.label}`);
+          //console.log(`Collided with sensor 8: ${sensors[8].body.label}`);
 
           soundXylophoneA2.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1070,7 +1058,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[9].body.label,
         () => {
-          console.log(`Collided with sensor 9: ${sensors[9].body.label}`);
+          //console.log(`Collided with sensor 9: ${sensors[9].body.label}`);
 
           soundXylophoneB2.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1084,7 +1072,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[10].body.label,
         () => {
-          console.log(`Collided with sensor 10: ${sensors[10].body.label}`);
+          //console.log(`Collided with sensor 10: ${sensors[10].body.label}`);
 
           soundXylophoneC2.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
@@ -1098,7 +1086,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[11].body.label,
         () => {
-          console.log(`Collided with sensor 11: ${sensors[11].body.label}`);
+          //console.log(`Collided with sensor 11: ${sensors[11].body.label}`);
 
           soundButton.play();
           cannonDoorIsOpen = !cannonDoorIsOpen;
@@ -1112,7 +1100,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[12].body.label,
         () => {
-          console.log(`Collided with sensor 12: ${sensors[12].body.label}`);
+          //console.log(`Collided with sensor 12: ${sensors[12].body.label}`);
 
           cannonElevatorIsMoving = true;
           cannonCanRotate = true;
@@ -1124,8 +1112,8 @@ function screenEvents() {
           player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
           player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.EMPTY);
 
-          console.log(player.onSpacePress);
-          console.log(player.onSpaceHold);
+          //console.log(player.onSpacePress);
+          //console.log(player.onSpaceHold);
         }
       );
 
@@ -1136,7 +1124,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[13].body.label,
         () => {
-          console.log(`Collided with sensor 13: ${sensors[13].body.label}`);
+          //console.log(`Collided with sensor 13: ${sensors[13].body.label}`);
 
           resetCannon();
           soundBaseballglove.play();
@@ -1148,8 +1136,8 @@ function screenEvents() {
             SpaceMapping.PLAYER_REWIND
           );
 
-          console.log(player.onSpacePress);
-          console.log(player.onSpaceHold);
+          //console.log(player.onSpacePress);
+          //console.log(player.onSpaceHold);
         }
       );
 
@@ -1160,7 +1148,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[14].body.label,
         () => {
-          console.log(`Collided with sensor 14: ${sensors[14].body.label}`);
+          //console.log(`Collided with sensor 14: ${sensors[14].body.label}`);
 
           soundAcceleration.play();
           Body.setVelocity(player.body, { x: 26, y: 0 });
@@ -1174,7 +1162,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[15].body.label,
         () => {
-          console.log(`Collided with sensor 15: ${sensors[15].body.label}`);
+          //console.log(`Collided with sensor 15: ${sensors[15].body.label}`);
 
           if (loopLeft.body.position.y >= 1080) {
             Body.setPosition(loopLeft.body, {
@@ -1205,7 +1193,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[16].body.label,
         () => {
-          console.log(`Collided with sensor 16: ${sensors[16].body.label}`);
+          //console.log(`Collided with sensor 16: ${sensors[16].body.label}`);
 
           soundAcceleration.play();
           Body.setVelocity(player.body, { x: 15, y: 0 });
@@ -1219,7 +1207,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[17].body.label,
         () => {
-          console.log(`Collided with sensor 17: ${sensors[17].body.label}`);
+          //console.log(`Collided with sensor 17: ${sensors[17].body.label}`);
 
           soundAcceleration.play();
           Body.setVelocity(player.body, { x: 20, y: 0 });
@@ -1233,7 +1221,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[18].body.label,
         () => {
-          console.log(`Collided with sensor 18: ${sensors[18].body.label}`);
+          //console.log(`Collided with sensor 18: ${sensors[18].body.label}`);
 
           // Car Rewind ##################################################################
           Matter.Body.setStatic(carBody.body, true);
@@ -1241,7 +1229,7 @@ function screenEvents() {
           player.recordedData = [];
           player.isRecording = false;
           carBodyPositionOriginal = { ...carBody.body.position };
-          // console.log(carBodyPositionOriginal);
+          // //console.log(carBodyPositionOriginal);
           // Car Rewind (End) ##################################################################
 
           // player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
@@ -1259,7 +1247,7 @@ function screenEvents() {
             width: 2,
           });
           playerPositionOriginal = { ...player.body.position };
-          // console.log(playerPositionOriginal);
+          // //console.log(playerPositionOriginal);
 
           Body.setPosition(carConstraintSensor.body, {
             x: carConstraintSensor.body.position.x,
@@ -1277,7 +1265,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[19].body.label,
         () => {
-          console.log(`Collided with sensor 19: ${sensors[19].body.label}`);
+          //console.log(`Collided with sensor 19: ${sensors[19].body.label}`);
         }
       );
 
@@ -1288,7 +1276,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[20].body.label,
         () => {
-          console.log(`Collided with sensor 20: ${sensors[20].body.label}`);
+          //console.log(`Collided with sensor 20: ${sensors[20].body.label}`);
 
           if (loopLeft2.body.position.y >= 1080) {
             Body.setPosition(loopLeft2.body, {
@@ -1319,7 +1307,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[21].body.label,
         () => {
-          console.log(`Collided with sensor 21: ${sensors[21].body.label}`);
+          //console.log(`Collided with sensor 21: ${sensors[21].body.label}`);
 
           player.constraints.forEach((constraint) => {
             Matter.World.remove(world, constraint);
@@ -1352,7 +1340,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[22].body.label,
         () => {
-          console.log(`Collided with sensor 22: ${sensors[22].body.label}`);
+          //console.log(`Collided with sensor 22: ${sensors[22].body.label}`);
 
           player.recordedData = [];
           Body.setPosition(rocketdoor.body, {
@@ -1361,7 +1349,7 @@ function screenEvents() {
           });
           rocketflying = true;
           soundRocket.play();
-          console.log("The End");
+          //console.log("The End");
         }
       );
 
@@ -1372,7 +1360,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[23].body.label,
         () => {
-          console.log(`Collided with sensor 23: ${sensors[23].body.label}`);
+          //console.log(`Collided with sensor 23: ${sensors[23].body.label}`);
 
           soundAcceleration.play();
           Body.setVelocity(carBody.body, { x: 90, y: 0 });
@@ -1386,7 +1374,7 @@ function screenEvents() {
       //   pair.bodyA.label === Player.LABEL &&
       //   pair.bodyB === sensors[24].body
       // ) {
-      //   console.log("Collided with sensor 24");
+      //   //console.log("Collided with sensor 24");
       //   Body.setPosition(carpushsensor.body, {
       //     x: carpushsensor.body.position.x,
       //     y: 600,
@@ -1402,7 +1390,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[24].body.label,
         () => {
-          console.log(`Collided with sensor 24: ${sensors[24].body.label}`);
+          //console.log(`Collided with sensor 24: ${sensors[24].body.label}`);
 
           if (!cannonHasBeenLoaded && !cannonHasBeenFired) {
             setTimeout(() => {
@@ -1423,7 +1411,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[25].body.label,
         () => {
-          console.log(`Collided with sensor 25: ${sensors[25].body.label}`);
+          //console.log(`Collided with sensor 25: ${sensors[25].body.label}`);
 
           // for resetting player rewind after crossing ########################################
           player.recordedData = [];
@@ -1443,7 +1431,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[26].body.label,
         () => {
-          console.log(`Collided with sensor 26: ${sensors[26].body.label}`);
+          //console.log(`Collided with sensor 26: ${sensors[26].body.label}`);
 
           Body.setPosition(safetyBlock.body, {
             x: safetyBlock.body.position.x,
@@ -1459,7 +1447,7 @@ function screenEvents() {
         Player.LABEL,
         sensors[27].body.label,
         () => {
-          console.log(`Collided with sensor 27: ${sensors[27].body.label}`);
+          //console.log(`Collided with sensor 27: ${sensors[27].body.label}`);
 
           if (
             pushBlock.body.position.x >= 9975 &&
@@ -1479,7 +1467,7 @@ function screenEvents() {
         Player.LABEL,
         "Hotwheels",
         () => {
-          console.log(`Collided with block 9: ${blocks[9].body.label}`);
+          //console.log(`Collided with block 9: ${blocks[9].body.label}`);
 
           playerIsMovingUpward = false;
         }
@@ -1492,7 +1480,7 @@ function screenEvents() {
         Player.LABEL,
         "Hotwheels-Mid",
         () => {
-          console.log(`Collided with block 10: ${blocks[10].body.label}`);
+          //console.log(`Collided with block 10: ${blocks[10].body.label}`);
 
           playerIsMovingUpward = true;
         }

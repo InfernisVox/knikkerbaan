@@ -269,8 +269,6 @@ function draw() {
     });
   }
 
-  console.log(carProgressValue === 1);
-
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 

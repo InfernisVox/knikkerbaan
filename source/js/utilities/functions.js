@@ -81,6 +81,9 @@ function adjustCar() {
 
 function drawLevel() {
   sensors.forEach((sensor) => sensor.draw());
+  for (let i = -1; i <= 15; i++) {
+    image(imgFloor, i * 2560, 675, 2560, 50);
+  }
   image(imgTowerBg, 1950, 285, 289, 428);
   image(imgBallPitBg, 7893, 575, 415, 127);
   blocks.forEach((block) => block.draw());
@@ -89,16 +92,12 @@ function drawLevel() {
     if (rocket.body.position.y >= -10000) {
       Body.setPosition(rocket.body, {
         x: rocket.body.position.x,
-        y: rocket.body.position.y - 3,
+        y: rocket.body.position.y - 4,
       });
       rocketoffset = rocket.body.position.y - 300;
     } else {
       rocketflying = false;
     }
-  }
-
-  for (let i = -1; i <= 15; i++) {
-    image(imgFloor, i * 2560, 675, 2560, 50);
   }
 
   image(imgWall, -1180, 0, 1165, 720);
@@ -114,6 +113,7 @@ function drawLevel() {
   setCannonButton();
 
   autoMove(player);
+
   player.draw();
   cannon.draw();
 
