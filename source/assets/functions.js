@@ -231,16 +231,8 @@ function loadAssets() {
   imgFgBoxHeart = loadImage(imgFgBoxHeart_src);
   loadingMessage(imgFgBoxHeart_src);
 
-  let imgCarwheel_src = "./assets/images/carwheel.png";
-  imgCarwheel = loadImage(imgCarwheel_src);
-  loadingMessage(imgCarwheel_src);
-
-  let imgCarbody_src = "./assets/images/carbody.png";
-  imgCarbody = loadImage(imgCarbody_src);
-  loadingMessage(imgCarbody_src);
-
   assetCalc += new Error().lineNumber;
-  assetTotal = (assetCalc - 2) / 4;
+  assetTotal = (assetCalc - 2) / 4 - 1;
   console.log(
     `%c\n-------------------------\nTotal assets loaded: %c${assetTotal}`,
     "color: #7289DA; font-weight: bold;"

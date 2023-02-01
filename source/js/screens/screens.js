@@ -485,11 +485,10 @@ function screen01() {
     world,
     {
       x: 5300,
-      y: 80,
+      y: 100,
       w: 200,
-      h: 30,
+      h: 40,
       color: blockColor,
-      image: imgCarbody,
       collisionFilter: {
         category: Masks.CAR,
         mask: Masks.WORLD,
@@ -509,11 +508,10 @@ function screen01() {
   carWheel1 = new Ball(
     world,
     {
-      x: carBody.body.position.x - 135,
+      x: carBody.body.position.x - 80,
       y: carBody.body.position.y,
-      r: 32,
+      r: 40,
       color: "lightblue",
-      image: imgCarwheel,
     },
     {
       isStatic: false,
@@ -529,7 +527,7 @@ function screen01() {
 
   carWheel1.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 - 100, y: 0 + 30 },
+    pointB: { x: 0 - 80, y: 0 + 10 },
     length: 0,
     stiffness: 1,
     draw: true,
@@ -542,11 +540,10 @@ function screen01() {
   carWheel2 = new Ball(
     world,
     {
-      x: carBody.body.position.x + 135,
+      x: carBody.body.position.x + 80,
       y: carBody.body.position.y,
-      r: 32,
+      r: 40,
       color: "lightblue",
-      image: imgCarwheel,
     },
     {
       isStatic: false,
@@ -562,7 +559,7 @@ function screen01() {
 
   carWheel2.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 + 100, y: 0 + 30 },
+    pointB: { x: 0 + 80, y: 0 + 10 },
     length: 0,
     stiffness: 1,
     draw: true,
@@ -1153,24 +1150,8 @@ function screenEvents() {
           player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
           player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.EMPTY);
 
-          Matter.Body.setStatic(carBody.body, true);
-
-          player.constrainTo(carBody, {
-            pointA: { x: 0, y: 0 },
-            pointB: { x: 0 - 30, y: -30 },
-            length: 0,
-            stiffness: 1,
-            draw: false,
-          });
-
-          player.recordedData = [];
-
-          Body.setPosition(carConstraintSensor.body, {
-            x: carConstraintSensor.body.position.x,
-            y: 1600,
-          });
-          soundAcceleration.play();
-          Body.setVelocity(carBody.body, { x: 20, y: 0 });
+          console.log(player.onSpacePress);
+          console.log(player.onSpaceHold);
         }
       );
 
@@ -1290,13 +1271,6 @@ function screenEvents() {
           player.constrainTo(carBody, {
             pointA: { x: 0, y: 0 },
             pointB: { x: 0, y: -60 },
-            length: 0,
-            stiffness: 1,
-            draw: false,
-          });
-          player.constrainTo(carBody, {
-            pointA: { x: 0, y: 0 },
-            pointB: { x: 0 - 30, y: -30 },
             length: 0,
             stiffness: 1,
             draw: false,
