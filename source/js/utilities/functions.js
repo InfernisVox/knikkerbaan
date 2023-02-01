@@ -75,7 +75,7 @@ function adjustCar() {
   imageMode(CENTER);
   translate(carBody.body.position.x, carBody.body.position.y);
   rotate(carBody.body.angle);
-  image(imgFgCarbody, 0, 0, 357, 111);
+  image(imgFgCarbody, 0, -20, 357, 111);
   pop();
 }
 
@@ -111,12 +111,12 @@ function drawLevel() {
   player.draw();
   cannon.draw();
 
+  adjustCar();
+
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
   image(imgBallPitFg, 7893, 588, 415, 114);
   image(imgRocket, 10030, rocketoffset, 339, 531);
-
-  adjustCar();
 
   image(imgFgBoxStar, 280, 520, 234, 235);
   image(imgFgBoxHeart, 150, 600, 194, 195);

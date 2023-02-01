@@ -123,8 +123,8 @@ function invisiblewalls(blockColor) {
 
 // #######################################
 function screen01() {
-  let sensorColor = color(0, 255, 50, 0);
-  let blockColor = color(255, 0, 255, 0);
+  let sensorColor = color(0, 255, 50, 100);
+  let blockColor = color(255, 0, 255);
 
   invisiblewalls(blockColor);
 
@@ -486,10 +486,10 @@ function screen01() {
     {
       x: 5300,
       y: 620,
-      w: 200,
-      h: 30,
+      w: 175,
+      h: 40,
       color: blockColor,
-      image: imgCarbody,
+      // image: imgCarbody,
       collisionFilter: {
         category: Masks.CAR,
         mask: Masks.WORLD,
@@ -511,7 +511,7 @@ function screen01() {
     {
       x: carBody.body.position.x - 135,
       y: carBody.body.position.y,
-      r: 32,
+      r: 40,
       color: "lightblue",
       image: imgCarwheel,
     },
@@ -529,7 +529,7 @@ function screen01() {
 
   carWheel1.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 - 100, y: 0 + 30 },
+    pointB: { x: 0 - 100, y: 10 },
     length: 0,
     stiffness: 1,
     draw: true,
@@ -544,7 +544,7 @@ function screen01() {
     {
       x: carBody.body.position.x + 135,
       y: carBody.body.position.y,
-      r: 32,
+      r: 40,
       color: "lightblue",
       image: imgCarwheel,
     },
@@ -562,7 +562,7 @@ function screen01() {
 
   carWheel2.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 + 100, y: 0 + 30 },
+    pointB: { x: 0 + 100, y: 10 },
     length: 0,
     stiffness: 1,
     draw: true,
@@ -1273,7 +1273,7 @@ function screenEvents() {
 
           player.constrainTo(carBody, {
             pointA: { x: 0, y: 0 },
-            pointB: { x: 0 - 30, y: -30 },
+            pointB: { x: -10, y: -50 },
             length: 0,
             stiffness: 1,
             draw: false,
@@ -1433,7 +1433,7 @@ function screenEvents() {
           console.log(`Collided with sensor 25: ${sensors[25].body.label}`);
 
           soundAcceleration.play();
-          Body.setVelocity(carBody.body, { x: 30, y: 0 });
+          Body.setVelocity(carBody.body, { x: 40, y: 0 });
 
           playerIsMovingUpward = false;
         }

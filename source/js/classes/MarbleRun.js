@@ -82,12 +82,12 @@ class MarbleRun {
     if (carProgressValue >= 0.99999) {
       Matter.Body.setPosition(carBody.body, {
         x: carBodyPositionX,
-        y: 630.77351582555,
+        y: 630.6175568566696,
       });
     } else {
       Matter.Body.setPosition(carBody.body, {
         x: carBodyPositionX - offset,
-        y: 630.77351582555,
+        y: 630.6175568566696,
       });
     }
   };

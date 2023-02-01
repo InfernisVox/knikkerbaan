@@ -118,7 +118,7 @@ function loadingMessage(assetName) {
   assetName = assetName.split("/").pop();
 
   console.log(
-    `%cLoading asset ${assertcounter}: %c${assetName}`,
+    `%cLoading asset ${assertcounter}: ${assetName}`,
     "color: #7289DA; font-weight: bold;"
   );
   assertcounter++;
