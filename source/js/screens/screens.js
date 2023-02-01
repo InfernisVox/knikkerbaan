@@ -985,6 +985,7 @@ function screenEvents() {
         sensors[1].body.label,
         () => {
           console.log(`Collided with sensor 1: ${sensors[1].body.label}`);
+
           soundXylophoneA1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -998,6 +999,7 @@ function screenEvents() {
         sensors[2].body.label,
         () => {
           console.log(`Collided with sensor 2: ${sensors[2].body.label}`);
+
           soundXylophoneB1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1011,6 +1013,7 @@ function screenEvents() {
         sensors[3].body.label,
         () => {
           console.log(`Collided with sensor 3: ${sensors[3].body.label}`);
+
           soundXylophoneC1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1024,6 +1027,7 @@ function screenEvents() {
         sensors[4].body.label,
         () => {
           console.log(`Collided with sensor 4: ${sensors[4].body.label}`);
+
           soundXylophoneD1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1037,6 +1041,7 @@ function screenEvents() {
         sensors[5].body.label,
         () => {
           console.log(`Collided with sensor 5: ${sensors[5].body.label}`);
+
           soundXylophoneE1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1050,6 +1055,7 @@ function screenEvents() {
         sensors[6].body.label,
         () => {
           console.log(`Collided with sensor 6: ${sensors[6].body.label}`);
+
           soundXylophoneF1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1063,6 +1069,7 @@ function screenEvents() {
         sensors[7].body.label,
         () => {
           console.log(`Collided with sensor 7: ${sensors[7].body.label}`);
+
           soundXylophoneG1.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1076,6 +1083,7 @@ function screenEvents() {
         sensors[8].body.label,
         () => {
           console.log(`Collided with sensor 8: ${sensors[8].body.label}`);
+
           soundXylophoneA2.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1089,6 +1097,7 @@ function screenEvents() {
         sensors[9].body.label,
         () => {
           console.log(`Collided with sensor 9: ${sensors[9].body.label}`);
+
           soundXylophoneB2.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
@@ -1102,201 +1111,279 @@ function screenEvents() {
         sensors[10].body.label,
         () => {
           console.log(`Collided with sensor 10: ${sensors[10].body.label}`);
+
           soundXylophoneC2.play();
           Body.setVelocity(player.body, { x: 0.5, y: 4 });
         }
       );
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[11].body
-      ) {
-        console.log("Collided with sensor 11");
-        soundButton.play();
-        cannonDoorIsOpen = !cannonDoorIsOpen;
-      }
+      // sensors[11].body.label: canondoorsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[11].body.label,
+        () => {
+          console.log(`Collided with sensor 11: ${sensors[11].body.label}`);
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[12].body
-      ) {
-        console.log("Collided with sensor 12");
-
-        cannonElevatorIsMoving = true;
-        cannonCanRotate = true;
-        setTimeout(function () {
-          cannonDoorIsOpen = false;
-          soundElevator.play();
-        }, 1200);
-      }
-
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[13].body
-      ) {
-        console.log("Collided with sensor 13");
-        resetCannon();
-        soundBaseballglove.play();
-      }
-
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[14].body
-      ) {
-        console.log("Collided with sensor 14");
-        soundAcceleration.play();
-        Body.setVelocity(player.body, { x: 26, y: 0 });
-      }
-
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[15].body
-      ) {
-        console.log("Collided with sensor 15");
-        if (loopLeft.body.position.y >= 1080) {
-          Body.setPosition(loopLeft.body, {
-            x: loopLeft.body.position.x,
-            y: 348,
-          });
-          Body.setPosition(loopRight.body, {
-            x: loopRight.body.position.x,
-            y: 1348,
-          });
-        } else {
-          Body.setPosition(loopLeft.body, {
-            x: loopLeft.body.position.x,
-            y: 1348,
-          });
-          Body.setPosition(loopRight.body, {
-            x: loopRight.body.position.x,
-            y: 348,
-          });
+          soundButton.play();
+          cannonDoorIsOpen = !cannonDoorIsOpen;
         }
-      }
+      );
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[16].body
-      ) {
-        console.log("Collided with sensor 16");
-        soundAcceleration.play();
-        Body.setVelocity(player.body, { x: 15, y: 0 });
-      }
+      // sensors[12].body.label: elevatorsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[12].body.label,
+        () => {
+          console.log(`Collided with sensor 12: ${sensors[12].body.label}`);
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[17].body
-      ) {
-        console.log("Collided with sensor 17");
-        soundAcceleration.play();
-        Body.setVelocity(player.body, { x: 20, y: 0 });
-      }
+          cannonElevatorIsMoving = true;
+          cannonCanRotate = true;
+          setTimeout(function () {
+            cannonDoorIsOpen = false;
+            soundElevator.play();
+          }, 1200);
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[18].body
-      ) {
-        console.log("Collided with sensor 18");
-        /* player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-          player,
-          FactoryFlag.EMPTY
-        ); */
-        player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.CAR_REWIND);
+          player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
+          player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.EMPTY);
 
-        Matter.Body.setStatic(carBody.body, true);
-
-        player.constrainTo(carBody, {
-          pointA: { x: 0, y: 0 },
-          pointB: { x: 0, y: -60 },
-          length: 0,
-          stiffness: 1,
-          draw: false,
-        });
-
-        player.recordedData = [];
-
-        Body.setPosition(carConstraintSensor.body, {
-          x: carConstraintSensor.body.position.x,
-          y: 1600,
-        });
-        soundAcceleration.play();
-        Body.setVelocity(carBody.body, { x: 20, y: 0 });
-      }
-
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[19].body
-      ) {
-        console.log("Collided with sensor 19");
-      }
-
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[20].body
-      ) {
-        console.log("Collided with sensor 20");
-        if (loopLeft2.body.position.y >= 1080) {
-          Body.setPosition(loopLeft2.body, {
-            x: loopLeft2.body.position.x,
-            y: 373,
-          });
-          Body.setPosition(loopRight2.body, {
-            x: loopRight2.body.position.x,
-            y: 1373,
-          });
-        } else {
-          Body.setPosition(loopLeft2.body, {
-            x: loopLeft2.body.position.x,
-            y: 1373,
-          });
-          Body.setPosition(loopRight2.body, {
-            x: loopRight2.body.position.x,
-            y: 373,
-          });
+          console.log(player.onSpacePress);
+          console.log(player.onSpaceHold);
         }
-      }
+      );
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[21].body
-      ) {
-        console.log("Collided with sensor 21");
-        player.constraints.forEach((constraint) => {
-          Matter.World.remove(world, constraint);
-        });
+      // sensors[13].body.label: baseballglovesensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[13].body.label,
+        () => {
+          console.log(`Collided with sensor 13: ${sensors[13].body.label}`);
 
-        soundKapow.play();
+          resetCannon();
+          soundBaseballglove.play();
 
-        // ...
-        if (!playerIsInSlowMotion) playerIsInSlowMotion = true;
-        Body.setVelocity(carBody.body, { x: 20, y: 0 });
-      }
+          player.onSpacePress = MarbleRun.mapSpacePressTo(
+            SpaceMapping.SINGLE_JUMP
+          );
+          player.onSpaceHold = MarbleRun.mapSpaceHoldTo(
+            SpaceMapping.PLAYER_REWIND
+          );
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[22].body
-      ) {
-        console.log("Collided with sensor 22");
-        player.recordedData = [];
-        Body.setPosition(rocketdoor.body, {
-          x: rocketdoor.body.position.x,
-          y: 400,
-        });
-        rocketflying = true;
-        soundRocket.play();
-        console.log("The End");
-      }
+          console.log(player.onSpacePress);
+          console.log(player.onSpaceHold);
+        }
+      );
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB === sensors[23].body
-      ) {
-        console.log("Collided with sensor 23");
-        soundAcceleration.play();
-        Body.setVelocity(carBody.body, { x: 90, y: 0 });
+      // sensors[14].body.label: speedboostloopingsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[14].body.label,
+        () => {
+          console.log(`Collided with sensor 14: ${sensors[14].body.label}`);
 
-        playerIsMovingUpward = false;
-      }
+          soundAcceleration.play();
+          Body.setVelocity(player.body, { x: 26, y: 0 });
+        }
+      );
+
+      // sensors[15].body.label: loopingswitchsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[15].body.label,
+        () => {
+          console.log(`Collided with sensor 15: ${sensors[15].body.label}`);
+
+          if (loopLeft.body.position.y >= 1080) {
+            Body.setPosition(loopLeft.body, {
+              x: loopLeft.body.position.x,
+              y: 348,
+            });
+            Body.setPosition(loopRight.body, {
+              x: loopRight.body.position.x,
+              y: 1348,
+            });
+          } else {
+            Body.setPosition(loopLeft.body, {
+              x: loopLeft.body.position.x,
+              y: 1348,
+            });
+            Body.setPosition(loopRight.body, {
+              x: loopRight.body.position.x,
+              y: 348,
+            });
+          }
+        }
+      );
+
+      // sensors[16].body.label: wheelshotmidspeedboostsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[16].body.label,
+        () => {
+          console.log(`Collided with sensor 16: ${sensors[16].body.label}`);
+
+          soundAcceleration.play();
+          Body.setVelocity(player.body, { x: 15, y: 0 });
+        }
+      );
+
+      // sensors[17].body.label: jumppadspeedboostsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[17].body.label,
+        () => {
+          console.log(`Collided with sensor 17: ${sensors[17].body.label}`);
+
+          soundAcceleration.play();
+          Body.setVelocity(player.body, { x: 20, y: 0 });
+        }
+      );
+
+      // sensors[18].body.label: carconstraintsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[18].body.label,
+        () => {
+          console.log(`Collided with sensor 18: ${sensors[18].body.label}`);
+
+          // player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
+          player.onSpaceHold = MarbleRun.mapSpaceHoldTo(
+            SpaceMapping.CAR_REWIND
+          );
+
+          Matter.Body.setStatic(carBody.body, true);
+
+          player.constrainTo(carBody, {
+            pointA: { x: 0, y: 0 },
+            pointB: { x: 0, y: -60 },
+            length: 0,
+            stiffness: 1,
+            draw: false,
+          });
+
+          player.recordedData = [];
+
+          Body.setPosition(carConstraintSensor.body, {
+            x: carConstraintSensor.body.position.x,
+            y: 1600,
+          });
+          soundAcceleration.play();
+          Body.setVelocity(carBody.body, { x: 20, y: 0 });
+        }
+      );
+
+      // sensors[19].body.label: loopingswitchsensor2
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[19].body.label,
+        () => {
+          console.log(`Collided with sensor 19: ${sensors[19].body.label}`);
+        }
+      );
+
+      // sensors[20].body.label: loopingswitchsensor2
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[20].body.label,
+        () => {
+          console.log(`Collided with sensor 20: ${sensors[20].body.label}`);
+
+          if (loopLeft2.body.position.y >= 1080) {
+            Body.setPosition(loopLeft2.body, {
+              x: loopLeft2.body.position.x,
+              y: 373,
+            });
+            Body.setPosition(loopRight2.body, {
+              x: loopRight2.body.position.x,
+              y: 1373,
+            });
+          } else {
+            Body.setPosition(loopLeft2.body, {
+              x: loopLeft2.body.position.x,
+              y: 1373,
+            });
+            Body.setPosition(loopRight2.body, {
+              x: loopRight2.body.position.x,
+              y: 373,
+            });
+          }
+        }
+      );
+
+      // sensors[21].body.label: carconstraintsensor2
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[21].body.label,
+        () => {
+          console.log(`Collided with sensor 21: ${sensors[21].body.label}`);
+
+          player.constraints.forEach((constraint) => {
+            Matter.World.remove(world, constraint);
+          });
+          soundKapow.play();
+
+          // ...
+          if (!playerIsInSlowMotion) playerIsInSlowMotion = true;
+          Body.setVelocity(carBody.body, { x: 20, y: 0 });
+        }
+      );
+
+      // sensors[22].body.label: rocketlaunchsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[22].body.label,
+        () => {
+          console.log(`Collided with sensor 22: ${sensors[22].body.label}`);
+
+          player.recordedData = [];
+          Body.setPosition(rocketdoor.body, {
+            x: rocketdoor.body.position.x,
+            y: 400,
+          });
+          rocketflying = true;
+          soundRocket.play();
+          console.log("The End");
+        }
+      );
+
+      // sensors[23].body.label: rampboostsensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[23].body.label,
+        () => {
+          console.log(`Collided with sensor 23: ${sensors[23].body.label}`);
+
+          soundAcceleration.play();
+          Body.setVelocity(carBody.body, { x: 90, y: 0 });
+
+          playerIsMovingUpward = false;
+        }
+      );
 
       // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (2/2)
       // if (
@@ -1312,84 +1399,104 @@ function screenEvents() {
       //   windingup = false;
       // }
 
-      // AutoMove ###################################
-      // blocks[9].body.label = "Hotwheels"
-      if (
-        (pair.bodyA.label === Player.LABEL &&
-          pair.bodyB.label === "Hotwheels") ||
-        (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "Hotwheels")
-      ) {
-        playerIsMovingUpward = false;
-      }
+      // sensors[24].body.label: cannonPit
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[24].body.label,
+        () => {
+          console.log(`Collided with sensor 24: ${sensors[24].body.label}`);
 
-      // blocks[10].body.label = "Hotwheels-Mid"
-      if (
-        (pair.bodyA.label === Player.LABEL &&
-          pair.bodyB.label === "Hotwheels-Mid") ||
-        (pair.bodyB.label === Player.LABEL &&
-          pair.bodyA.label === "Hotwheels-Mid")
-      ) {
-        playerIsMovingUpward = true;
-      }
-
-      // sensors[24].body.label = "cannonPit"
-      if (
-        (pair.bodyA.label === Player.LABEL &&
-          pair.bodyB.label === "cannonPit") ||
-        (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "cannonPit")
-      ) {
-        // ...
-        console.log("Collided with sensor 24");
-        if (!cannonHasBeenLoaded && !cannonHasBeenFired) {
-          setTimeout(() => {
+          if (!cannonHasBeenLoaded && !cannonHasBeenFired) {
+            setTimeout(() => {
+              cannonHasBeenLoaded = false;
+            }, 1000);
+          } else {
+            // Due to drawCanvas, the player will be reset to the static destination
             cannonHasBeenLoaded = false;
-          }, 1000);
-        } else {
-          // Due to drawCanvas, the player will be reset to the static destination
-          cannonHasBeenLoaded = false;
-          if (cannonHasBeenFired) cannonHasBeenFired = false;
+            if (cannonHasBeenFired) cannonHasBeenFired = false;
+          }
         }
-      }
+      );
 
-      // sensors[25].body.label = "rampboostsensor2"
-      if (
-        (pair.bodyA.label === Player.LABEL &&
-          pair.bodyB.label === "rampboostsensor2") ||
-        (pair.bodyB.label === Player.LABEL &&
-          pair.bodyA.label === "rampboostsensor2")
-      ) {
-        console.log("Collided with sensor 25");
-        soundAcceleration.play();
-        Body.setVelocity(carBody.body, { x: 30, y: 0 });
+      // sensors[25].body.label: rampboostsensor2
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[25].body.label,
+        () => {
+          console.log(`Collided with sensor 25: ${sensors[25].body.label}`);
 
-        playerIsMovingUpward = false;
-      }
+          soundAcceleration.play();
+          Body.setVelocity(carBody.body, { x: 30, y: 0 });
 
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB.label === "safetyblocksensor"
-      ) {
-        console.log("Collided with sensor 26");
-
-        Body.setPosition(safetyBlock.body, {
-          x: safetyBlock.body.position.x,
-          y: 4600,
-        });
-      }
-
-      if (
-        pair.bodyA.label === Player.LABEL &&
-        pair.bodyB.label === "pushblocksensor"
-      ) {
-        console.log("Collided with sensor 27");
-        if (
-          pushBlock.body.position.x >= 9975 &&
-          pushBlock.body.position.y <= 10100 &&
-          pushBlock.body.position.y >= 600
-        ) {
-          Body.setStatic(pushBlock.body, true);
+          playerIsMovingUpward = false;
         }
-      }
+      );
+
+      // sensors[26].body.label: safetyblocksensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[26].body.label,
+        () => {
+          console.log(`Collided with sensor 26: ${sensors[26].body.label}`);
+
+          Body.setPosition(safetyBlock.body, {
+            x: safetyBlock.body.position.x,
+            y: 4600,
+          });
+        }
+      );
+
+      // sensors[27].body.label: pushblocksensor
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        sensors[27].body.label,
+        () => {
+          console.log(`Collided with sensor 27: ${sensors[27].body.label}`);
+
+          if (
+            pushBlock.body.position.x >= 9975 &&
+            pushBlock.body.position.y <= 10100 &&
+            pushBlock.body.position.y >= 600
+          ) {
+            Body.setStatic(pushBlock.body, true);
+          }
+        }
+      );
+
+      // AutoMove ###################################
+      // blocks[9].body.label: "Hotwheels"
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        "Hotwheels",
+        () => {
+          console.log(`Collided with block 9: ${blocks[9].body.label}`);
+
+          playerIsMovingUpward = false;
+        }
+      );
+
+      // blocks[10].body.label: "Hotwheels-Mid"
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        Player.LABEL,
+        "Hotwheels-Mid",
+        () => {
+          console.log(`Collided with block 10: ${blocks[10].body.label}`);
+
+          playerIsMovingUpward = true;
+        }
+      );
     }
   });
 }
