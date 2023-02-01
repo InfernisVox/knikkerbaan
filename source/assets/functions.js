@@ -43,10 +43,6 @@ function loadAssets() {
   soundCat = loadSound(soundCat_Src);
   loadingMessage(soundCat_Src);
 
-  let soundGuitarAMajor_Src = "./assets/audio/instruments/amajor.wav";
-  soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);
-  loadingMessage(soundGuitarAMajor_Src);
-
   let soundXylophoneA1_Src = "./assets/audio/instruments/A1.mp3";
   soundXylophoneA1 = loadSound(soundXylophoneA1_Src);
   loadingMessage(soundXylophoneA1_Src);
@@ -242,6 +238,10 @@ function loadAssets() {
   let imgFgCarbody_src = "./assets/images/fg_carbody.png";
   imgFgCarbody = loadImage(imgFgCarbody_src);
   loadingMessage(imgFgCarbody_src);
+
+ let imgRamp_src = "./assets/images/ramp.png";
+  imgRamp = loadImage(imgRamp_src);
+  loadingMessage(imgRamp_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;

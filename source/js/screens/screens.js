@@ -72,7 +72,7 @@ function invisiblewalls(blockColor) {
         h: 550,
         color: blockColor,
       },
-      { isStatic: true }
+      { isStatic: true, label: "canontowerwall" }
     )
   );
 
@@ -86,7 +86,7 @@ function invisiblewalls(blockColor) {
         h: 550,
         color: blockColor,
       },
-      { isStatic: true }
+      { isStatic: true, label: "Coldwheelswall" }
     )
   );
 
@@ -101,6 +101,7 @@ function invisiblewalls(blockColor) {
     },
     {
       isStatic: true,
+      label: "behindballpitwall",
     }
   );
   blocks.push(safetyBlock);
@@ -116,6 +117,7 @@ function invisiblewalls(blockColor) {
     },
     {
       isStatic: true,
+      label: "rocketdoor",
     }
   );
   blocks.push(rocketdoor);
@@ -141,7 +143,7 @@ function screen01() {
         h: 100,
         color: blockColor,
       },
-      { isStatic: true }
+      { isStatic: true, label: "spawnpointblock" }
     )
   );
 
@@ -155,7 +157,7 @@ function screen01() {
         h: 40,
         color: blockColor,
       },
-      { isStatic: true }
+      { isStatic: true, label: "safetyblockbaseballglove" }
     )
   );
 
@@ -168,7 +170,7 @@ function screen01() {
       h: 380,
       image: imgElevator,
     },
-    { isStatic: true }
+    { isStatic: true, label: "elevator" }
   );
   blocks.push(cannonElevator);
 
@@ -195,7 +197,7 @@ function screen01() {
       h: windowHeight * 2,
       color: "black",
     },
-    { isStatic: true }
+    { isStatic: true, label: "wallbehindplayer" }
   );
   blocks.push(wall);
 
@@ -238,7 +240,7 @@ function screen01() {
       h: 80,
       color: color(255, 255, 255, 0),
     },
-    { isStatic: true, angle: 0.07 }
+    { isStatic: true, angle: 0.07, label: "xylophone" }
   );
   blocks.push(xylophone);
 
@@ -281,7 +283,7 @@ function screen01() {
       h: 300,
       color: color(255, 255, 255, 0),
     },
-    { isStatic: true }
+    { isStatic: true, labek: "lefttowerwall" }
   );
   blocks.push(towerLeft);
 
@@ -294,7 +296,7 @@ function screen01() {
       h: 380,
       color: color(255, 255, 255, 0),
     },
-    { isStatic: true }
+    { isStatic: true, label: "righttowerwall" }
   );
   blocks.push(towerRight);
 
@@ -307,7 +309,7 @@ function screen01() {
       h: 70,
       image: imgCannon,
     },
-    { isStatic: true, angle: cannonAngle, isSensor: true }
+    { isStatic: true, angle: cannonAngle, isSensor: true, label: "canon" }
   );
   // blocks.push(canon);
 
@@ -335,7 +337,7 @@ function screen01() {
       color: color(255, 255, 255, 0),
       image: imgTowerDoor,
     },
-    { isStatic: true }
+    { isStatic: true, label: "canonDoor" }
   );
   blocks.push(cannonDoor);
 
@@ -398,7 +400,7 @@ function screen01() {
       color: blockColor,
       image: imgLoopRight,
     },
-    { isStatic: true, angle: 0 }
+    { isStatic: true, angle: 0, label: "loopRight" }
   );
 
   blocks.push(loopRight);
@@ -415,7 +417,7 @@ function screen01() {
       color: blockColor,
       image: imgLoopLeft,
     },
-    { isStatic: true, angle: 0 }
+    { isStatic: true, angle: 0, label: "loopLeft" }
   );
   blocks.push(loopLeft);
 
@@ -432,7 +434,7 @@ function screen01() {
         color: blockColor,
         image: imgLandingPad,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "landingPad" }
     )
   );
 
@@ -477,7 +479,7 @@ function screen01() {
         color: blockColor,
         image: imgJumpPad,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "jumpPad" }
     )
   );
 
@@ -502,6 +504,7 @@ function screen01() {
         category: Masks.CAR,
         mask: Masks.WORLD,
       },
+      label: "carbody",
     }
   );
   blocks.push(carBody);
@@ -582,7 +585,7 @@ function screen01() {
       fromFile: "assets/images/Baseballglove.svg",
       image: imgBaseballGlove,
     },
-    { isStatic: false, angle: 0 }
+    { isStatic: false, angle: 0, label: "baseballGlove" }
   );
   blocks.push(baseballGlove);
 
@@ -652,7 +655,7 @@ function screen01() {
       color: blockColor,
       image: imgLoopRight,
     },
-    { isStatic: true, angle: 0 }
+    { isStatic: true, angle: 0, LABEL: "loopRight2" }
   );
   blocks.push(loopRight2);
 
@@ -668,7 +671,7 @@ function screen01() {
       color: blockColor,
       image: imgLoopLeft,
     },
-    { isStatic: true, angle: 0 }
+    { isStatic: true, angle: 0, label: "loopLeft2" }
   );
   blocks.push(loopLeft2);
 
@@ -695,8 +698,9 @@ function screen01() {
         w: 400,
         h: 200,
         color: blockColor,
+        image: imgRamp,
       },
-      { isStatic: true, angle: -0.25 }
+      { isStatic: true, angle: -0.25, label: "bookramp" }
     )
   );
 
@@ -710,7 +714,7 @@ function screen01() {
         h: 100,
         color: blockColor,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "ballpitwallleft" }
     )
   );
 
@@ -738,7 +742,7 @@ function screen01() {
         h: 100,
         color: blockColor,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "ballpitwallright" }
     )
   );
 
@@ -752,7 +756,7 @@ function screen01() {
         h: 100,
         color: blockColor,
       },
-      { isStatic: true, angle: 0 }
+      { isStatic: true, angle: 0, label: "stepstool" }
     )
   );
 
@@ -766,7 +770,7 @@ function screen01() {
         h: 200,
         color: blockColor,
       },
-      { isStatic: true, angle: 0.05 }
+      { isStatic: true, angle: 0.05, label: "ramp" }
     )
   );
 
@@ -780,7 +784,7 @@ function screen01() {
         h: 200,
         color: blockColor,
       },
-      { isStatic: true, angle: 0.25 }
+      { isStatic: true, angle: 0.25, label: "ramp2" }
     )
   );
 
@@ -795,7 +799,7 @@ function screen01() {
       scale: 1,
       color: blockColor,
     },
-    { isStatic: true, angle: 0, mass: 1, friction: 1, airfriction: 0.01 }
+    { isStatic: true, label: "rocket" }
   );
   blocks.push(rocket);
 
@@ -816,6 +820,7 @@ function screen01() {
       friction: 0.01,
       airfriction: 0.1,
       mass: 1,
+      label: "pushblock_starblock",
     }
   );
   blocks.push(pushBlock);
@@ -873,6 +878,7 @@ function screen01() {
         collisionFilter: {
           category: Masks.CAR,
         },
+        label: "ballpit",
       }
     )
   );
@@ -940,38 +946,6 @@ function screen01() {
       }
     )
   );
-
-  // TODO: Diese Stelle sorgt für einen Bug beim Jumpen des Players. Es löst einen "Flappy-Bird-Jump" aus (1/2)
-  // for (let i = 0; i < 10; i++) {
-  //   for (let j = 0; j < 20; j++) {
-  //     blocks.push(
-  //       new Ball(
-  //         world,
-  //         {
-  //           x: 8000 + i * 20,
-  //           y: 400 + j * 20,
-  //           r: 9,
-  //           color: color(random(0, 256), random(0, 256), random(0, 256)),
-  //         },
-  //         { isStatic: false, angle: 0, mass: 0.01, restitution: 0.5 }
-  //       )
-  //     );
-  //   }
-  // }
-
-  // sensors.push(
-  //   new BlockCore(
-  //     world,
-  //     {
-  //       x: 6100,
-  //       y: 400,
-  //       w: 60,
-  //       h: 1000,
-  //       color: sensorColor,
-  //     },
-  //     { isStatic: true, isSensor: true, label: "windingupsensor" }
-  //   )
-  // );
 }
 
 function screenEvents() {

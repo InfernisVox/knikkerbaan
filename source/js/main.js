@@ -100,6 +100,7 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgCarwheel;
 /** @type {Image} */ let imgCarbody;
 /** @type {Image} */ let imgFgCarbody;
+/** @type {Image} */ let imgRamp;
 // gif
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
