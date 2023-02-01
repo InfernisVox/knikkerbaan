@@ -1,4 +1,11 @@
+// @ts-check
+"use strict";
+
 class MarbleRun {
+  /**
+   *
+   * @returns {null}
+   */
   static #empty = function () {
     return null;
   };
@@ -72,6 +79,24 @@ class MarbleRun {
       if (exitCondition()) return player;
     }
 
+    // for rewinding player and car ########################################
+    if (
+      carHasBeenReleased &&
+      !player.recordedData.length &&
+      !playerHasMadeTheLooping
+    ) {
+      Matter.Body.setPosition(player.body, playerPositionOriginal);
+      Matter.Body.setPosition(carBody.body, carBodyPositionOriginal);
+
+      if (!carBody.body.isStatic) {
+        Matter.Body.setStatic(carBody.body, true);
+      }
+
+      setTimeout(() => {
+        player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.CAR_REWIND);
+      }, 1000);
+    }
+
     return player;
   };
   static #carRewind = function () {
@@ -82,12 +107,12 @@ class MarbleRun {
     if (carProgressValue >= 0.99999) {
       Matter.Body.setPosition(carBody.body, {
         x: carBodyPositionX,
-        y: 630.6175568566696,
+        y: 630.6191303914352,
       });
     } else {
       Matter.Body.setPosition(carBody.body, {
         x: carBodyPositionX - offset,
-        y: 630.6175568566696,
+        y: 630.6191303914352,
       });
     }
   };
@@ -169,8 +194,8 @@ class MarbleRun {
   // Cycle #################################
 
   static Cycle = class Cycle {
-    static #milliSecondsStart = null;
-    static #milliSecondsEnd = null;
+    /** @type {number | null} */ static #milliSecondsStart = null;
+    /** @type {number | null} */ static #milliSecondsEnd = null;
     static #hasBeenTriggered = false;
 
     /**

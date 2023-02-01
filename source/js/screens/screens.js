@@ -1235,12 +1235,19 @@ function screenEvents() {
         () => {
           console.log(`Collided with sensor 18: ${sensors[18].body.label}`);
 
+          // Car Rewind ##################################################################
+          Matter.Body.setStatic(carBody.body, true);
+          carHasBeenReleased = false;
+          player.recordedData = [];
+          player.isRecording = false;
+          carBodyPositionOriginal = { ...carBody.body.position };
+          // console.log(carBodyPositionOriginal);
+          // Car Rewind (End) ##################################################################
+
           // player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
           player.onSpaceHold = MarbleRun.mapSpaceHoldTo(
             SpaceMapping.CAR_REWIND
           );
-
-          Matter.Body.setStatic(carBody.body, true);
 
           player.constrainTo(carBody, {
             pointA: { x: 0, y: 0 },
@@ -1249,8 +1256,8 @@ function screenEvents() {
             stiffness: 1,
             draw: false,
           });
-
-          player.recordedData = [];
+          playerPositionOriginal = { ...player.body.position };
+          // console.log(playerPositionOriginal);
 
           Body.setPosition(carConstraintSensor.body, {
             x: carConstraintSensor.body.position.x,
@@ -1318,8 +1325,21 @@ function screenEvents() {
           soundKapow.play();
 
           // ...
-          if (!playerIsInSlowMotion) playerIsInSlowMotion = true;
+          if (!playerIsInSlowMotion && carHasBeenReleased)
+            playerIsInSlowMotion = true;
+
           Body.setVelocity(carBody.body, { x: 20, y: 0 });
+
+          player.recordedData = [];
+
+          if (playerHasMadeTheLooping) {
+            player.onSpacePress = MarbleRun.mapSpacePressTo(
+              SpaceMapping.SINGLE_JUMP
+            );
+            player.onSpaceHold = MarbleRun.mapSpaceHoldTo(
+              SpaceMapping.PLAYER_REWIND
+            );
+          }
         }
       );
 
@@ -1403,10 +1423,14 @@ function screenEvents() {
         () => {
           console.log(`Collided with sensor 25: ${sensors[25].body.label}`);
 
+          // for resetting player rewind after crossing ########################################
+          player.recordedData = [];
+
           soundAcceleration.play();
           Body.setVelocity(carBody.body, { x: 40, y: 0 });
 
           playerIsMovingUpward = false;
+          playerHasMadeTheLooping = true;
         }
       );
 

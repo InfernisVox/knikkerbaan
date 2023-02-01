@@ -1,3 +1,6 @@
+// @ts-check
+"use strict";
+
 class Camera {
   /** @type {Matter.Body} */ ref;
   /** @type {number} */ shiftX;

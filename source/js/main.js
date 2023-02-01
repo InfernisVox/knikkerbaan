@@ -64,10 +64,13 @@ let playerHasBeenAssigned = false;
 let playerIsMovingUpward = false;
 let playerVelocityX = 0;
 let playerIsInSlowMotion = false;
+let playerHasNotLandedInBallPit = true;
 const playerCurrentMapping = {
   press: SpaceMapping.EMPTY,
   hold: SpaceMapping.EMPTY,
 };
+/** @type {Matter.Vector} */ let playerPositionOriginal = null;
+let playerHasMadeTheLooping = false;
 
 // Assets ###########################
 // png, jpg, ..
@@ -105,9 +108,6 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgLoop2;
 /** @type {Image} */ let imgFgBaseball;
 /** @type {Image} */ let imgStepstool;
-/** @type {Image} */ let imgFgBaseballbat;
-/** @type {Image} */ let imgFgSucculente;
-/** @type {Image} */ let imgColdWheelsFast;
 // gif
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
@@ -145,6 +145,10 @@ const CANNON_ANGLE_MAX = -0.65;
 /** @type {BlockCore} */ let carConstraintSensor;
 /** @type {BlockCore} */ let carPushSensor;
 /** @type {number | null} */ let carProgressValue = null;
+/** @type {Matter.Vector} */ let carBodyPositionOriginal = null;
+let carHasBeenReleased = false;
+let carHasToBeReset = false;
+let carIsAtMaximumLoad = false;
 // Loops
 /** @type {PolygonFromSVG} */ let loopRight;
 /** @type {PolygonFromSVG} */ let loopLeft;
@@ -164,7 +168,7 @@ const CANNON_ANGLE_MAX = -0.65;
 // Rocket
 let rocketflying = false;
 let rocketoffset = 165;
-let soundSoundtrack;
+/** @type {SoundFile} */ let soundSoundtrack;
 let soundFlute;
 
 // ##################################################
@@ -196,7 +200,7 @@ function draw() {
   background(255, 255, 255);
   Engine.update(engine);
 
-  Player.recordDataOf(player, !spaceIsPressed);
+  Player.recordDataOf(player, !spaceIsPressed && player.isRecording);
 
   MarbleRun.Cycle.over(5600, () => {
     if (!playerHasBeenAssigned) {
@@ -206,7 +210,7 @@ function draw() {
     }
   });
 
-  if (frameCount % (25 * 30) == 0) {
+  if (frameCount % (25 * 30) === 0) {
     soundSoundtrack.play();
   }
 
@@ -215,7 +219,7 @@ function draw() {
 
   MarbleRun.Cycle.forNext(
     1500,
-    playerIsInSlowMotion,
+    playerIsInSlowMotion || playerHasNotLandedInBallPit,
     () => {
       if (playerIsInSlowMotion) {
         engine.timing.timeScale = 0.15;
@@ -224,7 +228,13 @@ function draw() {
     },
     () => {
       engine.timing.timeScale = 1;
-      console.log("SlowMo ended");
+
+      if (carHasBeenReleased) {
+        setTimeout(() => {
+          playerHasNotLandedInBallPit = false;
+          carHasBeenReleased = false;
+        }, 3000);
+      }
     }
   );
 
@@ -239,7 +249,19 @@ function draw() {
     }
   );
 
-  console.log(cannonAngle);
+  // When the car isn't wound up anymore and still isn't ready for reset
+  if (!carBody.body.isStatic && !carHasToBeReset) {
+    ifCarStandsStill(() => {
+      setTimeout(() => {
+        player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
+        player.onSpaceHold = MarbleRun.mapSpaceHoldTo(
+          SpaceMapping.PLAYER_REWIND
+        );
+      }, 2000);
+    });
+  }
+
+  console.log(carProgressValue === 1);
 
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
@@ -260,24 +282,7 @@ function keyReleased() {
     Matter.Body.setVelocity(player.body, { x: 0, y: engine.gravity.y });
   }
 
-  if (
-    playerCurrentMapping.hold === SpaceMapping.CAR_REWIND &&
-    !isNull(carProgressValue)
-  ) {
-    console.log(carProgressValue);
-    Matter.Body.setStatic(carBody.body, false);
-
-    let x = map(carProgressValue, 0, 100, 200, 2000);
-
-    Body.setVelocity(carBody.body, { x: x, y: 0 });
-
-    carProgressValue = null;
-
-    setTimeout(() => {
-      player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.SINGLE_JUMP);
-      player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.PLAYER_REWIND);
-    }, 2000);
-  }
+  carReleased();
 
   player.timer.reset();
   player.resetBooleans();

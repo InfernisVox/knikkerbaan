@@ -1,3 +1,6 @@
+// @ts-check
+"use strict";
+
 function resetCannon() {
   cannonAngle = 0.33;
   cannonIsReversing = false;
