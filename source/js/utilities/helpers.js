@@ -24,7 +24,7 @@ function bar(player, color, offset = null, animationCounter = null) {
       (isNull(offset) && isNull(animationCounter)
         ? 0
         : offset * animationCounter),
-    height * 0.9 - 10 / 2 + 2,
+    height * 0.96 - 10 / 2 + 2,
     196 * (player.recordedData.length / player.recordedDataLength),
     6
   );
@@ -36,7 +36,7 @@ function bar(player, color, offset = null, animationCounter = null) {
       (isNull(offset) && isNull(animationCounter)
         ? 0
         : offset * animationCounter),
-    height * 0.9,
+    height * 0.96,
     200,
     10
   );

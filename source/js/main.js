@@ -19,6 +19,7 @@ const Canvas = {
 /** @enum {number} */
 const Keys = {
   SPACE: 32,
+  S: 83,
 };
 /** @enum {number} */
 const Masks = {
@@ -34,6 +35,7 @@ const SpaceMapping = {
   PLAYER_REWIND: 2,
   CAR_REWIND: 3,
 };
+/** @type {number} */ const CANVAS_DATA_CHUNK_SIZE = 4;
 
 // Setup ##########################################################
 console.clear();
@@ -202,6 +204,7 @@ function setup() {
 
   soundCat.play();
   soundSoundtrack.play();
+  // soundWoolball.loop();
 }
 
 function draw() {
@@ -254,6 +257,7 @@ function draw() {
     },
     () => {
       engine.timing.timeScale = 1;
+      if (cannonHasBeenLoaded) cannonHasBeenFired = false;
     }
   );
 
@@ -269,9 +273,7 @@ function draw() {
     });
   }
 
-  console.log(carProgressValue === 1);
-
-  if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
+  // if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 
 // ##################################################
@@ -282,6 +284,10 @@ function keyPressed() {
     player.onSpacePress();
 
     spaceIsPressed = true;
+  }
+
+  if (keyCode === Keys.S) {
+    saveCanvas(canvas);
   }
 }
 
