@@ -70,6 +70,23 @@ function drawCanvas() {
   drawLevel();
 }
 
+function adjustCar() {
+  let carBodyPositionX = 5120;
+  let carBodyPositionY = 562;
+
+  let offsetX = carBody.body.position.x - 180;
+  let offsetY = carBody.body.position.y - 58;
+
+  console.log(carBody.body.angle);
+
+  push();
+  imageMode(CENTER);
+  translate(offsetX, offsetY);
+  rotate(carBody.body.angle);
+  image(imgCarbody, offsetX, offsetY, 357, 111);
+  pop();
+}
+
 function drawLevel() {
   sensors.forEach((sensor) => sensor.draw());
   image(imgTowerBg, 1950, 285, 289, 428);
@@ -106,6 +123,8 @@ function drawLevel() {
   image(imgCannonBase, 2020, 215, 128, 106);
   image(imgBallPitFg, 7893, 588, 415, 114);
   image(imgRocket, 10030, rocketoffset, 339, 531);
+
+  adjustCar();
 
   image(imgFgBoxStar, 280, 520, 234, 235);
   image(imgFgBoxHeart, 150, 600, 194, 195);

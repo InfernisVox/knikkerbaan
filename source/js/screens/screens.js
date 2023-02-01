@@ -485,7 +485,7 @@ function screen01() {
     world,
     {
       x: 5300,
-      y: 80,
+      y: 620,
       w: 200,
       h: 30,
       color: blockColor,
