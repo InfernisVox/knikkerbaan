@@ -205,13 +205,11 @@ function screen01() {
     world,
     {
       x: 410,
-      y: 560,
+      y: 525,
       w: 685,
       h: 511,
       fromFile: "assets/images/bed.svg",
-      scale: 0.95,
       color: sensorColor,
-      image: imgBed,
     },
     { isStatic: true, angle: 0, label: "bed" }
   );
@@ -234,10 +232,10 @@ function screen01() {
   xylophone = new Block(
     world,
     {
-      x: 1055,
-      y: 660,
-      w: 520,
-      h: 80,
+      x: 1090,
+      y: 650,
+      w: 530,
+      h: 100,
       color: sensorColor,
     },
     { isStatic: true, angle: 0.07, label: "xylophone" }
@@ -249,8 +247,8 @@ function screen01() {
       new BlockCore(
         world,
         {
-          x: 850 + i * 48,
-          y: 580 + i * 4,
+          x: 885 + i * 48,
+          y: 550 + i * 4,
           w: 15,
           h: 40,
           color: sensorColor,

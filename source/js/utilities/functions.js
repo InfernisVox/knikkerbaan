@@ -133,6 +133,8 @@ function drawLevel() {
   }
   image(imgTowerBg, 1950, 285, 289, 428);
   image(imgBallPitBg, 7893, 575, 415, 127);
+  image(imgBed, -25, 220, 747, 474);
+
   blocks.forEach((block) => block.draw());
 
   if (rocketflying) {
@@ -149,10 +151,10 @@ function drawLevel() {
 
   image(imgWall, -1180, 0, 1165, 720);
 
-  image(gifElGato, -55, 45, 470, 264);
+  image(gifElGato, -55, 30, 470, 264);
   push();
   rotate(0.01);
-  image(imgXylophone, 785, 560, 540, 120);
+  image(imgXylophone, 810, 540, 550, 151);
   pop();
 
   rotateCannon();
