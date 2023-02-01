@@ -30,7 +30,7 @@ class MarbleRun {
         cannonAngle < 0
           ? {
               x: 0.275,
-              y: -0.1,
+              y: -0.1 * (cannonAngle / CANNON_ANGLE_MAX),
             }
           : !cannonAngle
           ? {
@@ -39,13 +39,13 @@ class MarbleRun {
             }
           : {
               x: 0.275,
-              y: 0.1,
+              y: 0.1 * (cannonAngle / CANNON_ANGLE_MIN),
             }
       );
     }
 
     cannonHasBeenFired = true;
-    cannon.attributes.image=imgCannon;
+    // cannon.attributes.image = imgCannon;
     soundCanonshoot.play();
     setTimeout(() => {
       soundCanonshoot.stop();

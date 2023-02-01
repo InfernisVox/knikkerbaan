@@ -127,6 +127,8 @@ let cannonHasBeenLoaded = false;
 let cannonHasBeenFired = false;
 /** @type {Block} */ let cannonElevator;
 let cannonElevatorIsMoving = false;
+const CANNON_ANGLE_MIN = 0.33;
+const CANNON_ANGLE_MAX = -0.65;
 // Glove
 /** @type {PolygonFromSVG} */ let baseballGlove;
 // Car
@@ -229,6 +231,8 @@ function draw() {
       engine.timing.timeScale = 1;
     }
   );
+
+  console.log(cannonAngle);
 
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
