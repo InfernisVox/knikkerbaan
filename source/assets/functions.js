@@ -43,10 +43,6 @@ function loadAssets() {
   soundCat = loadSound(soundCat_Src);
   loadingMessage(soundCat_Src);
 
-  let soundGuitarAMajor_Src = "./assets/audio/instruments/amajor.wav";
-  soundGuitarAMajor = loadSound(soundGuitarAMajor_Src);
-  loadingMessage(soundGuitarAMajor_Src);
-
   let soundXylophoneA1_Src = "./assets/audio/instruments/A1.mp3";
   soundXylophoneA1 = loadSound(soundXylophoneA1_Src);
   loadingMessage(soundXylophoneA1_Src);
