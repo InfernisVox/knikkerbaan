@@ -216,6 +216,17 @@ function draw() {
     }
   );
 
+  MarbleRun.Cycle.forNext(
+    500,
+    cannonHasBeenFired,
+    () => {
+      if (cannonHasBeenFired) engine.timing.timeScale = 0.15;
+    },
+    () => {
+      engine.timing.timeScale = 1;
+    }
+  );
+
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 

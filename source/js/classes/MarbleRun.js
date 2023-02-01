@@ -75,7 +75,7 @@ class MarbleRun {
     return player;
   };
   static #carRewind = function () {
-    const offset = map(carProgressValue, 0, 1, 0, 100);
+    const offset = map(carProgressValue, 0, 1, 0, 50);
 
     if (isNull(carBodyPositionX)) carBodyPositionX = carBody.body.position.x;
 
