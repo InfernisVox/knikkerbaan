@@ -583,7 +583,11 @@ function screen01() {
       fromFile: "assets/images/Baseballglove.svg",
       image: imgBaseballGlove,
     },
-    { isStatic: false, angle: 0, label: "baseballGlove" }
+    {
+      isStatic: false,
+      angle: 0,
+      label: "baseballGlove",
+    }
   );
   blocks.push(baseballGlove);
 

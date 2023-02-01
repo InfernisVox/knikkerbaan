@@ -64,6 +64,53 @@ function initPlayer() {
   );
 }
 
+/**
+ *
+ * @param {HTMLCanvasElement} canvas
+ * @param {number} [sampleSize] The size at which different pixel samples should be selected
+ */
+function getCanvasContent(canvas, sampleSize = 100) {
+  /** @type {ImageData} */ let canvasContent;
+  /** @type {Uint8ClampedArray} */ let canvasContentData;
+
+  /** @type {number | undefined} */ let rAvg;
+  /** @type {number | undefined} */ let gAvg;
+  /** @type {number | undefined} */ let bAvg;
+  /** @type {number | undefined} */ let aAvg;
+
+  /** @type {CanvasRenderingContext2D} */ let ctx = canvas.getContext("2d");
+
+  canvasContent = ctx.getImageData(
+    Canvas.WIDTH / 2,
+    Canvas.HEIGHT / 2,
+    Canvas.WIDTH / 2,
+    Canvas.HEIGHT / 2
+  );
+  canvasContentData = canvasContent.data;
+
+  const canvasContentRGBA = [];
+  for (let i = 0; i < canvasContentData.length; i += CANVAS_DATA_CHUNK_SIZE) {
+    const chunk = canvasContentData.slice(i, i + CANVAS_DATA_CHUNK_SIZE);
+    canvasContentRGBA.push(chunk);
+  }
+
+  canvasContentRGBA.forEach((element) => {
+    rAvg += element[0];
+    gAvg += element[1];
+    bAvg += element[2];
+    aAvg += element[3];
+  });
+
+  rAvg = rAvg / canvasContentRGBA.length;
+  gAvg = gAvg / canvasContentRGBA.length;
+  bAvg = bAvg / canvasContentRGBA.length;
+  aAvg = aAvg / canvasContentRGBA.length;
+
+  document.body.style.backgroundColor = `rgba(${rAvg},${gAvg},${bAvg},${aAvg})`;
+
+  for (let i = 0; i < sampleSize; i++) {}
+}
+
 function drawCanvas() {
   cam.swivelBehind(() => player.body.position.x <= CANVAS_BREAKPOINT);
 

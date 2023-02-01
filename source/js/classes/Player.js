@@ -181,6 +181,36 @@ class Player extends Ball {
 
         if (
           (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "pushblock") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "pushblock")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "carconstraintsensor2") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "carconstraintsensor2")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "pushblock_starblock") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "pushblock_starblock")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
             pair.bodyB.label === "Rectangle Body") ||
           (pair.bodyB.label === Player.LABEL &&
             pair.bodyA.label === "Rectangle Body")
@@ -215,9 +245,9 @@ class Player extends Ball {
           if (this.i <= 1) this.i += 0.5;
           else this.i = 0;
 
-          bar(player, color(0, 0, 0, 150), offset, this.i);
+          bar(player, color("white"), offset, this.i);
         } else {
-          bar(player, color(0, 0, 0, 150));
+          bar(player, color("white"));
         }
       });
     }

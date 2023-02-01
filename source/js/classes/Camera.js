@@ -59,7 +59,7 @@ class Camera {
 
       mouse.setOffset({ x: -this.shiftX, y: 0 });
 
-      marbleRun.stats();
+      // marbleRun.stats();
     }
   }
 }

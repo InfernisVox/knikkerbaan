@@ -255,7 +255,7 @@ class MarbleRun {
      * rely on the loop functionality of `draw`.
      *
      * @param {number} milliSeconds The total duration for which `forNext` will run
-     * @param {boolean | (...args: any[]) => boolean} trigger The trigger for calling `forNext`
+     * @param {boolean | ((...args: any[]) => boolean)} trigger The trigger for calling `forNext`
      * @param {() => void} callback The callback to be called during `forNext`
      * @param {() => void} [callbackEnd] The callback that is called when `forNext` has terminated
      */
