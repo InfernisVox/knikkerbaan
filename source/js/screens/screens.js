@@ -485,10 +485,11 @@ function screen01() {
     world,
     {
       x: 5300,
-      y: 100,
+      y: 80,
       w: 200,
-      h: 40,
+      h: 30,
       color: blockColor,
+      image: imgCarbody,
       collisionFilter: {
         category: Masks.CAR,
         mask: Masks.WORLD,
@@ -508,10 +509,11 @@ function screen01() {
   carWheel1 = new Ball(
     world,
     {
-      x: carBody.body.position.x - 80,
+      x: carBody.body.position.x - 135,
       y: carBody.body.position.y,
-      r: 40,
+      r: 32,
       color: "lightblue",
+      image: imgCarwheel,
     },
     {
       isStatic: false,
@@ -527,7 +529,7 @@ function screen01() {
 
   carWheel1.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 - 80, y: 0 + 10 },
+    pointB: { x: 0 - 110, y: 0 + 30 },
     length: 0,
     stiffness: 1,
     draw: true,
@@ -540,10 +542,11 @@ function screen01() {
   carWheel2 = new Ball(
     world,
     {
-      x: carBody.body.position.x + 80,
+      x: carBody.body.position.x + 135,
       y: carBody.body.position.y,
-      r: 40,
+      r: 32,
       color: "lightblue",
+      image: imgCarwheel,
     },
     {
       isStatic: false,
@@ -559,7 +562,7 @@ function screen01() {
 
   carWheel2.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 + 80, y: 0 + 10 },
+    pointB: { x: 0 + 110, y: 0 + 30 },
     length: 0,
     stiffness: 1,
     draw: true,
