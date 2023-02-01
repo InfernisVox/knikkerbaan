@@ -52,6 +52,7 @@ class Player extends Ball {
   /** @type {Data[]} */ recordedData;
 
   isReversing;
+  isRecording;
   hasRewindStarted;
 
   /**
@@ -83,6 +84,7 @@ class Player extends Ball {
     this.jumpCount = 0;
 
     this.isOnGround = false;
+    this.isRecording = true;
   }
 
   // ##################################################
@@ -191,13 +193,10 @@ class Player extends Ball {
 
     Matter.Events.on(engine, "collisionEnd", function (event) {
       for (const pair of event.pairs) {
-        ifBodiesArePairs(
-          pair.bodyA,
-          pair.bodyB,
-          Player.LABEL,
-          "floor",
-          () => {}
-        );
+        ifBodiesArePairs(pair.bodyA, pair.bodyB, Player.LABEL, "floor", () => {
+          // ...
+          player.isOnGround = false;
+        });
       }
     });
   }
