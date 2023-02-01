@@ -71,16 +71,11 @@ function drawCanvas() {
 }
 
 function adjustCar() {
-  let carBodyPositionX = 5120;
-  let carBodyPositionY = 562;
-
-  let offsetX = carBody.body.position.x - 180;
-  let offsetY = carBody.body.position.y - 58;
-
-  console.log(carBody.body.angle);
-
   push();
-  image(imgCarbody, offsetX, offsetY, 357, 111);
+  imageMode(CENTER);
+  translate(carBody.body.position.x, carBody.body.position.y);
+  rotate(carBody.body.angle);
+  image(imgFgCarbody, 0, 0, 357, 111);
   pop();
 }
 

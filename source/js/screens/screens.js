@@ -123,8 +123,8 @@ function invisiblewalls(blockColor) {
 
 // #######################################
 function screen01() {
-  let sensorColor = color(0, 255, 50, 100);
-  let blockColor = color(255, 0, 255);
+  let sensorColor = color(0, 255, 50, 0);
+  let blockColor = color(255, 0, 255, 0);
 
   invisiblewalls(blockColor);
 
