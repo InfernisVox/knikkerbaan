@@ -239,6 +239,10 @@ function loadAssets() {
   imgFgCarbody = loadImage(imgFgCarbody_src);
   loadingMessage(imgFgCarbody_src);
 
+ let imgRamp_src = "./assets/images/ramp.png";
+  imgRamp = loadImage(imgRamp_src);
+  loadingMessage(imgRamp_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;
   console.log(

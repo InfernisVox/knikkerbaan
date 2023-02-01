@@ -695,6 +695,7 @@ function screen01() {
         w: 400,
         h: 200,
         color: blockColor,
+        image: imgRamp,
       },
       { isStatic: true, angle: -0.25 }
     )
