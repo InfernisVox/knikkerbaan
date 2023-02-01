@@ -166,7 +166,7 @@ function screen01() {
     world,
     {
       x: 2095,
-      y: windowHeight + 180, //140
+      y: windowHeight + 240, //140
       w: 190,
       h: 380,
       image: imgElevator,
@@ -1230,7 +1230,6 @@ function screenEvents() {
           // Car Rewind ##################################################################
           Matter.Body.setStatic(carBody.body, true);
           carHasBeenReleased = false;
-          player.recordedData = [];
           player.isRecording = false;
           carBodyPositionOriginal = { ...carBody.body.position };
           // //console.log(carBodyPositionOriginal);
@@ -1367,6 +1366,8 @@ function screenEvents() {
           //console.log(`Collided with sensor 23: ${sensors[23].body.label}`);
 
           soundAcceleration.play();
+
+          player.recordedData = [];
           Body.setVelocity(carBody.body, { x: 90, y: 0 });
 
           playerIsMovingUpward = false;
