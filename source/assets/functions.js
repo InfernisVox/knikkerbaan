@@ -246,9 +246,34 @@ function loadAssets() {
   let imgFgBaseball_src = "./assets/images/fg_baseball.png";
   imgFgBaseball = loadImage(imgFgBaseball_src);
   loadingMessage(imgFgBaseball_src);
+
   let imgStepstool_src = "./assets/images/stepstool.png";
   imgStepstool = loadImage(imgStepstool_src);
   loadingMessage(imgStepstool_src);
+
+  let imgFgBaseballbat_src = "./assets/images/fg_baseballbat.png";
+  imgFgBaseballbat = loadImage(imgFgBaseballbat_src);
+  loadingMessage(imgFgBaseballbat_src);
+
+  let imgFgSucculente_src = "./assets/images/fg_succulente.png";
+  imgFgSucculente = loadImage(imgFgSucculente_src);
+  loadingMessage(imgFgSucculente_src);
+
+  let imgColdWheelsFast_src = "./assets/images/coldwheelsfast.png";
+  imgColdWheelsFast = loadImage(imgColdWheelsFast_src);
+  loadingMessage(imgColdWheelsFast_src);
+
+  let imgWall_src = "./assets/images/wall.png";
+  imgWall = loadImage(imgWall_src);
+  loadingMessage(imgWall_src);
+
+  let imgFloor_src = "./assets/images/floor.png";
+  imgFloor = loadImage(imgFloor_src);
+  loadingMessage(imgFloor_src);
+
+  let imgSkateboard_src = "./assets/images/skateboard.png";
+  imgSkateboard = loadImage(imgSkateboard_src);
+  loadingMessage(imgSkateboard_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;

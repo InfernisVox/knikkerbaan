@@ -97,6 +97,12 @@ function drawLevel() {
     }
   }
 
+  for (let i = -1; i <= 15; i++) {
+    image(imgFloor, i * 2560, 675, 2560, 50);
+  }
+
+  image(imgWall, -1180, 0, 1165, 720);
+
   image(gifElGato, -55, 45, 470, 264);
   push();
   rotate(0.01);
@@ -115,6 +121,21 @@ function drawLevel() {
 
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
+
+  push();
+  translate(3270, 555);
+  rotate(-0.26);
+  image(imgColdWheelsFast, 0, 0, 132, 85);
+  pop();
+
+  push();
+  translate(3840, 490);
+  rotate(0.1);
+  image(imgColdWheelsFast, 0, 0, 132, 85);
+  pop();
+
+  image(imgColdWheelsFast, 4700, 500, 132, 85);
+
   image(imgLoop1, 4035, 60, 656, 655);
   image(imgLoop2, 6100, -40, 980, 950);
   image(imgBallPitFg, 7893, 588, 415, 114);
@@ -125,6 +146,8 @@ function drawLevel() {
     translate(cam.shiftX * 0.5, 0);
     image(imgFgBoxStar, 280, 520, 234, 235);
     image(imgFgBoxHeart, 150, 600, 194, 195);
+    image(imgFgSucculente, 1300, 360, 360, 396);
+    image(imgFgBaseballbat, 3200, 640, 827, 130);
     image(imgFgBaseball, 4400, 575, 174, 170);
   });
 

@@ -108,6 +108,9 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgFgBaseballbat;
 /** @type {Image} */ let imgFgSucculente;
 /** @type {Image} */ let imgColdWheelsFast;
+/** @type {Image} */ let imgWall;
+/** @type {Image} */ let imgSkateboard;
+
 // gif
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
@@ -166,6 +169,8 @@ let rocketflying = false;
 let rocketoffset = 165;
 let soundSoundtrack;
 let soundFlute;
+let constraintColor;
+let showConstraints = false;
 
 // ##################################################
 
@@ -238,8 +243,6 @@ function draw() {
       engine.timing.timeScale = 1;
     }
   );
-
-  console.log(cannonAngle);
 
   if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }

@@ -127,6 +127,7 @@ function invisiblewalls(blockColor) {
 function screen01() {
   let sensorColor = color(0, 255, 50, 100);
   let blockColor = color(255, 0, 255);
+  constraintColor = color(0, 0, 255);
 
   invisiblewalls(blockColor);
 
@@ -165,7 +166,7 @@ function screen01() {
     world,
     {
       x: 2095,
-      y: windowHeight + 140,
+      y: windowHeight + 180, //140
       w: 190,
       h: 380,
       image: imgElevator,
@@ -181,8 +182,7 @@ function screen01() {
       y: 700,
       w: windowWidth * 50,
       h: 40,
-      color: "gray",
-      image: imgFloor,
+      color: blockColor,
     },
     { isStatic: true, label: "floor" }
   );
@@ -195,7 +195,7 @@ function screen01() {
       y: windowHeight / 2,
       w: 1000,
       h: windowHeight * 2,
-      color: "black",
+      color: blockColor,
     },
     { isStatic: true, label: "wallbehindplayer" }
   );
@@ -210,7 +210,7 @@ function screen01() {
       h: 511,
       fromFile: "assets/images/bed.svg",
       scale: 0.95,
-      color: color(255, 255, 255, 0),
+      color: sensorColor,
       image: imgBed,
     },
     { isStatic: true, angle: 0, label: "bed" }
@@ -238,7 +238,7 @@ function screen01() {
       y: 660,
       w: 520,
       h: 80,
-      color: color(255, 255, 255, 0),
+      color: sensorColor,
     },
     { isStatic: true, angle: 0.07, label: "xylophone" }
   );
@@ -513,7 +513,7 @@ function screen01() {
       x: carBody.body.position.x - 135,
       y: carBody.body.position.y,
       r: 40,
-      color: "lightblue",
+      color: blockColor,
       image: imgCarwheel,
     },
     {
@@ -533,8 +533,8 @@ function screen01() {
     pointB: { x: 0 - 100, y: 10 },
     length: 0,
     stiffness: 1,
-    draw: true,
-    color: color(255, 0, 0),
+    draw: showConstraints,
+    color: constraintColor,
     width: 2,
   });
 
@@ -546,7 +546,7 @@ function screen01() {
       x: carBody.body.position.x + 135,
       y: carBody.body.position.y,
       r: 40,
-      color: "lightblue",
+      color: blockColor,
       image: imgCarwheel,
     },
     {
@@ -566,8 +566,8 @@ function screen01() {
     pointB: { x: 0 + 100, y: 10 },
     length: 0,
     stiffness: 1,
-    draw: true,
-    color: color(255, 0, 0),
+    draw: showConstraints,
+    color: constraintColor,
     width: 2,
   });
 
@@ -1247,7 +1247,9 @@ function screenEvents() {
             pointB: { x: -10, y: -50 },
             length: 0,
             stiffness: 1,
-            draw: false,
+            draw: showConstraints,
+            color: constraintColor,
+            width: 2,
           });
 
           player.recordedData = [];
