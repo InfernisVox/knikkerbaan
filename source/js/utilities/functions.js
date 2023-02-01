@@ -80,9 +80,6 @@ function adjustCar() {
   console.log(carBody.body.angle);
 
   push();
-  imageMode(CENTER);
-  translate(offsetX, offsetY);
-  rotate(carBody.body.angle);
   image(imgCarbody, offsetX, offsetY, 357, 111);
   pop();
 }
