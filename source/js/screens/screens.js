@@ -751,12 +751,13 @@ function screen01() {
       world,
       {
         x: 8700,
-        y: 630,
-        w: 200,
+        y: 640,
+        w: 180,
         h: 100,
         color: blockColor,
+        image: imgStepstool,
       },
-      { isStatic: true, angle: 0, label: "stepstool" }
+      { isStatic: true, angle: 0, label: "Body" }
     )
   );
 

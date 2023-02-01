@@ -239,9 +239,13 @@ function loadAssets() {
   imgFgCarbody = loadImage(imgFgCarbody_src);
   loadingMessage(imgFgCarbody_src);
 
- let imgRamp_src = "./assets/images/ramp.png";
+  let imgRamp_src = "./assets/images/ramp.png";
   imgRamp = loadImage(imgRamp_src);
   loadingMessage(imgRamp_src);
+
+  let imgStepstool_src = "./assets/images/stepstool.png";
+  imgStepstool = loadImage(imgStepstool_src);
+  loadingMessage(imgStepstool_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;

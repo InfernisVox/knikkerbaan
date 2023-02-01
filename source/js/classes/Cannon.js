@@ -42,7 +42,7 @@ function loadCannon() {
     } else {
       if (!cannonHasBeenLoaded) {
         cannonHasBeenLoaded = true;
-
+        cannon.attributes.image = imgCannonActivated;
         player.recordedData = [];
 
         Body.setPosition(player.body, {
