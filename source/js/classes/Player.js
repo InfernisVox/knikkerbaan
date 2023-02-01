@@ -162,6 +162,22 @@ class Player extends Ball {
         }
 
         if (
+          (pair.bodyA.label === Player.LABEL && pair.bodyB.label === "ramp") ||
+          (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "ramp")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL && pair.bodyB.label === "ramp2") ||
+          (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "ramp2")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
           (pair.bodyA.label === Player.LABEL &&
             pair.bodyB.label === "Rectangle Body") ||
           (pair.bodyB.label === Player.LABEL &&

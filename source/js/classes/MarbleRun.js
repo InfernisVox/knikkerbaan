@@ -45,7 +45,7 @@ class MarbleRun {
     }
 
     cannonHasBeenFired = true;
-    // cannon.attributes.image = imgCannon;
+    cannon.attributes.image = imgCannon;
     soundCanonshoot.play();
     setTimeout(() => {
       soundCanonshoot.stop();

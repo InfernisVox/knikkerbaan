@@ -118,8 +118,12 @@ function drawLevel() {
   image(imgBallPitFg, 7893, 588, 415, 114);
   image(imgRocket, 10030, rocketoffset, 339, 531);
 
-  image(imgFgBoxStar, 280, 520, 234, 235);
-  image(imgFgBoxHeart, 150, 600, 194, 195);
+  once(() => {
+    // TODO: Hier kommen die Images rein, die im Vordergrund für den Parallax genutzt werden
+    translate(cam.shiftX * 0.5, 0);
+    image(imgFgBoxStar, 280, 520, 234, 235);
+    image(imgFgBoxHeart, 150, 600, 194, 195);
+  });
 
   mouse.draw();
 }
