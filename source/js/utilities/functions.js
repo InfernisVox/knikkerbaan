@@ -115,6 +115,8 @@ function drawLevel() {
 
   image(imgTowerFg, 1950, 285, 289, 428);
   image(imgCannonBase, 2020, 215, 128, 106);
+  image(imgLoop1, 4035, 60, 656, 655);
+  image(imgLoop2, 6100, -40, 980, 950);
   image(imgBallPitFg, 7893, 588, 415, 114);
   image(imgRocket, 10030, rocketoffset, 339, 531);
 
@@ -123,6 +125,7 @@ function drawLevel() {
     translate(cam.shiftX * 0.5, 0);
     image(imgFgBoxStar, 280, 520, 234, 235);
     image(imgFgBoxHeart, 150, 600, 194, 195);
+    image(imgFgBaseball, 4400, 575, 174, 170);
   });
 
   mouse.draw();

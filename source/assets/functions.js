@@ -235,7 +235,6 @@ function loadAssets() {
   imgRamp = loadImage(imgRamp_src);
   loadingMessage(imgRamp_src);
 
-<<<<<<< HEAD
   let imgLoop1_src = "./assets/images/loop1.png";
   imgLoop1 = loadImage(imgLoop1_src);
   loadingMessage(imgLoop1_src);
@@ -247,11 +246,9 @@ function loadAssets() {
   let imgFgBaseball_src = "./assets/images/fg_baseball.png";
   imgFgBaseball = loadImage(imgFgBaseball_src);
   loadingMessage(imgFgBaseball_src);
-=======
   let imgStepstool_src = "./assets/images/stepstool.png";
   imgStepstool = loadImage(imgStepstool_src);
   loadingMessage(imgStepstool_src);
->>>>>>> 06b29121f409839c02661a6be0b22af6076e2b09
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;

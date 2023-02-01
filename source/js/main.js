@@ -101,13 +101,13 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgCarbody;
 /** @type {Image} */ let imgFgCarbody;
 /** @type {Image} */ let imgRamp;
-<<<<<<< HEAD
 /** @type {Image} */ let imgLoop1;
 /** @type {Image} */ let imgLoop2;
 /** @type {Image} */ let imgFgBaseball;
-=======
 /** @type {Image} */ let imgStepstool;
->>>>>>> 06b29121f409839c02661a6be0b22af6076e2b09
+/** @type {Image} */ let imgFgBaseball;
+/** @type {Image} */ let imgFgSucculente;
+/** @type {Image} */ let imgColdWheelsFast;
 // gif
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
