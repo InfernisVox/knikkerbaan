@@ -239,6 +239,10 @@ function loadAssets() {
   imgCarbody = loadImage(imgCarbody_src);
   loadingMessage(imgCarbody_src);
 
+  let imgFgCarbody_src = "./assets/images/fg_carbody.png";
+  imgFgCarbody = loadImage(imgFgCarbody_src);
+  loadingMessage(imgFgCarbody_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;
   console.log(
