@@ -529,7 +529,7 @@ function screen01() {
 
   carWheel1.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 - 110, y: 0 + 30 },
+    pointB: { x: 0 - 100, y: 0 + 30 },
     length: 0,
     stiffness: 1,
     draw: true,
@@ -562,7 +562,7 @@ function screen01() {
 
   carWheel2.constrainTo(carBody, {
     pointA: { x: 0, y: 0 },
-    pointB: { x: 0 + 110, y: 0 + 30 },
+    pointB: { x: 0 + 100, y: 0 + 30 },
     length: 0,
     stiffness: 1,
     draw: true,
@@ -1210,7 +1210,7 @@ function screenEvents() {
 
         player.constrainTo(carBody, {
           pointA: { x: 0, y: 0 },
-          pointB: { x: 0, y: -60 },
+          pointB: { x: 0 - 30, y: -30 },
           length: 0,
           stiffness: 1,
           draw: false,
