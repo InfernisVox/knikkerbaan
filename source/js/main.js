@@ -97,6 +97,8 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgColdWheels;
 /** @type {Image} */ let imgFgBoxStar;
 /** @type {Image} */ let imgFgBoxHeart;
+/** @type {Image} */ let imgCarwheel;
+/** @type {Image} */ let imgCarbody;
 // gif
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
@@ -194,7 +196,6 @@ function draw() {
 
   if (frameCount % (25 * 30) == 0) {
     soundSoundtrack.play();
-    console.log("music");
   }
 
   once(drawCanvas);
