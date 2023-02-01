@@ -1,137 +1,145 @@
 class MarbleRun {
+  static #empty = function () {
+    return null;
+  };
+  static #singleJump = function () {
+    if (!player.spaceHasBeenPressed) {
+      Matter.Body.applyForce(
+        player.body,
+        { x: player.body.position.x, y: player.body.position.y },
+        !playerIsMovingUpward
+          ? {
+              x: 0.065,
+              y: -0.075,
+            }
+          : {
+              x: -0.065,
+              y: -0.075,
+            }
+      );
+      player.spaceHasBeenPressed = true;
+    }
+  };
+  static #cannonFire = function () {
+    if (player.body.isStatic) Matter.Body.setStatic(player.body, false);
+
+    if (cannonHasBeenLoaded) {
+      Matter.Body.applyForce(
+        player.body,
+        { x: player.body.position.x, y: player.body.position.y },
+        cannonAngle < 0
+          ? {
+              x: 0.275,
+              y: -0.1,
+            }
+          : !cannonAngle
+          ? {
+              x: 0.275,
+              y: 0,
+            }
+          : {
+              x: 0.275,
+              y: 0.1,
+            }
+      );
+    }
+
+    cannonHasBeenFired = true;
+
+    soundCanonshoot.play();
+    setTimeout(() => {
+      soundCanonshoot.stop();
+    }, 1000);
+  };
+  /**
+   *
+   * @param  {(() => boolean)[]} exitConditions
+   * @returns {Player | undefined}
+   */
+  static #playerRewind = function (...exitConditions) {
+    // #################### Zeit anhalten: Matter.Runner.stop(runner);
+    // #################### Super Slow Mo: Matter.Sleeping.set(body, true);
+
+    const lastData = player.recordedData.shift();
+
+    if (lastData) {
+      Matter.Body.setPosition(player.body, lastData.p);
+      Matter.Body.setAngle(player.body, lastData.a);
+      Matter.Body.setVelocity(player.body, lastData.v);
+    }
+
+    for (let exitCondition of exitConditions) {
+      if (exitCondition()) return player;
+    }
+
+    return player;
+  };
+  static #carRewind = function () {
+    const offset = map(carProgressValue, 0, 1, 0, 100);
+
+    if (isNull(carBodyPositionX)) carBodyPositionX = carBody.body.position.x;
+
+    if (carProgressValue >= 0.99999) {
+      Matter.Body.setPosition(carBody.body, {
+        x: carBodyPositionX,
+        y: 630.77351582555,
+      });
+    } else {
+      Matter.Body.setPosition(carBody.body, {
+        x: carBodyPositionX - offset,
+        y: 630.77351582555,
+      });
+    }
+  };
+
   /**
    * The factory that returns the function that will be mapped onto single mouse buttons
-   * @param {Player} player
    * @param {number} factoryFlag
    * @returns {() => any}
    */
-  static mapSpacePressOfTo(player, factoryFlag) {
+  static mapSpacePressTo(factoryFlag) {
     switch (factoryFlag) {
-      case FactoryFlag.EMPTY: {
-        playerCurrentMapping.press = FactoryFlag.EMPTY;
-        return () => null;
+      case SpaceMapping.EMPTY: {
+        playerCurrentMapping.press = SpaceMapping.EMPTY;
+        return MarbleRun.#empty;
       }
-
-      case FactoryFlag.SINGLE_JUMP: {
-        playerCurrentMapping.press = FactoryFlag.SINGLE_JUMP;
-        return () => {
-          if (!player.spaceHasBeenPressed) {
-            Matter.Body.applyForce(
-              player.body,
-              { x: player.body.position.x, y: player.body.position.y },
-              {
-                x: 0.065,
-                y: -0.09,
-              }
-            );
-            player.spaceHasBeenPressed = true;
-          }
-        };
+      case SpaceMapping.SINGLE_JUMP: {
+        playerCurrentMapping.press = SpaceMapping.SINGLE_JUMP;
+        return MarbleRun.#singleJump;
       }
-
-      case FactoryFlag.CANON_SHOOT: {
-        playerCurrentMapping.press = FactoryFlag.CANON_SHOOT;
-        return () => {
-          if (player.body.isStatic) Matter.Body.setStatic(player.body, false);
-
-          if (cannonHasBeenLoaded) {
-            Matter.Body.applyForce(
-              player.body,
-              { x: player.body.position.x, y: player.body.position.y },
-              cannonAngle < 0
-                ? {
-                    x: 0.275,
-                    y: -0.1,
-                  }
-                : !cannonAngle
-                ? {
-                    x: 0.275,
-                    y: 0,
-                  }
-                : {
-                    x: 0.275,
-                    y: 0.1,
-                  }
-            );
-          }
-
-          cannonHasBeenFired = true;
-
-          soundCanonshoot.play();
-          setTimeout(() => {
-            soundCanonshoot.stop();
-          }, 1000);
-        };
+      case SpaceMapping.CANNON_FIRE: {
+        playerCurrentMapping.press = SpaceMapping.CANNON_FIRE;
+        return MarbleRun.#cannonFire;
       }
-
       default: {
-        return () => {
-          console.log("Hello World");
-        };
+        playerCurrentMapping.press = SpaceMapping.EMPTY;
+        return MarbleRun.#empty;
       }
     }
   }
 
-  static mapSpaceHoldOfTo(player, factoryFlag) {
+  /**
+   * The factory that returns the function that will be mapped onto single mouse buttons
+   * @param {number} factoryFlag
+   * @returns {() => any}
+   */
+  static mapSpaceHoldTo(factoryFlag) {
     switch (factoryFlag) {
-      case FactoryFlag.EMPTY: {
-        playerCurrentMapping.hold = FactoryFlag.EMPTY;
-        return () => null;
+      case SpaceMapping.EMPTY: {
+        playerCurrentMapping.hold = SpaceMapping.EMPTY;
+        return MarbleRun.#empty;
       }
-
-      case FactoryFlag.PLAYER_REWIND: {
-        playerCurrentMapping.hold = FactoryFlag.PLAYER_REWIND;
-        /**
-         *
-         * @param  {(() => boolean)[]} exitConditions
-         * @returns {Player | undefined}
-         */
-        return (...exitConditions) => {
-          // #################### Zeit anhalten: Matter.Runner.stop(runner);
-          // #################### Super Slow Mo: Matter.Sleeping.set(body, true);
-
-          const lastData = player.recordedData.shift();
-
-          if (lastData) {
-            Matter.Body.setPosition(player.body, lastData.p);
-            Matter.Body.setAngle(player.body, lastData.a);
-            Matter.Body.setVelocity(player.body, lastData.v);
-          }
-
-          for (let exitCondition of exitConditions) {
-            if (exitCondition()) return player;
-          }
-
-          return player;
-        };
+      case SpaceMapping.PLAYER_REWIND: {
+        playerCurrentMapping.hold = SpaceMapping.PLAYER_REWIND;
+        return MarbleRun.#playerRewind;
       }
-
-      case FactoryFlag.CAR_REWIND: {
-        playerCurrentMapping.hold = FactoryFlag.CAR_REWIND;
-        return () => {
-          const offset = map(carProgressValue, 0, 1, 0, 100);
-
-          if (isNull(carBodyPositionX))
-            carBodyPositionX = carBody.body.position.x;
-
-          if (carProgressValue >= 0.99999) {
-            Matter.Body.setPosition(carBody.body, {
-              x: carBodyPositionX,
-              y: 630.77351582555,
-            });
-          } else {
-            Matter.Body.setPosition(carBody.body, {
-              x: carBodyPositionX - offset,
-              y: 630.77351582555,
-            });
-          }
-        };
+      case SpaceMapping.CAR_REWIND: {
+        playerCurrentMapping.hold = SpaceMapping.CAR_REWIND;
+        return MarbleRun.#carRewind;
       }
-
       default: {
-        return () => {
-          console.log("Hello World");
-        };
+        playerCurrentMapping.press = SpaceMapping.EMPTY;
+        return MarbleRun.#empty;
       }
     }
   }

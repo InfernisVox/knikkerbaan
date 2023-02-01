@@ -1204,10 +1204,7 @@ function screenEvents() {
           player,
           FactoryFlag.EMPTY
         ); */
-        player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
-          player,
-          FactoryFlag.CAR_REWIND
-        );
+        player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.CAR_REWIND);
 
         Matter.Body.setStatic(carBody.body, true);
 
@@ -1413,11 +1410,11 @@ function spacePressed() {
       if (marbleRun.hasBeenStarted) {
         player.onSpaceHold();
 
-        if (playerCurrentMapping.hold === FactoryFlag.PLAYER_REWIND) {
+        if (playerCurrentMapping.hold === SpaceMapping.PLAYER_REWIND) {
           player
             .showGlitch(!!player.recordedData.length)
             .showBar(player.isReversing);
-        } else if (playerCurrentMapping.hold === FactoryFlag.CAR_REWIND) {
+        } else if (playerCurrentMapping.hold === SpaceMapping.CAR_REWIND) {
           // ...
           carProgressValue = showProgress();
         }

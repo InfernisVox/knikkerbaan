@@ -74,8 +74,8 @@ class Player extends Ball {
     this.recordedData = [];
     this.recordedDataLength = this.recordedData.length;
 
-    this.onSpacePress = MarbleRun.mapSpacePressOfTo(this, FactoryFlag.EMPTY);
-    this.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(this, FactoryFlag.EMPTY);
+    this.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
+    this.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.EMPTY);
 
     this.timer = new ProgressTimer();
 
@@ -100,6 +100,62 @@ class Player extends Ball {
         if (
           (pair.bodyA.label === Player.LABEL && pair.bodyB.label === "bed") ||
           (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "bed")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "Hotwheels") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "Hotwheels")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "Hotwheels-Mid") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "Hotwheels-Mid")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL && pair.bodyB.label === "Body") ||
+          (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "Body")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL && pair.bodyB.label === "Stack") ||
+          (pair.bodyB.label === Player.LABEL && pair.bodyA.label === "Stack")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "carwheel1") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "carwheel1")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "carwheel2") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "carwheel2")
         ) {
           player.spaceHasBeenPressed = false;
           player.isOnGround = true;
@@ -166,7 +222,7 @@ class Player extends Ball {
     pop();
     push();
     tint(255, 235);
-    image(gifRewindOverlay, 0, 0, width, height);
+    if (bool) image(gifRewindOverlay, 0, 0, width, height);
     pop();
     return this;
   }

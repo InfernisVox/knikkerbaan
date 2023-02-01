@@ -51,14 +51,10 @@ function loadCannon() {
         });
         Matter.Body.setStatic(player.body, true);
 
-        player.onSpacePress = MarbleRun.mapSpacePressOfTo(
-          player,
-          FactoryFlag.CANON_SHOOT
+        player.onSpacePress = MarbleRun.mapSpacePressTo(
+          SpaceMapping.CANNON_FIRE
         );
-        player.onSpaceHold = MarbleRun.mapSpaceHoldOfTo(
-          player,
-          FactoryFlag.EMPTY
-        );
+        player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.EMPTY);
       }
     }
   }
