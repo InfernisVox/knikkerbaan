@@ -207,14 +207,6 @@ function loadAssets() {
   imgJumpPad = loadImage(imgJumpPad_src);
   loadingMessage(imgJumpPad_src);
 
-  let imgLoopLeft_src = "./assets/images/loopleft.png";
-  imgLoopLeft = loadImage(imgLoopLeft_src);
-  loadingMessage(imgLoopLeft_src);
-
-  let imgLoopRight_src = "./assets/images/loopright.png";
-  imgLoopRight = loadImage(imgLoopRight_src);
-  loadingMessage(imgLoopRight_src);
-
   let soundSoundtrack_src = "./assets/audio/soundtrack.wav";
   soundSoundtrack = loadSound(soundSoundtrack_src);
   loadingMessage(soundSoundtrack_src);
@@ -239,9 +231,21 @@ function loadAssets() {
   imgFgCarbody = loadImage(imgFgCarbody_src);
   loadingMessage(imgFgCarbody_src);
 
- let imgRamp_src = "./assets/images/ramp.png";
+  let imgRamp_src = "./assets/images/ramp.png";
   imgRamp = loadImage(imgRamp_src);
   loadingMessage(imgRamp_src);
+
+  let imgLoop1_src = "./assets/images/loop1.png";
+  imgLoop1 = loadImage(imgLoop1_src);
+  loadingMessage(imgLoop1_src);
+
+  let imgLoop2_src = "./assets/images/loop2.png";
+  imgLoop2 = loadImage(imgLoop2_src);
+  loadingMessage(imgLoop2_src);
+
+  let imgFgBaseball_src = "./assets/images/fg_baseball.png";
+  imgFgBaseball = loadImage(imgFgBaseball_src);
+  loadingMessage(imgFgBaseball_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;

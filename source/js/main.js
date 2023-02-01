@@ -101,6 +101,9 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgCarbody;
 /** @type {Image} */ let imgFgCarbody;
 /** @type {Image} */ let imgRamp;
+/** @type {Image} */ let imgLoop1;
+/** @type {Image} */ let imgLoop2;
+/** @type {Image} */ let imgFgBaseball;
 // gif
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
@@ -156,6 +159,7 @@ let cannonElevatorIsMoving = false;
 let rocketflying = false;
 let rocketoffset = 165;
 let soundSoundtrack;
+let soundFlute;
 
 // ##################################################
 

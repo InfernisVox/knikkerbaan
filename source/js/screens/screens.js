@@ -398,7 +398,6 @@ function screen01() {
       fromFile: "assets/images/Loop_right.svg",
       scale: 0.95,
       color: blockColor,
-      image: imgLoopRight,
     },
     { isStatic: true, angle: 0, label: "loopRight" }
   );
@@ -415,7 +414,6 @@ function screen01() {
       fromFile: "assets/images/Loop_left.svg",
       scale: 0.95,
       color: blockColor,
-      image: imgLoopLeft,
     },
     { isStatic: true, angle: 0, label: "loopLeft" }
   );
@@ -653,7 +651,6 @@ function screen01() {
       fromFile: "assets/images/Loop_right.svg",
       scale: 1.4,
       color: blockColor,
-      image: imgLoopRight,
     },
     { isStatic: true, angle: 0, LABEL: "loopRight2" }
   );
@@ -669,7 +666,6 @@ function screen01() {
       fromFile: "assets/images/Loop_left.svg",
       scale: 1.4,
       color: blockColor,
-      image: imgLoopLeft,
     },
     { isStatic: true, angle: 0, label: "loopLeft2" }
   );
