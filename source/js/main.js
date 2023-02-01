@@ -105,7 +105,7 @@ const playerCurrentMapping = {
 /** @type {Image} */ let imgLoop2;
 /** @type {Image} */ let imgFgBaseball;
 /** @type {Image} */ let imgStepstool;
-/** @type {Image} */ let imgFgBaseball;
+/** @type {Image} */ let imgFgBaseballbat;
 /** @type {Image} */ let imgFgSucculente;
 /** @type {Image} */ let imgColdWheelsFast;
 // gif
