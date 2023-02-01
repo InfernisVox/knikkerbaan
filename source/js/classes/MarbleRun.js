@@ -30,7 +30,7 @@ class MarbleRun {
         cannonAngle < 0
           ? {
               x: 0.275,
-              y: -0.1,
+              y: -0.1 * (cannonAngle / CANNON_ANGLE_MAX),
             }
           : !cannonAngle
           ? {
@@ -39,13 +39,13 @@ class MarbleRun {
             }
           : {
               x: 0.275,
-              y: 0.1,
+              y: 0.1 * (cannonAngle / CANNON_ANGLE_MIN),
             }
       );
     }
 
     cannonHasBeenFired = true;
-
+    cannon.attributes.image = imgCannon;
     soundCanonshoot.play();
     setTimeout(() => {
       soundCanonshoot.stop();
@@ -82,12 +82,12 @@ class MarbleRun {
     if (carProgressValue >= 0.99999) {
       Matter.Body.setPosition(carBody.body, {
         x: carBodyPositionX,
-        y: 630.77351582555,
+        y: 630.6175568566696,
       });
     } else {
       Matter.Body.setPosition(carBody.body, {
         x: carBodyPositionX - offset,
-        y: 630.77351582555,
+        y: 630.6175568566696,
       });
     }
   };

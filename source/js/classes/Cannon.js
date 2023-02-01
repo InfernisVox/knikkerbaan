@@ -16,9 +16,9 @@ function resetCannon() {
 
 function rotateCannon() {
   if (cannonCanRotate) {
-    if (cannonAngle >= 0.33) {
+    if (cannonAngle >= CANNON_ANGLE_MIN) {
       cannonIsReversing = true;
-    } else if (cannonAngle <= -0.65) {
+    } else if (cannonAngle <= CANNON_ANGLE_MAX) {
       cannonIsReversing = false;
     }
 
@@ -42,7 +42,7 @@ function loadCannon() {
     } else {
       if (!cannonHasBeenLoaded) {
         cannonHasBeenLoaded = true;
-
+        cannon.attributes.image = imgCannonActivated;
         player.recordedData = [];
 
         Body.setPosition(player.body, {
