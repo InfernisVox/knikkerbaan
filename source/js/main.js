@@ -115,6 +115,7 @@ let playerHasMadeTheLooping = false;
 /** @type {Image} */ let imgColdWheelsFast;
 /** @type {Image} */ let imgWall;
 /** @type {Image} */ let imgSkateboard;
+/** @type {Image} */ let imgFgStepstool;
 
 // gif
 /** @type {Image} */ let gifElGato;

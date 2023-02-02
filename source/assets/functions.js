@@ -39,7 +39,7 @@ function loadAssets() {
   gifElGato = loadImage(gifelgato_Src);
   loadingMessage(gifelgato_Src);
 
-  let soundCat_Src = "./assets/audio/instruments/cat_sound.mp3";
+  let soundCat_Src = "./assets/audio/cat_sound.wav";
   soundCat = loadSound(soundCat_Src);
   loadingMessage(soundCat_Src);
 
@@ -274,6 +274,10 @@ function loadAssets() {
   let imgSkateboard_src = "./assets/images/skateboard.png";
   imgSkateboard = loadImage(imgSkateboard_src);
   loadingMessage(imgSkateboard_src);
+
+  let imgFgStepstool_src = "./assets/images/fg_stepstool.png";
+  imgFgStepstool = loadImage(imgFgStepstool_src);
+  loadingMessage(imgFgStepstool_src);
 
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;

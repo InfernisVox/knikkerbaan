@@ -35,22 +35,7 @@ function initMouse() {
 
   mouse.on("mouseup", (/** @type {any} */ e) => {
     if (!mouseIsDragged) {
-      //console.log(e.mouse.position.x, e.mouse.position.y);
-      let ball = new Ball(
-        world,
-        {
-          x: e.mouse.position.x,
-          y: e.mouse.position.y,
-          r: 15,
-          color: "yellow",
-        },
-        { isStatic: false, restitution: 1, label: "Murmel" }
-      );
-      Body.applyForce(blocks[0].body, blocks[0].body.position, {
-        x: 0,
-        y: 2,
-      });
-      blocks.push(ball);
+      console.log(e.mouse.position.x, e.mouse.position.y);
     }
     mouseIsDragged = false;
   });
@@ -920,9 +905,9 @@ function screen01() {
     new BlockCore(
       world,
       {
-        x: 9975,
+        x: 9925,
         y: 100,
-        w: 160,
+        w: 200,
         h: 2000,
         color: sensorColor,
       },
@@ -1153,7 +1138,7 @@ function screenEvents() {
           //console.log(`Collided with sensor 14: ${sensors[14].body.label}`);
 
           soundAcceleration.play();
-          Body.setVelocity(player.body, { x: 26, y: 0 });
+          Body.setVelocity(player.body, { x: 28, y: 0 });
         }
       );
 
@@ -1198,7 +1183,7 @@ function screenEvents() {
           //console.log(`Collided with sensor 16: ${sensors[16].body.label}`);
 
           soundAcceleration.play();
-          Body.setVelocity(player.body, { x: 15, y: 0 });
+          Body.setVelocity(player.body, { x: 10, y: 0 });
         }
       );
 
@@ -1212,7 +1197,7 @@ function screenEvents() {
           //console.log(`Collided with sensor 17: ${sensors[17].body.label}`);
 
           soundAcceleration.play();
-          Body.setVelocity(player.body, { x: 20, y: 0 });
+          Body.setVelocity(player.body, { x: 25, y: 0 });
         }
       );
 
@@ -1453,9 +1438,8 @@ function screenEvents() {
           //console.log(`Collided with sensor 27: ${sensors[27].body.label}`);
 
           if (
-            pushBlock.body.position.x >= 9975 &&
-            pushBlock.body.position.y <= 10100 &&
-            pushBlock.body.position.y >= 600
+            pushBlock.body.position.x >= 9940 &&
+            pushBlock.body.position.y >= 540
           ) {
             Body.setStatic(pushBlock.body, true);
           }

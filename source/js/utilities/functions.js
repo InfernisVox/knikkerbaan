@@ -198,6 +198,11 @@ function drawLevel() {
     image(imgFgSucculente, 1300, 360, 360, 396);
     image(imgFgBaseballbat, 3200, 640, 827, 130);
     image(imgFgBaseball, 4400, 575, 174, 170);
+    image(imgFgStepstool, 8200, 540, 435, 236);
+    image(imgFgBoxStar, 10000, 570, 208, 210);
+    image(imgFgSucculente, 10200, 380, 360, 396);
+    image(imgFgBaseballbat, 13000, 640, 827, 130);
+    image(imgFgBaseball, 14000, 575, 174, 170);
   });
 
   mouse.draw();
