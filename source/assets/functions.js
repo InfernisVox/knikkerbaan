@@ -279,6 +279,14 @@ function loadAssets() {
   imgFgStepstool = loadImage(imgFgStepstool_src);
   loadingMessage(imgFgStepstool_src);
 
+  let imgRocketActivated_src = "./assets/images/rocketActivated.png";
+  imgRocketActivated = loadImage(imgRocketActivated_src);
+  loadingMessage(imgRocketActivated_src);
+
+  let gifEndScene_src = "./assets/images/EndScene.gif";
+  gifEndScene = loadImage(gifEndScene_src);
+  loadingMessage(gifEndScene_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;
   console.log(
