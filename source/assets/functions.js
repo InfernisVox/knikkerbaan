@@ -295,6 +295,10 @@ function loadAssets() {
   imgPosterAbc = loadImage(imgPosterAbc_src);
   loadingMessage(imgPosterAbc_src);
 
+  let gifCatLoading_src = "./assets/images/catload.gif";
+  gifCatLoading = loadImage(gifCatLoading_src);
+  loadingMessage(gifCatLoading_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;
   console.log(

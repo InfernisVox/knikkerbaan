@@ -138,13 +138,14 @@ function drawLevel() {
   blocks.forEach((block) => block.draw());
 
   if (rocketflying) {
-    if (rocket.body.position.y >= -10000) {
+    if (rocket.body.position.y >= -1000) {
       Body.setPosition(rocket.body, {
         x: rocket.body.position.x,
         y: rocket.body.position.y - 4,
       });
       rocketoffset = rocket.body.position.y - 300;
     } else {
+      gameended = true;
       rocketflying = false;
     }
   }
@@ -204,6 +205,13 @@ function drawLevel() {
     image(imgFgBaseballbat, 13000, 640, 827, 130);
     image(imgFgBaseball, 14000, 575, 174, 170);
   });
+
+  if (gameended) {
+    image(gifEndScene, 9780, 0, 1320, 720);
+    setTimeout(() => {
+      image(gifCatLoading, 9780, 0, 1320, 720);
+    }, 1000);
+  }
 
   mouse.draw();
 }

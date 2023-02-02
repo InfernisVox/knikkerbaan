@@ -128,6 +128,7 @@ let playerHasMadeTheLooping = false;
 /** @type {Image} */ let gifElGato;
 /** @type {Image} */ let gifRewind;
 /** @type {Image} */ let gifRewindOverlay;
+/** @type {Image} */ let gifCatLoading;
 
 // Custom event variables ###########################
 let mouseIsDragged = false;
@@ -188,6 +189,7 @@ let rocketoffset = 165;
 let soundFlute;
 let constraintColor;
 let showConstraints = false;
+let gameended = false;
 
 // ##################################################
 
@@ -212,7 +214,7 @@ function setup() {
 
   soundCat.play();
   soundSoundtrack.play();
-  // soundWoolball.loop();
+  soundWoolball.loop();
 
   MarbleRun.stop(marbleRun);
 }

@@ -185,7 +185,7 @@ class MarbleRun {
       Matter.Runner.stop(runner);
       noLoop();
 
-      gifElGato.pause();
+      // gifElGato.pause();
       Matter.Body.setStatic(player.body, true);
     }
   }
