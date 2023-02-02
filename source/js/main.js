@@ -60,6 +60,9 @@ const Engine = Matter.Engine,
 /** @type {Item[]} */ let sensors = [];
 /** @type {(() => void)[]} */ let screens;
 
+// User ###########################
+let userIsReady = false;
+
 // Player ###########################
 /** @type {Player} */ let player;
 let playerHasBeenAssigned = false;
@@ -116,9 +119,9 @@ let playerHasMadeTheLooping = false;
 /** @type {Image} */ let imgWall;
 /** @type {Image} */ let imgSkateboard;
 /** @type {Image} */ let imgFgStepstool;
-/** @type {Image} */ let imgRocketActivated
+/** @type {Image} */ let imgRocketActivated;
 /** @type {Image} */ let gifEndScene;
-/** @type {Image} */ let imgPosterDraw
+/** @type {Image} */ let imgPosterDraw;
 /** @type {Image} */ let imgPosterAbc;
 
 // gif
@@ -210,6 +213,8 @@ function setup() {
   soundCat.play();
   soundSoundtrack.play();
   // soundWoolball.loop();
+
+  MarbleRun.stop(marbleRun);
 }
 
 function draw() {
@@ -285,10 +290,15 @@ function draw() {
 
 function keyPressed() {
   if (keyCode === Keys.SPACE) {
-    player.timer.start();
-    player.onSpacePress();
+    if (userIsReady) {
+      player.timer.start();
+      player.onSpacePress();
 
-    spaceIsPressed = true;
+      spaceIsPressed = true;
+    } else {
+      userIsReady = true;
+      MarbleRun.resume(marbleRun);
+    }
   }
 
   if (keyCode === Keys.S) {

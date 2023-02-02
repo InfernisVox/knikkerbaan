@@ -211,9 +211,27 @@ class Player extends Ball {
 
         if (
           (pair.bodyA.label === Player.LABEL &&
+            pair.bodyB.label === "Circle Body") ||
+          (pair.bodyB.label === Player.LABEL &&
+            pair.bodyA.label === "Circle Body")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL &&
             pair.bodyB.label === "Rectangle Body") ||
           (pair.bodyB.label === Player.LABEL &&
             pair.bodyA.label === "Rectangle Body")
+        ) {
+          player.spaceHasBeenPressed = false;
+          player.isOnGround = true;
+        }
+
+        if (
+          (pair.bodyA.label === Player.LABEL && pair.bodyB.label) ||
+          (pair.bodyB.label === Player.LABEL && pair.bodyA.label)
         ) {
           player.spaceHasBeenPressed = false;
           player.isOnGround = true;

@@ -35,7 +35,7 @@ function initMouse() {
 
   mouse.on("mouseup", (/** @type {any} */ e) => {
     if (!mouseIsDragged) {
-      console.log(e.mouse.position.x, e.mouse.position.y);
+      // console.log(e.mouse.position.x, e.mouse.position.y);
     }
     mouseIsDragged = false;
   });
@@ -559,16 +559,17 @@ function screen01() {
   baseballGlove = new PolygonFromSVG(
     world,
     {
-      x: 2750,
-      y: 137,
+      x: 2755.2672490125897,
+      y: 134.26307222352762,
       w: 174,
       h: 183,
       fromFile: "assets/images/Baseballglove.svg",
       image: imgBaseballGlove,
     },
     {
-      isStatic: false,
-      angle: 0,
+      isStatic: true,
+      mass: 0.005,
+      angle: -0.592146955958298,
       label: "baseballGlove",
     }
   );

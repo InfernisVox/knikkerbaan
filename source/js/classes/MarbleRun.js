@@ -37,7 +37,7 @@ class MarbleRun {
         cannonAngle < 0
           ? {
               x: 0.275,
-              y: -0.1 * (cannonAngle / CANNON_ANGLE_MAX),
+              y: -0.115 * (cannonAngle / CANNON_ANGLE_MAX),
             }
           : !cannonAngle
           ? {
@@ -46,12 +46,17 @@ class MarbleRun {
             }
           : {
               x: 0.275,
-              y: 0.1 * (cannonAngle / CANNON_ANGLE_MIN),
+              y: 0.115 * (cannonAngle / CANNON_ANGLE_MIN),
             }
       );
     }
 
     cannonHasBeenFired = true;
+
+    if (cannonHasBeenFired && baseballGlove.body.isStatic) {
+      Matter.Body.setStatic(baseballGlove.body, false);
+    }
+
     cannon.attributes.image = imgCannon;
     soundCanonshoot.play();
     setTimeout(() => {
@@ -169,8 +174,41 @@ class MarbleRun {
     }
   }
 
+  /**
+   *
+   * @param {MarbleRun} marbleRun
+   */
+  static stop(marbleRun) {
+    if (!marbleRun.hasBeenPaused) {
+      marbleRun.hasBeenPaused = true;
+
+      Matter.Runner.stop(runner);
+      noLoop();
+
+      gifElGato.pause();
+      Matter.Body.setStatic(player.body, true);
+    }
+  }
+
+  /**
+   *
+   * @param {MarbleRun} marbleRun
+   */
+  static resume(marbleRun) {
+    if (marbleRun.hasBeenPaused) {
+      marbleRun.hasBeenPaused = false;
+
+      Matter.Runner.run(runner, engine);
+      loop();
+
+      gifElGato.play();
+      Matter.Body.setStatic(player.body, false);
+    }
+  }
+
   constructor() {
     this.hasBeenStarted = false;
+    this.hasBeenPaused = false;
   }
 
   /**
