@@ -287,6 +287,14 @@ function loadAssets() {
   gifEndScene = loadImage(gifEndScene_src);
   loadingMessage(gifEndScene_src);
 
+  let imgPosterDraw_src = "./assets/images/posterdraw.png";
+  imgPosterDraw = loadImage(imgPosterDraw_src);
+  loadingMessage(imgPosterDraw_src);
+
+  let imgPosterAbc_src = "./assets/images/posterabc.png";
+  imgPosterAbc = loadImage(imgPosterAbc_src);
+  loadingMessage(imgPosterAbc_src);
+
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;
   console.log(

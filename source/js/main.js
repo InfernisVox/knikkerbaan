@@ -118,6 +118,8 @@ let playerHasMadeTheLooping = false;
 /** @type {Image} */ let imgFgStepstool;
 /** @type {Image} */ let imgRocketActivated
 /** @type {Image} */ let gifEndScene;
+/** @type {Image} */ let imgPosterDraw
+/** @type {Image} */ let imgPosterAbc;
 
 // gif
 /** @type {Image} */ let gifElGato;
