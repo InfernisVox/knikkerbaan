@@ -187,7 +187,7 @@ let rocketflying = false;
 let rocketoffset = 165;
 /** @type {SoundFile} */ let soundSoundtrack;
 let soundFlute;
-let constraintColor;
+/** @type {Colour} */ let constraintColor;
 let showConstraints = false;
 let gameended = false;
 
@@ -212,10 +212,6 @@ function setup() {
   initScreens(screens);
   screenEvents();
 
-  soundCat.play();
-  soundSoundtrack.play();
-  soundWoolball.loop();
-
   MarbleRun.stop(marbleRun);
 }
 
@@ -234,10 +230,6 @@ function draw() {
       player.onSpaceHold = MarbleRun.mapSpaceHoldTo(SpaceMapping.PLAYER_REWIND);
     }
   });
-
-  if (frameCount % (25 * 30) === 0) {
-    soundSoundtrack.play();
-  }
 
   once(drawCanvas);
   spacePressed();

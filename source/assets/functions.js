@@ -302,7 +302,7 @@ function loadAssets() {
   assetCalc += new Error().lineNumber;
   assetTotal = (assetCalc - 2) / 4;
   console.log(
-    `%c\n-------------------------\nTotal assets loaded: %c${assetTotal}`,
+    `%c\n-------------------------\nTotal assets loaded: ${assetTotal}`,
     "color: #7289DA; font-weight: bold;"
   );
 }

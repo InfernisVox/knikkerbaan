@@ -198,6 +198,10 @@ class MarbleRun {
       loop();
 
       gifElGato.play();
+      soundCat.play();
+      soundSoundtrack.loop();
+      soundWoolball.loop();
+
       Matter.Body.setStatic(player.body, false);
     }
   }
