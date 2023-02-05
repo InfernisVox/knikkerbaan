@@ -559,17 +559,16 @@ function screen01() {
   baseballGlove = new PolygonFromSVG(
     world,
     {
-      x: 2755.2672490125897,
-      y: 134.26307222352762,
+      x: 2755,
+      y: 134,
       w: 174,
       h: 183,
       fromFile: "assets/images/Baseballglove.svg",
       image: imgBaseballGlove,
     },
     {
-      isStatic: true,
-      mass: 0.005,
-      angle: -0.592146955958298,
+      isStatic: false,
+      angle: 0,
       label: "baseballGlove",
     }
   );
@@ -916,6 +915,24 @@ function screen01() {
         isStatic: true,
         isSensor: true,
         label: "pushblocksensor",
+      }
+    )
+  );
+
+  sensors.push(
+    new Block(
+      world,
+      {
+        x: 3150,
+        y: 200,
+        w: 40,
+        h: 400,
+        color: sensorColor,
+      },
+      {
+        isStatic: true,
+        isSensor: true,
+        label: "baseballglovedactivate",
       }
     )
   );
@@ -1446,6 +1463,18 @@ function screenEvents() {
           }
         }
       );
+
+      if (
+        pair.bodyA.label === Player.LABEL &&
+        pair.bodyB === sensors[28].body
+      ) {
+        //console.log("Collided with sensor 28");
+        baseballGlove.body.collisionFilter = {
+          group: -1,
+          category: 2,
+          mask: 0,
+        };
+      }
 
       // AutoMove ###################################
       // blocks[9].body.label: "Hotwheels"

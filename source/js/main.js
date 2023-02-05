@@ -225,6 +225,8 @@ function draw() {
 
   Player.recordDataOf(player, !spaceIsPressed && player.isRecording);
 
+  // getCanvasContent();
+
   MarbleRun.Cycle.over(5600, () => {
     if (!playerHasBeenAssigned) {
       playerHasBeenAssigned = true;

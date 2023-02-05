@@ -53,10 +53,6 @@ class MarbleRun {
 
     cannonHasBeenFired = true;
 
-    if (cannonHasBeenFired && baseballGlove.body.isStatic) {
-      Matter.Body.setStatic(baseballGlove.body, false);
-    }
-
     cannon.attributes.image = imgCannon;
     soundCanonshoot.play();
     setTimeout(() => {

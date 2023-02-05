@@ -81,10 +81,10 @@ function getCanvasContent(canvas, sampleSize = 100) {
   /** @type {CanvasRenderingContext2D} */ let ctx = canvas.getContext("2d");
 
   canvasContent = ctx.getImageData(
-    Canvas.WIDTH / 2,
-    Canvas.HEIGHT / 2,
-    Canvas.WIDTH / 2,
-    Canvas.HEIGHT / 2
+    player.body.position.x - 100,
+    player.body.position.y - 100,
+    player.body.position.x + 100,
+    player.body.position.y + 100
   );
   canvasContentData = canvasContent.data;
 
