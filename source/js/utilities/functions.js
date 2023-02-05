@@ -71,12 +71,12 @@ function getCanvasContent() {
   let c = document.getElementById("defaultCanvas0");
   let ctx = c.getContext("2d");
 
-  if (count > 10) {
+  if (count > 5) {
     canvascontent = ctx.getImageData(
-      player.body.position.x - 150,
-      player.body.position.y - 150,
-      player.body.position.x + 150,
-      player.body.position.y + 150
+      width / 2 + 200,
+      height / 2 + 400,
+      width / 2 - 200,
+      height / 2
     );
 
     canvascontent = canvascontent.data;
@@ -102,10 +102,7 @@ function getCanvasContent() {
 
     document.body.style.backgroundColor = `rgba(${avgr},${avgg},${avgb},${avga})`;
 
-    if (canvascontent >= 200000) {
-      console.log("e");
-      canvascontent = [];
-    }
+    canvascontent = [];
 
     count = 0;
   }
