@@ -164,7 +164,7 @@ class MarbleRun {
         return MarbleRun.#carRewind;
       }
       default: {
-        playerCurrentMapping.press = SpaceMapping.EMPTY;
+        playerCurrentMapping.hold = SpaceMapping.EMPTY;
         return MarbleRun.#empty;
       }
     }
@@ -181,7 +181,11 @@ class MarbleRun {
       Matter.Runner.stop(runner);
       noLoop();
 
-      // gifElGato.pause();
+      gifElGato.pause();
+      soundCat.pause();
+      soundSoundtrack.pause();
+      soundWoolball.pause();
+
       Matter.Body.setStatic(player.body, true);
     }
   }

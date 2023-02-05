@@ -1233,7 +1233,7 @@ function screenEvents() {
           carHasBeenReleased = false;
           player.isRecording = false;
           carBodyPositionOriginal = { ...carBody.body.position };
-          // //console.log(carBodyPositionOriginal);
+          //console.log(carBodyPositionOriginal);
           // Car Rewind (End) ##################################################################
 
           // player.onSpacePress = MarbleRun.mapSpacePressTo(SpaceMapping.EMPTY);
@@ -1251,7 +1251,7 @@ function screenEvents() {
             width: 2,
           });
           playerPositionOriginal = { ...player.body.position };
-          // //console.log(playerPositionOriginal);
+          //console.log(playerPositionOriginal);
 
           Body.setPosition(carConstraintSensor.body, {
             x: carConstraintSensor.body.position.x,
@@ -1312,6 +1312,7 @@ function screenEvents() {
         sensors[21].body.label,
         () => {
           //console.log(`Collided with sensor 21: ${sensors[21].body.label}`);
+          playerHasMadeTheLooping = true;
 
           player.constraints.forEach((constraint) => {
             Matter.World.remove(world, constraint);
@@ -1332,6 +1333,20 @@ function screenEvents() {
             );
             player.onSpaceHold = MarbleRun.mapSpaceHoldTo(
               SpaceMapping.PLAYER_REWIND
+            );
+          }
+        }
+      );
+      ifBodiesArePairs(
+        pair.bodyA,
+        pair.bodyB,
+        carBody.body.label,
+        sensors[21].body.label,
+        () => {
+          //console.log("Hell yeah");
+          if (playerCurrentMapping.press !== SpaceMapping.SINGLE_JUMP) {
+            player.onSpacePress = MarbleRun.mapSpacePressTo(
+              SpaceMapping.SINGLE_JUMP
             );
           }
         }
@@ -1426,7 +1441,6 @@ function screenEvents() {
           Body.setVelocity(carBody.body, { x: 40, y: 0 });
 
           playerIsMovingUpward = false;
-          playerHasMadeTheLooping = true;
         }
       );
 
