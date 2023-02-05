@@ -64,51 +64,52 @@ function initPlayer() {
   );
 }
 
-/**
- *
- * @param {HTMLCanvasElement} canvas
- * @param {number} [sampleSize] The size at which different pixel samples should be selected
- */
-function getCanvasContent(canvas, sampleSize = 100) {
-  /** @type {ImageData} */ let canvasContent;
-  /** @type {Uint8ClampedArray} */ let canvasContentData;
+function getCanvasContent() {
+  // Function will consume lots of memory
+  // Only call for flex.
 
-  /** @type {number | undefined} */ let rAvg;
-  /** @type {number | undefined} */ let gAvg;
-  /** @type {number | undefined} */ let bAvg;
-  /** @type {number | undefined} */ let aAvg;
+  let c = document.getElementById("defaultCanvas0");
+  let ctx = c.getContext("2d");
 
-  /** @type {CanvasRenderingContext2D} */ let ctx = canvas.getContext("2d");
+  if (count > 10) {
+    canvascontent = ctx.getImageData(
+      player.body.position.x - 150,
+      player.body.position.y - 150,
+      player.body.position.x + 150,
+      player.body.position.y + 150
+    );
 
-  canvasContent = ctx.getImageData(
-    player.body.position.x - 100,
-    player.body.position.y - 100,
-    player.body.position.x + 100,
-    player.body.position.y + 100
-  );
-  canvasContentData = canvasContent.data;
+    canvascontent = canvascontent.data;
 
-  const canvasContentRGBA = [];
-  for (let i = 0; i < canvasContentData.length; i += CANVAS_DATA_CHUNK_SIZE) {
-    const chunk = canvasContentData.slice(i, i + CANVAS_DATA_CHUNK_SIZE);
-    canvasContentRGBA.push(chunk);
+    const canvasfilter = [];
+    for (let i = 0; i < canvascontent.length; i += CANVAS_DATA_CHUNK_SIZE) {
+      const chunk = canvascontent.slice(i, i + CANVAS_DATA_CHUNK_SIZE);
+      canvasfilter.push(chunk);
+    }
+    canvascontent = canvasfilter;
+
+    canvascontent.forEach((element) => {
+      avgr += element[0];
+      avgg += element[1];
+      avgb += element[2];
+      avga += element[3];
+    });
+
+    avgr = avgr / canvascontent.length;
+    avgg = avgg / canvascontent.length;
+    avgb = avgb / canvascontent.length;
+    avga = avga / canvascontent.length;
+
+    document.body.style.backgroundColor = `rgba(${avgr},${avgg},${avgb},${avga})`;
+
+    if (canvascontent >= 200000) {
+      console.log("e");
+      canvascontent = [];
+    }
+
+    count = 0;
   }
-
-  canvasContentRGBA.forEach((element) => {
-    rAvg += element[0];
-    gAvg += element[1];
-    bAvg += element[2];
-    aAvg += element[3];
-  });
-
-  rAvg = rAvg / canvasContentRGBA.length;
-  gAvg = gAvg / canvasContentRGBA.length;
-  bAvg = bAvg / canvasContentRGBA.length;
-  aAvg = aAvg / canvasContentRGBA.length;
-
-  document.body.style.backgroundColor = `rgba(${rAvg},${gAvg},${bAvg},${aAvg})`;
-
-  for (let i = 0; i < sampleSize; i++) {}
+  count++;
 }
 
 function drawCanvas() {

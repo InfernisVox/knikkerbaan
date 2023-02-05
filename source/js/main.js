@@ -190,6 +190,14 @@ let soundFlute;
 /** @type {Colour} */ let constraintColor;
 let showConstraints = false;
 let gameended = false;
+let count = 0;
+
+let avgr = 0;
+let avgg = 0;
+let avgb = 0;
+let avga = 0;
+
+let canvascontent;
 
 // ##################################################
 
@@ -220,8 +228,6 @@ function draw() {
   Engine.update(engine);
 
   Player.recordDataOf(player, !spaceIsPressed && player.isRecording);
-
-  // getCanvasContent();
 
   MarbleRun.Cycle.over(5600, () => {
     if (!playerHasBeenAssigned) {
@@ -279,6 +285,7 @@ function draw() {
     });
   }
 
+  getCanvasContent();
   // if (player.body.position.x >= CANVAS_BREAKPOINT) marbleRun.stats();
 }
 
